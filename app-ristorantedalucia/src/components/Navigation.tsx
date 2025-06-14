@@ -68,7 +68,7 @@ export default function Navbar({navItems}: {navItems: HEADERMENU_QUERYResult}) {
                   return item.items.map((nav, index) => (
                   <li
                     key={index}
-                    className="flex items-center p-1 text-lg gap-x-2"
+                    className="flex items-center p-1 text-lg gap-x-2 uppercase"
                   >
                     <Link href={(nav.link?.slug === 'home' ? '/' : nav.link?.slug) ?? nav.externalUrl ?? '#'} className="flex items-center">
                     {nav.text}
