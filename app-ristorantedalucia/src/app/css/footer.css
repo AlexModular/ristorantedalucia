@@ -1,5 +1,4 @@
 footer {
-    background-color: #000;
     border-top: 10px solid var(--gold);
 }
 
@@ -11,7 +10,7 @@ footer h5 {
 }
 
 footer h6 {
-    font-family: 'MaturaMTScriptCapitals';
+    font-family: 'Oswald';
     font-size: 20px;
     margin-bottom: 10px;
 }

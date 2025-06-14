@@ -7,7 +7,7 @@ import {
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
 export const structure: StructureResolver = (S, context) =>
   S.list()
-    .title('Donna Sofì')
+    .title('Ristorante Enoteca Da Lucia')
     .items([
       S.documentTypeListItem('page').title('Pages'),
       S.documentTypeListItem('navigation').title('Menu Navigation'),

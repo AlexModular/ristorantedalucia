@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   },
   robots: {
     index: false,
-    follow: false,
+    follow: true,
   }
 };
 
@@ -78,12 +78,12 @@ export default async function RootLayout({
   });
   const locale = await getLocale();
   return (
-    <html lang={locale} data-theme="dark" className="dark">
-      <GoogleAnalytics gaId="G-LH923HJN5B" />
-      <body cz-shortcut-listen="true" className="dark:bg-black dark:text-white">
+    <html lang={locale} data-theme="light" className="light">
+      <GoogleAnalytics gaId="UA-119546408-1" />
+      <body cz-shortcut-listen="true" className="dark:bg-white dark:text-black">
         <NextIntlClientProvider>
           <ReCaptchaProvider>
-              <div className="bg-black min-h-screen">
+              <div className="min-h-screen">
                 <Navigation navItems={navItems} />
                 <IubendaProvider bannerConfig={iubendaBannerConfig}>
                   {children}
