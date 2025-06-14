@@ -21,7 +21,7 @@ div.page-head::before {
 div.page-head h1 {
   width: 100%;
   text-align: center;
-  font-family: 'MaturaMTScriptCapitals';
+  font-family: 'Oswald';
   position: relative;
   z-index: 1;
   /*color: var(--gold);*/
@@ -85,12 +85,12 @@ div.page-content h2.page-title {
 }
 
 div.page-content h3.subtitle {
-  font-family: 'MaturaMTScriptCapitals';
+  font-family: 'Oswald';
   padding-bottom: 30px;
 }
 
 h4.subtitle {
-  font-family: 'MaturaMTScriptCapitals';
+  font-family: 'Oswald';
   font-size: 35px;
 }
 

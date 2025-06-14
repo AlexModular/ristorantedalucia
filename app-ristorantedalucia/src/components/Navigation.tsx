@@ -29,7 +29,7 @@ export default function Navbar({navItems}: {navItems: HEADERMENU_QUERYResult}) {
   };
   return (
     <header className={`border-rose-900 border-b-2 ${isSticky ? 'sticky z-50 top-0' : ''}`}>
-      <nav className="block w-full max-w-screen px-4 py-4 mx-auto bg-opacity-90 sticky top-3 shadow lg:px-8 backdrop-blur-lg backdrop-saturate-150 z-[9999]">
+      <nav className="block w-full max-w-screen px-4 pt-4 mx-auto bg-opacity-90 sticky top-3 shadow lg:px-8 backdrop-blur-lg backdrop-saturate-150 z-[9999]">
         <div className="container flex flex-wrap items-center justify-between mx-auto">
           {/* Desktop Menu Left */}
           <div className="hidden lg:block menu-left">
@@ -39,7 +39,7 @@ export default function Navbar({navItems}: {navItems: HEADERMENU_QUERYResult}) {
                   return item.items.map((nav, index) => (
                   <li
                     key={index}
-                    className="flex items-center p-1 text-lg gap-x-2"
+                    className="flex items-center p-1 text-lg gap-x-2 uppercase"
                   >
                     <Link href={(nav.link?.slug === 'home' ? '/' : nav.link?.slug) ?? nav.externalUrl ?? '#'} className="flex items-center">
                     {nav.text}
@@ -51,12 +51,15 @@ export default function Navbar({navItems}: {navItems: HEADERMENU_QUERYResult}) {
                 })}
             </ul>
           </div>
-          <Link
-            href="/"
-            className="logo"
-          >
-            <Image priority={true} src="/images/logo.png" height={0} width={0} alt="Donna Sofì, Pizzeria Casalecchio Di Reno, Bologna" className="logo" />
-          </Link>
+          <div className="logo-container flex items-center justify-start lg:justify-center w-full lg:w-auto">
+            {/* Logo */}
+            <Link
+              href="/"
+              className="logo"
+            >
+              <Image priority={true} src="/images/logo-solo.png" height={50} width={95} alt="Ristorante Enoteca Da Lucia, Bologna Centro Storico" className="logo" />
+            </Link>
+          </div>
           {/* Desktop Menu Right */}
           <div className="hidden lg:block menu-right">
             <ul className="flex flex-col justify-start gap-2 mt-2 mb-4 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
@@ -103,17 +106,17 @@ export default function Navbar({navItems}: {navItems: HEADERMENU_QUERYResult}) {
 
           {/* Mobile Menu */}
           <div
-            className={`mobile-menu fixed top-0 left-0 min-h-screen w-64 bg-black bg-opacity-80 shadow-lg transform transition-transform duration-300 ease-in-out backdrop-blur backdrop-saturate-150 ${
+            className={`mobile-menu fixed top-0 left-0 min-h-screen w-64 bg-white bg-opacity-80 shadow-lg transform transition-transform duration-300 ease-in-out backdrop-blur backdrop-saturate-150 ${
               isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
             } lg:hidden z-50`}
           >
-            <div className="flex flex-row items-center border-b border-rose-900 pb-4 bg-black">
+            <div className="flex flex-row items-center border-b border-rose-900 pb-4 bg-white">
               <Link
                 href="/"
                 className="cursor-pointer font-bold text-xl pt-4 ps-4 logo"
                 onClick={toggleMobileMenu}
               >
-                <Image priority={true} src="/images/donnasofi.svg" height={0} width={0} alt="Donna Sofì, Pizzeria Casalecchio Di Reno, Bologna" className="logo" />
+                <Image priority={true} src="/images/donnasofi.svg" height={0} width={0} alt="Ristorante Enoteca Da Lucia, Bologna Centro Storico" className="logo" />
               </Link>
               <button
                 onClick={toggleMobileMenu}

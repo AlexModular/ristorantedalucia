@@ -11,7 +11,7 @@ export default function Footer ({locations, socials, copyright}: {locations: LOC
     <footer className="text-center pt-6 pb-6">
       <div className="footer-links grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 py-7">
         <div className="footer-logo md:pr-10 lg:pr-10 2xl:pr-10 md:col-span-2 lg:col-span-2 pb-8 justify-center">
-          <Image priority={false} src="/images/logo.png" alt="Donna Sofì, Pizzeria Casalecchio Di Reno, Bologna" className="logo" width={0} height={0} sizes="100vw 100vw" style={{ width: '100%', height: 'auto', maxHeight: '250px' }} />
+          <Image priority={false} src="/images/logo.png" alt="Ristorante Enoteca Da Lucia, Bologna Centro Storico" className="logo" width={0} height={0} sizes="100vw 100vw" style={{ width: '100%', height: 'auto', maxHeight: '250px' }} />
         </div>
         <div className="locations md:col-span-2 lg:col-span-2 px-5">
           <h5 className="text-center md:text-left">Dove siamo</h5>

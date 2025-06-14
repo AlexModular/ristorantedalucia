@@ -1,5 +1,5 @@
 header {
-  font-family: 'MaturaMTScriptCapitals', 'LeckerliOne', 'Oswald';
+  font-family: 'Oswald', 'LeckerliOne', 'Oswald';
   padding-top: 0;
   padding-bottom: 0;
 }
@@ -7,10 +7,6 @@ header {
 header nav {
   padding-top: 25px;
   padding-bottom: 25px;
-}
-header .logo img {
-  width: 100%;
-  height: 30px;
 }
 
 header li a{
@@ -40,10 +36,6 @@ header .menu-right li a {
 header .menu-right li a:hover {
   color: var(--white);
   background-size: 50% 0.1em;
-}
-
-header .logo {
-  flex: min-content;
 }
 
 .mobile-menu {

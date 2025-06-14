@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<QueryParams
       title: page?.title,
       description: page?.subtitle,
       url: `https://donnasofi.com/${page?.slug}`,
-      siteName: 'Donna Sofì - Pizzeria',
+      siteName: 'Ristorante Enoteca Da Lucia - Pizzeria',
       images: [
         {
           url: 'https://donnasofi.com/images/donnasofi.svg',
