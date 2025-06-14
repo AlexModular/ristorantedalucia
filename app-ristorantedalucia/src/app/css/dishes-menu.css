@@ -1,0 +1,27 @@
+.dishes-menu-container .filter-container .filter-item {
+  width: calc(33.3% - 30px);
+  display: inline-block;
+  min-height: 122px;
+  margin: 15px;
+}
+.dishes-menu-container li.filter-item h6 {
+  padding-bottom: 5px;
+  border-bottom: 2px solid var(--background);
+}
+.dishes-menu-container li.filter-item.active h6 {
+  border-bottom-color: var(--foreground);
+}
+@media screen and (min-width: 1318px) {
+  .dishes-menu-container li.filter-item {
+    min-width: 180px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .dishes-menu-container .filter-container .filter-item {
+    width: calc(100% - 30px);
+  }
+  .filter-list li:nth-child(3n) {
+    break-after: always;
+  }
+  
+}

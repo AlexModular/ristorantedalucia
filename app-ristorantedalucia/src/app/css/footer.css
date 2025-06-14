@@ -1,0 +1,56 @@
+footer {
+    background-color: #000;
+    border-top: 10px solid var(--gold);
+}
+
+footer h5 {
+    font-size: 25px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+}
+
+footer h6 {
+    font-family: 'MaturaMTScriptCapitals';
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+footer > .footer-links {
+    max-width: 1920px;
+    margin: auto;
+}
+
+footer > .footer-links > .footer-logo {
+    display: flex;
+    justify-content: center;
+}
+footer > .footer-links > .footer-logo > img {
+    max-width: 450px;
+}
+
+footer > .footer-company-info {
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 1px dotted var(--gold);
+}
+
+footer .footer-socials {
+    display: flex;
+    justify-content: left;
+}
+
+@media screen and (min-width: 1536px) {
+    footer h5 {
+        font-size: 30px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    footer .footer-socials {
+        justify-content: center;
+    }
+    footer > .footer-links > .footer-logo > img {
+        max-width: 350px;
+    }
+    
+}

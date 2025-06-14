@@ -1,0 +1,14 @@
+.looper__listInstance {
+  font-size: 40px;
+  font-family: 'MaturaMTScriptCapitals';
+  padding: 15px;
+  color: var(--gold)
+}
+
+@media screen and (max-width: 768px) {
+  .looper__listInstance {
+    font-size: 25px;
+    padding: 10px;
+  }
+  
+}

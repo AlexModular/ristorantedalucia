@@ -1,0 +1,119 @@
+div.page-head {
+  height: 190px;
+  background-position: center 30%;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  display: flex;
+  align-content: center;
+}
+
+div.page-head::before {
+  content: '';
+  background-color: #0000006e;
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+div.page-head h1 {
+  width: 100%;
+  text-align: center;
+  font-family: 'MaturaMTScriptCapitals';
+  position: relative;
+  z-index: 1;
+  /*color: var(--gold);*/
+  max-height: 100px;
+  align-self: center;
+  text-shadow: 0 0 4px #000;
+  cursor: default;
+}
+
+.breadcrumbs {
+  background: #161616;
+  width: 100%;
+  height: 45px;
+  display: flex;
+  position: relative;
+  z-index: 1;
+}
+
+.breadcrumbs ul {
+  max-width: 1536px;
+  width: 100%;
+  margin: auto;
+  font-family: 'Oswald';
+  text-transform: uppercase;
+  align-self: flex-start;
+  vertical-align: middle;
+}
+.breadcrumbs ul li {
+  float: left;
+  color: #a5a5a5;
+}
+
+.breadcrumbs ul li a:hover {
+  color: var(--gold);
+  transition: color ease-in-out .2s;
+}
+
+.breadcrumbs ul li:last-child {
+  color: #fff;
+  cursor: default;
+}
+
+.breadcrumbs ul li:not(:last-child)::after {
+  content: '/';
+  padding: 0 20px;
+}
+
+div.page-content {
+  margin: auto;
+  position: relative;
+  z-index: 1;
+}
+
+div.page-content:not(.full-width) {
+  max-width: 1536px;
+}
+
+div.page-content h2.page-title {
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+div.page-content h3.subtitle {
+  font-family: 'MaturaMTScriptCapitals';
+  padding-bottom: 30px;
+}
+
+h4.subtitle {
+  font-family: 'MaturaMTScriptCapitals';
+  font-size: 35px;
+}
+
+@media screen and (min-width: 768px) {
+  div.page-head {
+    height: 380px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  div.page-head {
+    height: 777px;
+  }
+}
+
+@media screen and (min-width: 1536px) {
+  div.page-head h1 {
+    font-size: 100px;
+  }
+  div.page-content h2.page-title {
+    font-size: 60px;
+  }
+  h4.subtitle {
+    font-size: 50px;
+  }
+}

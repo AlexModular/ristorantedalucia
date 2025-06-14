@@ -1,0 +1,145 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'RobotoCondensed';
+  src: url('/fonts/Roboto_Condensed/RobotoCondensed-VariableFont_wght.ttf');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cabin';
+  src: url('/fonts/Cabin/Cabin-VariableFont_wdth-wght.ttf');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'LeckerliOne';
+  src: url('/fonts/Leckerli_One/LeckerliOne-Regular.ttf');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Oswald';
+  src: url('/fonts/Oswald/Oswald-VariableFont_wght.ttf');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MaturaMTScriptCapitals';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Matura MT Script Capitals'), url('/fonts/MaturaSc/MaturaSc.woff') format('woff');
+}
+
+:root {
+  --background: #fff;
+  --foreground: #030304;
+  --gold: #c5a86a;
+  --gray: #a1a1a1;
+  --swiper-navigation-color: var(--background) !important;
+  --swiper-theme-color: var(--background) !important;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --background: #fff;
+    --foreground: #0a0a0a;
+    --gold: #b99b5b;
+    --gray: #a1a1a1;
+    --swiper-navigation-color: var(--foreground) !important;
+    --swiper-theme-color: var(--foreground) !important;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'Cabin', Helvetica, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Oswald';
+}
+
+h1 { font-size: 55px }
+
+h2 {
+  font-size: 35px;
+}
+
+h3, h4, h5 {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 25px;
+}
+
+@media (min-width: 640px) {
+  h1 {
+    font-size: 55px;
+  }
+
+  h2 {
+    font-size: 45px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+  }
+
+  h3, h4, h5 {
+    font-size: 35px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+  }
+}
+
+div.separator {
+  border-bottom: 10px solid rgb(136 19 55 / var(--tw-border-opacity, 1));
+}
+
+@media (max-width: 640px) {
+  h1 {
+    font-size: 45px;
+    line-height: 50px;
+  }
+  video {
+    min-height: 400px;
+    overflow: hidden;
+    object-fit: cover;
+  }
+  div.separator {
+    border-bottom-width: 5px;
+  }
+}
+
+.family-leckerli-one {
+  font-family: 'LeckerliOne';
+}
+
+.family-matura-sc {
+  font-family: 'MaturaMTScriptCapitals';
+}
+
+.family-oswald {
+  font-family: 'Oswald';
+}
+
+p {
+  font-size: 18px
+}
+
+.grecaptcha-badge { visibility: hidden; }
+.iub__us-widget { display: none !important; }
+@import 'css/animations.css';
+@import 'css/header.css';
+@import 'css/banner.css';
+@import 'css/slider.css';
+@import 'css/page.css';
+@import 'css/contact-form.css';
+@import 'css/promotional-text.css';
+@import 'css/dishes-menu.css';
+@import 'css/footer.css';
