@@ -28,8 +28,8 @@ export default function Navbar({navItems}: {navItems: HEADERMENU_QUERYResult}) {
     }
   };
   return (
-    <header className={`border-rose-900 border-b-2 ${isSticky ? 'sticky z-50 top-0' : ''}`}>
-      <nav className="block w-full max-w-screen px-4 pt-4 mx-auto bg-opacity-90 sticky top-3 shadow lg:px-8 backdrop-blur-lg backdrop-saturate-150 z-[9999]">
+    <header className={`border-gold border-b-2 ${isSticky ? 'sticky z-50 top-0' : ''}`}>
+      <nav className={`block w-full max-w-screen px-4 pt-4 mx-auto sticky top-3 shadow lg:px-8 ${isSticky ? 'backdrop-blur-lg backdrop-saturate-150 bg-opacity-50 ' : ''}bg-white z-[9999]`}>
         <div className="container flex flex-wrap items-center justify-between mx-auto">
           {/* Desktop Menu Left */}
           <div className="hidden lg:block menu-left">

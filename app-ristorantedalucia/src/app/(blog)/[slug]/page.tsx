@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<QueryParams
       title: page?.title,
       description: page?.subtitle,
       url: `https://donnasofi.com/${page?.slug}`,
-      siteName: 'Ristorante Enoteca Da Lucia - Pizzeria',
+      siteName: 'Donna Sofì - Pizzeria',
       images: [
         {
           url: 'https://donnasofi.com/images/donnasofi.svg',
@@ -43,7 +43,7 @@ export default async function Page({ params }: { params: Promise<QueryParams> })
     params: await params,
   });
   return (
-      <main className="relative">
+      <main className="relative bg-white">
         <PageIntro data={{title: page?.title ?? '', introImage: page?.introImage}} />
         <div className="page-container">
           {page?.subtitle && <h2 className="text-center uppercase pt-20" data-aos="zoom-in">{page?.subtitle}</h2>}

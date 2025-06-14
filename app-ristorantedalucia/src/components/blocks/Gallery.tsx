@@ -37,7 +37,7 @@ export default function Gallery({item}: {item: G}) {
   return (
     <AOSComponent>
       <div className="slider-container" data-aos="fade-up">
-        <h3 className="slider-title text-center family-matura-sc text-gold">{item.heading}</h3>
+        <h3 className="slider-title text-center family-oswald text-gold uppercase">{item.heading}</h3>
         <div className="slider-description text-center px-2 py-4 pb-8">{item.subtitle}</div>
         <LightGallery
           plugins={[lgZoom]}

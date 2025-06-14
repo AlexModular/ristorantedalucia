@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<QueryParams
       title: page?.title,
       description: page?.subtitle,
       url: `https://donnasofi.com/${page?.slug}`,
-      siteName: 'Ristorante Enoteca Da Lucia - Pizzeria',
+      siteName: 'Donna Sofì - Pizzeria',
       images: [
         {
           url: 'https://donnasofi.com/images/donnasofi.svg',
@@ -44,7 +44,7 @@ export default async function Page() {
     query: HOMEPAGE_QUERY
   });
   return (
-      <main className="relative">
+      <main className="relative bg-white">
         <PageMaker page={page} />
       </main>
   );
