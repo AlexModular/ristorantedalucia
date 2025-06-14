@@ -1,0 +1,84 @@
+
+.banner {
+    max-width: 1024px;
+    margin: auto;
+  }
+
+.banner h1 {
+  font-family: 'Oswald';
+  font-size: 35px;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+.banner .banner-text {
+  font-family: 'Cabin';
+  font-size: 15px;
+
+}
+
+.banner h2.banner-text.banner-motto {
+  font-family: 'MaturaMTScriptCapitals';
+  font-style: italic;
+  font-size: 23px;
+}
+
+.banner h1.with-basil::before {
+  content: "";
+  background: url(/images/basilico.svg) no-repeat;
+  background-size: 100%;
+  background-position: center center;
+  width: 160px;
+  height: 150px;
+  display: block;
+  float: inline-start;
+  position: relative;
+  top: 0;
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  rotate: 45deg;
+}
+
+@media screen {
+  .banner h1.with-basil::before {
+    width: 65px;
+    height: 55px;
+  }
+}
+@media screen and (min-width: 640px) { 
+  .banner h1 {
+    font-size: 55px;
+  }  
+  .banner h2.banner-text.banner-motto {
+    font-size: 25px;
+  }
+ 
+}
+@media screen and (min-width: 768px) {
+  .banner h1 {
+    padding-top: 25px;
+  }
+ 
+  .banner .banner-text {
+    padding-top: 25px;
+    padding-bottom: 25px;
+  }
+}
+@media screen and (min-width: 1024px) {
+  
+  .banner h1.with-basil::after,
+  .banner h1.with-basil::before {
+    width: 160px;
+    height: 150px;
+  }
+  .banner h1.with-basil::after {
+    content: "";
+    background: url(/images/basilico.svg) no-repeat;
+    background-size: 100%;
+    background-position: center center;
+    display: block;
+    float: inline-end;
+    position: relative;
+    rotate: -45deg;
+  }
+}

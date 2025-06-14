@@ -1,0 +1,65 @@
+header {
+  font-family: 'MaturaMTScriptCapitals', 'LeckerliOne', 'Oswald';
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+header nav {
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+header .logo img {
+  width: 100%;
+  height: 30px;
+}
+
+header li a{
+  color: var(--gray);
+  transition: all 0.2s ease-in-out;
+}
+
+header .menu-left li a {
+  background-image: linear-gradient(var(--gold), var(--gold));
+  background-size: 0% 0.1em;
+  background-position-y: 100%;
+  background-position-x: 0%;
+  background-repeat: no-repeat;
+}
+header .menu-left li a:hover {
+  color: var(--white);
+  background-size: 50% 0.1em;
+}
+header .menu-right li a {
+  background-image: linear-gradient(var(--gold), var(--gold));
+  background-size: 0% 0.1em;
+  background-position-y: 100%;
+  background-position-x: 100%;
+  background-repeat: no-repeat;
+}
+
+header .menu-right li a:hover {
+  color: var(--white);
+  background-size: 50% 0.1em;
+}
+
+header .logo {
+  flex: min-content;
+}
+
+.mobile-menu {
+  width: 100% !important;
+}
+
+@media screen and (min-width: 1024px) {
+  header.sticky {
+    animation-duration: .1s;
+    animation-delay: .3s;
+    animation-fill-mode: both;
+    -webkit-animation-duration: .1s;
+    -webkit-animation-delay: .3s;
+    -webkit-animation-fill-mode: both;
+    animation-name: slideInDown;
+    -webkit-animation-name: slideInDown;
+    background: #00000047;
+  }
+}

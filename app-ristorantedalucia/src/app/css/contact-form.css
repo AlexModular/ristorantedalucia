@@ -1,0 +1,43 @@
+form.contact-form {
+  max-width: 1536px;
+  margin: auto;
+}
+
+form.contact-form .block {
+  padding-bottom: 15px;
+}
+
+form.contact-form .block span:not(.checkbox) {
+  font-family: 'Oswald';
+  font-size: 18px;
+}
+
+form.contact-form .block input:not([type="checkbox"]),
+form.contact-form .block textarea {
+  margin-top: 15px;
+  padding: 15px;
+  font-size: 16px;
+}
+
+form.contact-form button[type="submit"] {
+  font-size: 18px;
+  padding: 15px;
+  font-family: 'Oswald';
+  text-transform: uppercase;
+  transition: all ease-in-out .2s;
+}
+
+
+@media screen and (min-width: 1024px) {
+  form.contact-form .block span:not(.checkbox) {
+    font-size: 25px;
+  }
+  form.contact-form button[type="submit"] {
+    font-size: 25px;
+  }
+  form.contact-form .block input:not([type="checkbox"]),
+  form.contact-form .block textarea {
+    padding: 25px;
+    font-size: 20px;
+  }
+}
