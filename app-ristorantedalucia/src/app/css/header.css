@@ -31,6 +31,7 @@ header .menu-right li a {
   background-position-y: 100%;
   background-position-x: 100%;
   background-repeat: no-repeat;
+  font-weight: 800;
 }
 
 header .menu-right li a:hover {

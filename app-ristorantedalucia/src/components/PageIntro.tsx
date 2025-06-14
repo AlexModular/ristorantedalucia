@@ -31,9 +31,9 @@ export default function PageIntro({data}: {data: PageIntroProps}) {
   return (
     <AOSComponent>
       <div className="page-head" style={style}>
-        <h1 data-aos="zoom-in">{data.title}</h1>
+        <h1 className="text-white uppercase" data-aos="zoom-in">{data.title}</h1>
       </div>
-      <div className="breadcrumbs border-t-0 border-b-2 border-rose-900 px-5 sm:px-10">
+      <div className="breadcrumbs border-t-0 border-b-2 border-gold px-5 sm:px-10">
         <ul className="list-none" data-aos="fade-right">
           <li><Link href={'/'}>Home</Link></li>
           <li>{data.title}</li>

@@ -24,7 +24,7 @@ export default function Slider(params: {key: number, item: S}) {
     <AOSComponent>
       <div className="slider-container" style={style}>
         <div className="swiper-container backdrop-blur-sm clearfix">
-          <h3 className="slider-title text-center family-matura-sc text-gold" data-aos="flip-left">{data.heading}</h3>
+          <h3 className="slider-title text-center family-oswald text-gold uppercase" data-aos="flip-left">{data.heading}</h3>
           <div className="slider-description text-center px-2 py-4">{data.subtitle}</div>
           <Swiper
             // install Swiper modules

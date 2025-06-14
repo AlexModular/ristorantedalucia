@@ -34,7 +34,7 @@ export default function TextWithIllustration(params: {item: T}) {
           </div>
         )}
         <div className={textClasses} data-aos={txtAosFx}>
-          <h3 className="family-matura-sc text-gold">{item.heading}</h3>
+          <h3 className="family-oswald text-gold uppercase">{item.heading}</h3>
           {item.imagePosition === 'left' && (
             <div className="py-4 md:hidden" data-aos="fade-bottom">
               {img && <Image width={w} height={sizes?.height} alt={item.image?.alt ?? ''} src={img}/>}

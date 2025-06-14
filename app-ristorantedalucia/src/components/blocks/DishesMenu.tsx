@@ -39,7 +39,7 @@ export default function DishesMenu({item}: {item: DishesMenuForPageMaker}) {
   return (
     <AOSComponent>
       <div className="dishes-menu-container pb-20" data-aos="fade-up" data-aos-delay="200">
-        <h2 className="family-matura-sc text-gold text-center py-5">{item.menu?.title}</h2>
+        <h2 className="family-oswald text-gold uppercase text-center py-5">{item.menu?.title}</h2>
         {item.menu?.introText && (
           <div className="text-center px-5 pb-10">
             <PortableText value={item.menu?.introText || []} />
@@ -57,7 +57,7 @@ export default function DishesMenu({item}: {item: DishesMenuForPageMaker}) {
           {item.menu?.categories?.map((category, index) =>
             category.dishes?.map((dish, idx) => (
               <div key={'dish-' + idx} className={`filter-item cat-${index}-${uuid} border-b-2 border-dotted border-gold pt-0 md:p-[15px]`}>
-                <h6 className="md:text-2xl text-xl family-matura-sc text-gold">{dish.title} {dish.price && format.number(dish.price, {style: 'currency', currency: 'EUR'})}</h6>
+                <h6 className="md:text-2xl text-xl family-oswald text-gold uppercase">{dish.title} {dish.price && format.number(dish.price, {style: 'currency', currency: 'EUR'})}</h6>
                 <div className="dish-description m-2">{dish.description || dish.title}</div>
                 <p className="text-lg"></p>
               </div>
