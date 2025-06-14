@@ -34,7 +34,7 @@
   --background: #fff;
   --foreground: #030304;
   --gold: #c5a86a;
-  --gray: #a1a1a1;
+  --gray: #323232;
   --swiper-navigation-color: var(--background) !important;
   --swiper-theme-color: var(--background) !important;
 }
@@ -44,7 +44,7 @@
     --background: #fff;
     --foreground: #0a0a0a;
     --gold: #b99b5b;
-    --gray: #a1a1a1;
+    --gray: #323232;
     --swiper-navigation-color: var(--foreground) !important;
     --swiper-theme-color: var(--foreground) !important;
   }
