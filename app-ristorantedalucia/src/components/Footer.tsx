@@ -1,3 +1,5 @@
+'use client';
+
 import Link from "next/link"
 import Image from 'next/image'
 import iconSet from '@/config/icomoon/selection.json'
@@ -49,7 +51,7 @@ export default function Footer ({locations, socials, copyright}: {locations: LOC
       </div>
       <div className="clearfix"></div>
       <div className="footer-company-info">
-        <a href="#" className="scrollTopButton">
+        <a href="#" className="scrollTopButton" onClick={scrollToTop}>
           <span className="button-square">
               <FaAngleDoubleUp />
           </span>

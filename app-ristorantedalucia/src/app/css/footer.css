@@ -43,6 +43,7 @@ footer > .footer-company-info > .scrollTopButton {
     margin-top: -70px;
     line-height: 19px;
     margin-left: -19px;
+    left: calc(50% - 30px);
 }
 
 footer > .footer-company-info > .scrollTopButton > .button-square {
