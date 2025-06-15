@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import React, { useState, useEffect } from 'react';
 import { HEADERMENU_QUERYResult } from "../../sanity.types";
+import { usePathname } from 'next/navigation'
 
 export default function Navbar({navItems}: {navItems: HEADERMENU_QUERYResult}) {
 
@@ -27,9 +28,12 @@ export default function Navbar({navItems}: {navItems: HEADERMENU_QUERYResult}) {
       setIsSticky(false);
     }
   };
+
+  const pathname = usePathname();
+
   return (
     <header className={`border-gold border-b-2 ${isSticky ? 'sticky z-50 top-0' : ''}`}>
-      <nav className={`block w-full max-w-screen px-4 pt-4 mx-auto sticky top-3 shadow lg:px-8 ${isSticky ? 'backdrop-blur-lg backdrop-saturate-150 bg-opacity-50 ' : ''}bg-white z-[9999]`}>
+      <nav className={`block w-full max-w-screen px-4 pt-4 mx-auto sticky top-3 shadow lg:px-[20px]  lg:py-[20px] bg-white z-[9999]`}>
         <div className="container flex flex-wrap items-center justify-between mx-auto">
           {/* Desktop Menu Left */}
           <div className="hidden lg:block menu-left">
@@ -41,8 +45,8 @@ export default function Navbar({navItems}: {navItems: HEADERMENU_QUERYResult}) {
                     key={index}
                     className="flex items-center p-1 text-lg gap-x-2 uppercase"
                   >
-                    <Link href={(nav.link?.slug === 'home' ? '/' : nav.link?.slug) ?? nav.externalUrl ?? '#'} className="flex items-center">
-                    {nav.text}
+                    <Link href={(nav.link?.slug === 'home' ? '/' : nav.link?.slug) ?? nav.externalUrl ?? '#'} className={`flex items-center${pathname ==  '/' + nav.link?.slug || (nav.link?.slug === 'home' && pathname == '/') ? ' active' : ''}`}>
+                      {nav.text}
                     </Link>
                   </li>
                   ));
@@ -51,13 +55,13 @@ export default function Navbar({navItems}: {navItems: HEADERMENU_QUERYResult}) {
                 })}
             </ul>
           </div>
-          <div className="logo-container flex items-center justify-start lg:justify-center w-full lg:w-auto">
+          <div className={`logo-container flex items-center justify-start lg:justify-center w-full lg:w-auto bg-white z-[9999]`}>
             {/* Logo */}
             <Link
               href="/"
               className="logo"
             >
-              <Image priority={true} src="/images/logo-solo.png" height={50} width={95} alt="Ristorante Enoteca Da Lucia, Bologna Centro Storico" className="logo" />
+              <Image priority={true} src="/images/logo-solo.png" height={75} width={142} alt="Ristorante Enoteca Da Lucia, Bologna Centro Storico" className="logo" />
             </Link>
           </div>
           {/* Desktop Menu Right */}

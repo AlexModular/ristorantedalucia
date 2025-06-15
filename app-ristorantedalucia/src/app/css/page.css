@@ -16,6 +16,7 @@ div.page-head::before {
   left: 0;
   width: 100%;
   height: 100%;
+  max-height: 190px;
 }
 
 div.page-head h1 {
@@ -32,7 +33,7 @@ div.page-head h1 {
 }
 
 .breadcrumbs {
-  background: #161616;
+  background: #494949;
   width: 100%;
   height: 45px;
   display: flex;
@@ -98,11 +99,17 @@ h4.subtitle {
   div.page-head {
     height: 380px;
   }
+    div.page-head::before {
+    max-height: 380px;
+  }
 }
 
 @media screen and (min-width: 1024px) {
   div.page-head {
-    height: 777px;
+    height: 400px;
+  }
+  div.page-head::before {
+    max-height: 400px;
   }
 }
 

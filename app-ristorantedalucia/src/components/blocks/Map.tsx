@@ -16,9 +16,10 @@ export default function Map(params: {item: MAP}) {
           mapId={"custom_style"}
           style={{width: '99vw', height: '55vh'}}
           defaultCenter={mapCenter}
-          defaultZoom={12}
+          defaultZoom={15}
           gestureHandling={'cooperative'}
           disableDefaultUI={true}
+          colorScheme="DARK"
         />
         {item.locations?.filter(location => location?.lat !== undefined && location?.lng !== undefined).map((location, index) => (
           location?.lat !== undefined && location?.lng !== undefined ? (

@@ -15,7 +15,7 @@ export const timeValueType = defineType({
 export function ALLOWED_TIMES() {
   const times = []
   for (let h = 0; h < 24; h++) {
-    for (let m = 0; m < 60; m += 30) {
+    for (let m = 0; m < 60; m += 15) {
       times.push(`${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`)
     }
   }

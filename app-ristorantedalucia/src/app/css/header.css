@@ -16,27 +16,34 @@ header li a{
 
 header .menu-left li a {
   background-image: linear-gradient(var(--gold), var(--gold));
-  background-size: 0% 0.1em;
+  background-size: 0% 0.2em;
   background-position-y: 100%;
   background-position-x: 0%;
   background-repeat: no-repeat;
+  font-size: 22px;
+  font-weight: 500;
+  height: 40px;
 }
-header .menu-left li a:hover {
+header .menu-left li a:hover,
+header .menu-left li a.active {
   color: var(--white);
-  background-size: 50% 0.1em;
+  background-size: 50% 0.2em;
 }
 header .menu-right li a {
   background-image: linear-gradient(var(--gold), var(--gold));
-  background-size: 0% 0.1em;
+  background-size: 0% 0.2em;
   background-position-y: 100%;
   background-position-x: 100%;
   background-repeat: no-repeat;
-  font-weight: 800;
+  font-size: 22px;
+  font-weight: 500;
+  height: 40px;
 }
 
-header .menu-right li a:hover {
+header .menu-right li a:hover,
+header .menu-right li a.active {
   color: var(--white);
-  background-size: 50% 0.1em;
+  background-size: 50% 0.2em;
 }
 
 .mobile-menu {
@@ -54,5 +61,16 @@ header .menu-right li a:hover {
     animation-name: slideInDown;
     -webkit-animation-name: slideInDown;
     background: #00000047;
+  }
+
+  .logo-container {
+    position: absolute;
+    border-radius: 50%;
+    left: calc(50% - 71px);
+    width: 142px;
+    height: 142px;
+    top: 1px;
+    border-bottom: 5px solid var(--gold);
+    box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.5);
   }
 }

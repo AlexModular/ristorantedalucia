@@ -49,24 +49,24 @@ export default function ContactForm(params: {item: Form}) {
         <h3 className="subtitle text-center px-5 sm:px-10 2xl:px-0" data-aos="fade-left">{item.heading}</h3>
         <form onSubmit={handleSubmit} className="contact-form min-[468px]:grid grid-cols-2 gap-12 max-[1024px]:gap-2 pb-12 px-5 sm:px-10 2xl:px-0" data-aos="fade-left">
           <label className="block">
-            <span className="text-white uppercase">Nome <span className="required text-gold">*</span></span>
-            <input type="text" name='name' required className="mt-0 block w-full px-0.5 text-white bg-background border-0 border-b-2 border-white focus:ring-0 focus:border-gold" placeholder="Il tuo nome" />
+            <span className="text-black uppercase">Nome <span className="required text-gold">*</span></span>
+            <input type="text" name='name' required className="mt-0 block w-full px-0.5 text-black bg-background border-0 border-b-2 border-black focus:ring-0 focus:border-gold" placeholder="Il tuo nome" />
           </label>
           <label className="block">
-            <span className="text-white uppercase">Cognome <span className="required text-gold">*</span></span>
-            <input type="text" name='lastname' required className="mt-0 block w-full px-0.5 text-white bg-background border-0 border-b-2 border-white focus:ring-0 focus:border-gold" placeholder="Il tuo cognome" />
+            <span className="text-black uppercase">Cognome <span className="required text-gold">*</span></span>
+            <input type="text" name='lastname' required className="mt-0 block w-full px-0.5 text-black bg-background border-0 border-b-2 border-black focus:ring-0 focus:border-gold" placeholder="Il tuo cognome" />
           </label>
           <label className="block">
-            <span className="text-white uppercase">Email <span className="required text-gold">*</span></span>
-            <input type="email" name='email' required className="mt-0 block w-full px-0.5 text-white bg-background border-0 border-b-2 border-white focus:ring-0 focus:border-gold" placeholder="Il tuo indirizzo email" />
+            <span className="text-black uppercase">Email <span className="required text-gold">*</span></span>
+            <input type="email" name='email' required className="mt-0 block w-full px-0.5 text-black bg-background border-0 border-b-2 border-black focus:ring-0 focus:border-gold" placeholder="Il tuo indirizzo email" />
           </label>
           <label className="block">
-            <span className="text-white uppercase">Telefono</span>
-            <input type="tel" name='tel' className="mt-0 block w-full px-0.5 text-white bg-background border-0 border-b-2 border-white focus:ring-0 focus:border-gold" placeholder="Il tuo numero di telefono" />
+            <span className="text-black uppercase">Telefono</span>
+            <input type="tel" name='tel' className="mt-0 block w-full px-0.5 text-black bg-background border-0 border-b-2 border-black focus:ring-0 focus:border-gold" placeholder="Il tuo numero di telefono" />
           </label>
           <label className="block col-span-2">
-            <span className="text-white uppercase">Il tuo messaggio <span className="required text-gold">*</span></span>
-            <textarea name='message' className="mt-0 block w-full px-0.5 border-0 border-b-2 text-white bg-background border-white focus:ring-0 focus:border-gold" placeholder="Il tuo messaggio" rows={2}></textarea>
+            <span className="text-black uppercase">Il tuo messaggio <span className="required text-gold">*</span></span>
+            <textarea name='message' className="mt-0 block w-full px-0.5 border-0 border-b-2 text-black bg-background border-black focus:ring-0 focus:border-gold" placeholder="Il tuo messaggio" rows={2}></textarea>
           </label>
           <label className="block col-span-2">
             <div className="mt-2">
@@ -78,7 +78,7 @@ export default function ContactForm(params: {item: Form}) {
               </div>
             </div>
           </label>
-          <button type="submit" className="border-gold border-2 hover:bg-gold full-width col-span-2 transition-all hover:text-background"disabled={disabled}>
+          <button type="submit" className="border-gold border-2 bg-gold text-white hover:bg-white full-width col-span-2 transition-all hover:text-black"disabled={disabled}>
               Invia
           </button>
         </form>

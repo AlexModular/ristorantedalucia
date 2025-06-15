@@ -24,6 +24,14 @@ export const durationType = defineType({
       type: 'timeValue',
     }),
     defineField({
+      name: 'morningClosed',
+      type: 'boolean',
+    }),
+    defineField({
+      name: 'eveningClosed',
+      type: 'boolean',
+    }),
+    defineField({
       name: 'closed',
       type: 'boolean',
     }),

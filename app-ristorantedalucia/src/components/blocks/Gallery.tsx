@@ -63,7 +63,7 @@ export default function Gallery({item}: {item: G}) {
             </a>
           ))}
         </LightGallery>
-        <div className='clearfix'></div>
+        <div className='clearfix pb-8'></div>
       </div>
     </AOSComponent>
   )

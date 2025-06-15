@@ -30,12 +30,46 @@ footer > .footer-links > .footer-logo > img {
 footer > .footer-company-info {
     margin-top: 25px;
     padding-top: 25px;
-    border-top: 1px dotted var(--gold);
+    border-top: 2px solid #494949;
 }
 
 footer .footer-socials {
     display: flex;
     justify-content: left;
+}
+
+footer > .footer-company-info > .scrollTopButton {
+    position: absolute;
+    margin-top: -70px;
+    line-height: 19px;
+    margin-left: -19px;
+}
+
+footer > .footer-company-info > .scrollTopButton > .button-square {
+    background: #fff;
+    border: 4px solid;
+    border-color: #494949;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 80%;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    display: block;
+}
+
+footer > .footer-company-info > .scrollTopButton > .button-square svg {
+    font-size: 30px;
+    line-height: 24px;
+    color: #494949;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+    margin: auto;
+    margin-top: 10px;
 }
 
 @media screen and (min-width: 1536px) {
