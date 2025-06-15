@@ -75,6 +75,7 @@ export const HOMEPAGE_QUERY = defineQuery(`*[slug.current match "home*"][0]{
         alt,
         heading,
         subtitle,
+        logo,
         'link': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{
           'slug': slug.current
         },
@@ -169,6 +170,7 @@ export const PAGE_QUERY = defineQuery(`*[slug.current == $slug][0]{
         alt,
         heading,
         subtitle,
+        logo,
         'link': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{
           'slug': slug.current
         },

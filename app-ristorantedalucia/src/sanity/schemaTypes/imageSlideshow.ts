@@ -36,6 +36,12 @@ export const imageSlideshowType = defineType({
               type: 'string',
               title: 'Alternative text',
             },
+            {
+              name: 'logo',
+              type: 'image',
+              title: 'Logo Instad of Heading',
+              description: 'Optional logo to display instead of the heading text',
+            }
           ],
         }),
       ],

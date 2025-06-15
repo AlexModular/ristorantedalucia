@@ -259,6 +259,17 @@ export type Slideshow = {
     subtitle?: string;
     cta?: NavigationItem;
     alt?: string;
+    logo?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
     _type: "image";
     _key: string;
   }>;
@@ -720,7 +731,7 @@ export type COPYRIGHT_QUERYResult = Array<{
   _key: string;
 }> | null;
 // Variable: HOMEPAGE_QUERY
-// Query: *[slug.current match "home*"][0]{  title,  subtitle,  slug,  metaTitle,  metaDescription,  fullWidth,  pageBuilder[]{    _type == "video" => {      _type,      videoLabel,      cssClasses,      file    },    _type == "banner" => {      _type,      heading,      text,      headingCSSClasses,      subtitle    },    _type == "separator" => {      _type,      separatorColor    },    _type == "slider" => {      _type,      heading,      subtitle,      backgroundImage,      images    },    _type == "slideshow" => {      _type,      'images':  images[] {        asset,        hotspot,        crop,        alt,        heading,        subtitle,        'link': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{          'slug': slug.current        },        'externalUrl': cta.navigationItemUrl.externalUrl,        'ctaText': cta.text      }    },    _type == "textWithIllustration" => {      _type,      heading,      text,      image,      imagePosition,      gridSize    },    _type == "gallery" => {      _type,      heading,      subtitle,      images    },    _type == "form" => {      _type,      heading,      label,      form    },    _type == "promotion" => {      _type,      title,      link,      direction,      speed    },    _type == "map" => {      _type,      heading,      mapCenter,      locations    },    _type == "dishesMenu" => {      _type,      _ref,      "menu": *[ _type == "dishesMenu" && menu._ref == ^._id ][0] {        title,        introText,        categories      }    }  },}
+// Query: *[slug.current match "home*"][0]{  title,  subtitle,  slug,  metaTitle,  metaDescription,  fullWidth,  pageBuilder[]{    _type == "video" => {      _type,      videoLabel,      cssClasses,      file    },    _type == "banner" => {      _type,      heading,      text,      headingCSSClasses,      subtitle    },    _type == "separator" => {      _type,      separatorColor    },    _type == "slider" => {      _type,      heading,      subtitle,      backgroundImage,      images    },    _type == "slideshow" => {      _type,      'images':  images[] {        asset,        hotspot,        crop,        alt,        heading,        subtitle,        logo,        'link': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{          'slug': slug.current        },        'externalUrl': cta.navigationItemUrl.externalUrl,        'ctaText': cta.text      }    },    _type == "textWithIllustration" => {      _type,      heading,      text,      image,      imagePosition,      gridSize    },    _type == "gallery" => {      _type,      heading,      subtitle,      images    },    _type == "form" => {      _type,      heading,      label,      form    },    _type == "promotion" => {      _type,      title,      link,      direction,      speed    },    _type == "map" => {      _type,      heading,      mapCenter,      locations    },    _type == "dishesMenu" => {      _type,      _ref,      "menu": *[ _type == "dishesMenu" && menu._ref == ^._id ][0] {        title,        introText,        categories      }    }  },}
 export type HOMEPAGE_QUERYResult = {
   title: string | null;
   subtitle: string | null;
@@ -846,6 +857,17 @@ export type HOMEPAGE_QUERYResult = {
       alt: string | null;
       heading: string | null;
       subtitle: string | null;
+      logo: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+      } | null;
       link: {
         slug: string | null;
       } | null;
@@ -917,7 +939,7 @@ export type HOMEPAGE_QUERYResult = {
   } | {}> | null;
 } | null;
 // Variable: PAGE_QUERY
-// Query: *[slug.current == $slug][0]{  title,  subtitle,  slug,  metaTitle,  metaDescription,  introImage,  fullWidth,  pageBuilder[]{    _type == "video" => {      _type,      videoLabel,      cssClasses,      file    },    _type == "banner" => {      _type,      heading,      text,      headingCSSClasses,      subtitle    },    _type == "separator" => {      _type,      separatorColor    },    _type == "slider" => {      _type,      title,      subtitle,      backgroundImage,      images    },    _type == "slideshow" => {      _type,      'images':  images[] {        asset,        hotspot,        crop,        alt,        heading,        subtitle,        'link': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{          'slug': slug.current        },        'externalUrl': cta.navigationItemUrl.externalUrl,        'ctaText': cta.text      }    },    _type == "textWithIllustration" => {      _type,      heading,      text,      image,      imagePosition,      gridSize    },    _type == "gallery" => {      _type,      heading,      subtitle,      images    },    _type == "form" => {      _type,      heading,      label,      form    },    _type == "promotion" => {      _type,      title,      link,      direction,      speed    },    _type == "map" => {      _type,      heading,      mapCenter,      locations    },    _type == "dishesMenu" => {      _type,      _ref,      "menu": *[_type == "dishesMenu" && ^._ref == _id][0] {        _id,        title,        introText,        categories      }    }  },}
+// Query: *[slug.current == $slug][0]{  title,  subtitle,  slug,  metaTitle,  metaDescription,  introImage,  fullWidth,  pageBuilder[]{    _type == "video" => {      _type,      videoLabel,      cssClasses,      file    },    _type == "banner" => {      _type,      heading,      text,      headingCSSClasses,      subtitle    },    _type == "separator" => {      _type,      separatorColor    },    _type == "slider" => {      _type,      title,      subtitle,      backgroundImage,      images    },    _type == "slideshow" => {      _type,      'images':  images[] {        asset,        hotspot,        crop,        alt,        heading,        subtitle,        logo,        'link': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{          'slug': slug.current        },        'externalUrl': cta.navigationItemUrl.externalUrl,        'ctaText': cta.text      }    },    _type == "textWithIllustration" => {      _type,      heading,      text,      image,      imagePosition,      gridSize    },    _type == "gallery" => {      _type,      heading,      subtitle,      images    },    _type == "form" => {      _type,      heading,      label,      form    },    _type == "promotion" => {      _type,      title,      link,      direction,      speed    },    _type == "map" => {      _type,      heading,      mapCenter,      locations    },    _type == "dishesMenu" => {      _type,      _ref,      "menu": *[_type == "dishesMenu" && ^._ref == _id][0] {        _id,        title,        introText,        categories      }    }  },}
 export type PAGE_QUERYResult = {
   title: null;
   subtitle: null;
@@ -1072,6 +1094,17 @@ export type PAGE_QUERYResult = {
       alt: string | null;
       heading: string | null;
       subtitle: string | null;
+      logo: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+      } | null;
       link: {
         slug: string | null;
       } | null;
@@ -1151,7 +1184,7 @@ declare module "@sanity/client" {
     "*[_type == \"socials\"][0].socials": SOCIALS_QUERYResult;
     "*[_type == \"locations\"]{\n  title,\n  city,\n  address,\n  postalCode,\n  phone,\n  email,\n  monday,\n  tuesday,\n  wednesday,\n  thursday,\n  friday,\n  saturday,\n  sunday\n}": LOCATIONS_QUERYResult;
     "*[_type == \"copyright\"][0].content": COPYRIGHT_QUERYResult;
-    "*[slug.current match \"home*\"][0]{\n  title,\n  subtitle,\n  slug,\n  metaTitle,\n  metaDescription,\n  fullWidth,\n  pageBuilder[]{\n    _type == \"video\" => {\n      _type,\n      videoLabel,\n      cssClasses,\n      file\n    },\n    _type == \"banner\" => {\n      _type,\n      heading,\n      text,\n      headingCSSClasses,\n      subtitle\n    },\n    _type == \"separator\" => {\n      _type,\n      separatorColor\n    },\n    _type == \"slider\" => {\n      _type,\n      heading,\n      subtitle,\n      backgroundImage,\n      images\n    },\n    _type == \"slideshow\" => {\n      _type,\n      'images':  images[] {\n        asset,\n        hotspot,\n        crop,\n        alt,\n        heading,\n        subtitle,\n        'link': *[_type == \"page\" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{\n          'slug': slug.current\n        },\n        'externalUrl': cta.navigationItemUrl.externalUrl,\n        'ctaText': cta.text\n      }\n    },\n    _type == \"textWithIllustration\" => {\n      _type,\n      heading,\n      text,\n      image,\n      imagePosition,\n      gridSize\n    },\n    _type == \"gallery\" => {\n      _type,\n      heading,\n      subtitle,\n      images\n    },\n    _type == \"form\" => {\n      _type,\n      heading,\n      label,\n      form\n    },\n    _type == \"promotion\" => {\n      _type,\n      title,\n      link,\n      direction,\n      speed\n    },\n    _type == \"map\" => {\n      _type,\n      heading,\n      mapCenter,\n      locations\n    },\n    _type == \"dishesMenu\" => {\n      _type,\n      _ref,\n      \"menu\": *[ _type == \"dishesMenu\" && menu._ref == ^._id ][0] {\n        title,\n        introText,\n        categories\n      }\n    }\n  },\n}": HOMEPAGE_QUERYResult;
-    "*[slug.current == $slug][0]{\n  title,\n  subtitle,\n  slug,\n  metaTitle,\n  metaDescription,\n  introImage,\n  fullWidth,\n  pageBuilder[]{\n    _type == \"video\" => {\n      _type,\n      videoLabel,\n      cssClasses,\n      file\n    },\n    _type == \"banner\" => {\n      _type,\n      heading,\n      text,\n      headingCSSClasses,\n      subtitle\n    },\n    _type == \"separator\" => {\n      _type,\n      separatorColor\n    },\n    _type == \"slider\" => {\n      _type,\n      title,\n      subtitle,\n      backgroundImage,\n      images\n    },\n    _type == \"slideshow\" => {\n      _type,\n      'images':  images[] {\n        asset,\n        hotspot,\n        crop,\n        alt,\n        heading,\n        subtitle,\n        'link': *[_type == \"page\" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{\n          'slug': slug.current\n        },\n        'externalUrl': cta.navigationItemUrl.externalUrl,\n        'ctaText': cta.text\n      }\n    },\n    _type == \"textWithIllustration\" => {\n      _type,\n      heading,\n      text,\n      image,\n      imagePosition,\n      gridSize\n    },\n    _type == \"gallery\" => {\n      _type,\n      heading,\n      subtitle,\n      images\n    },\n    _type == \"form\" => {\n      _type,\n      heading,\n      label,\n      form\n    },\n    _type == \"promotion\" => {\n      _type,\n      title,\n      link,\n      direction,\n      speed\n    },\n    _type == \"map\" => {\n      _type,\n      heading,\n      mapCenter,\n      locations\n    },\n    _type == \"dishesMenu\" => {\n      _type,\n      _ref,\n      \"menu\": *[_type == \"dishesMenu\" && ^._ref == _id][0] {\n        _id,\n        title,\n        introText,\n        categories\n      }\n    }\n  },\n}": PAGE_QUERYResult;
+    "*[slug.current match \"home*\"][0]{\n  title,\n  subtitle,\n  slug,\n  metaTitle,\n  metaDescription,\n  fullWidth,\n  pageBuilder[]{\n    _type == \"video\" => {\n      _type,\n      videoLabel,\n      cssClasses,\n      file\n    },\n    _type == \"banner\" => {\n      _type,\n      heading,\n      text,\n      headingCSSClasses,\n      subtitle\n    },\n    _type == \"separator\" => {\n      _type,\n      separatorColor\n    },\n    _type == \"slider\" => {\n      _type,\n      heading,\n      subtitle,\n      backgroundImage,\n      images\n    },\n    _type == \"slideshow\" => {\n      _type,\n      'images':  images[] {\n        asset,\n        hotspot,\n        crop,\n        alt,\n        heading,\n        subtitle,\n        logo,\n        'link': *[_type == \"page\" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{\n          'slug': slug.current\n        },\n        'externalUrl': cta.navigationItemUrl.externalUrl,\n        'ctaText': cta.text\n      }\n    },\n    _type == \"textWithIllustration\" => {\n      _type,\n      heading,\n      text,\n      image,\n      imagePosition,\n      gridSize\n    },\n    _type == \"gallery\" => {\n      _type,\n      heading,\n      subtitle,\n      images\n    },\n    _type == \"form\" => {\n      _type,\n      heading,\n      label,\n      form\n    },\n    _type == \"promotion\" => {\n      _type,\n      title,\n      link,\n      direction,\n      speed\n    },\n    _type == \"map\" => {\n      _type,\n      heading,\n      mapCenter,\n      locations\n    },\n    _type == \"dishesMenu\" => {\n      _type,\n      _ref,\n      \"menu\": *[ _type == \"dishesMenu\" && menu._ref == ^._id ][0] {\n        title,\n        introText,\n        categories\n      }\n    }\n  },\n}": HOMEPAGE_QUERYResult;
+    "*[slug.current == $slug][0]{\n  title,\n  subtitle,\n  slug,\n  metaTitle,\n  metaDescription,\n  introImage,\n  fullWidth,\n  pageBuilder[]{\n    _type == \"video\" => {\n      _type,\n      videoLabel,\n      cssClasses,\n      file\n    },\n    _type == \"banner\" => {\n      _type,\n      heading,\n      text,\n      headingCSSClasses,\n      subtitle\n    },\n    _type == \"separator\" => {\n      _type,\n      separatorColor\n    },\n    _type == \"slider\" => {\n      _type,\n      title,\n      subtitle,\n      backgroundImage,\n      images\n    },\n    _type == \"slideshow\" => {\n      _type,\n      'images':  images[] {\n        asset,\n        hotspot,\n        crop,\n        alt,\n        heading,\n        subtitle,\n        logo,\n        'link': *[_type == \"page\" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{\n          'slug': slug.current\n        },\n        'externalUrl': cta.navigationItemUrl.externalUrl,\n        'ctaText': cta.text\n      }\n    },\n    _type == \"textWithIllustration\" => {\n      _type,\n      heading,\n      text,\n      image,\n      imagePosition,\n      gridSize\n    },\n    _type == \"gallery\" => {\n      _type,\n      heading,\n      subtitle,\n      images\n    },\n    _type == \"form\" => {\n      _type,\n      heading,\n      label,\n      form\n    },\n    _type == \"promotion\" => {\n      _type,\n      title,\n      link,\n      direction,\n      speed\n    },\n    _type == \"map\" => {\n      _type,\n      heading,\n      mapCenter,\n      locations\n    },\n    _type == \"dishesMenu\" => {\n      _type,\n      _ref,\n      \"menu\": *[_type == \"dishesMenu\" && ^._ref == _id][0] {\n        _id,\n        title,\n        introText,\n        categories\n      }\n    }\n  },\n}": PAGE_QUERYResult;
   }
 }

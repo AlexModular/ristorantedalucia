@@ -5,9 +5,9 @@ header {
 }
 
 header nav {
-  padding-top: 25px;
-  padding-bottom: 25px;
+  padding-bottom: .5rem;
 }
+
 
 header li a{
   color: var(--gray);
@@ -51,6 +51,12 @@ header .menu-right li a.active {
 }
 
 @media screen and (min-width: 1024px) {
+  
+  header nav {
+    padding-top: 25px;
+    padding-bottom: 25px;
+  }
+
   header.sticky {
     animation-duration: .1s;
     animation-delay: .3s;
