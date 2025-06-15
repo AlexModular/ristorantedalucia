@@ -50,13 +50,13 @@ export default function Slideshow(params: {key: number, item: SlideshowForPageMa
                   {item?.heading && (<div className='family-matura-sc slide-title text-3xl sm:text-4xl md:text-5xl lg:text-9xl text-gold'>{item.heading}</div>)}
                   <div className='slide-content-items'>
                     {item?.subtitle && (<div className='family-oswald slide-subtitle text-lg sm:text-2xl md:text-4xl lg:text-5xl uppercase pb-4 md:pb-12'>{item.subtitle}</div>)}
-                    {(item?.link?.slug !== null || item?.externalUrl !== null) && (
+                    {((item?.link?.slug != null && item?.link?.slug != '') || (item?.externalUrl != null && item?.externalUrl != '')) && (
                       <div className='cta'>
                         <Link
                           href={item.externalUrl ? item.externalUrl : (item.link?.slug || '#')}
-                          target={item.link?.slug ? '__blank' : ''}
+                          target={item.externalUrl ? '__blank' : ''}
                           className='family-oswald cta-btn bg-gold transition-all hover:text-gold hover:bg-background p-2 md:p-4 text-md md:text-2xl lg:text-4xl uppercase'
-                        >{item.ctaText || 'Scopri di più'}</Link>
+                        >{item.ctaText || 'Scopri di più'} {item.externalUrl} {item.link?.slug}</Link>
                       </div>
                     )}
                   </div>

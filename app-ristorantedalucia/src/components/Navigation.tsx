@@ -33,7 +33,7 @@ export default function Navbar({navItems}: {navItems: HEADERMENU_QUERYResult}) {
 
   return (
     <header className={`border-gold border-b-2 ${isSticky ? 'sticky z-50 top-0' : ''}`}>
-      <nav className={`block w-full max-w-screen px-4 pt-4 mx-auto sticky top-3 shadow lg:px-[20px]  lg:py-[20px] bg-white z-[9999]`}>
+      <nav className={`block w-full max-w-screen px-2 pt-2 md:px-4 md:pt-4 mx-auto sticky top-3 shadow lg:px-[20px]  lg:py-[20px] bg-white z-[9999]`}>
         <div className="container flex flex-wrap items-center justify-between mx-auto">
           {/* Desktop Menu Left */}
           <div className="hidden lg:block menu-left">
@@ -55,7 +55,7 @@ export default function Navbar({navItems}: {navItems: HEADERMENU_QUERYResult}) {
                 })}
             </ul>
           </div>
-          <div className={`logo-container flex items-center justify-start lg:justify-center w-full lg:w-auto bg-white z-[9999]`}>
+          <div className={`logo-container flex items-center justify-start lg:justify-center w-[80px] lg:w-auto bg-white z-[9999]`}>
             {/* Logo */}
             <Link
               href="/"
@@ -86,7 +86,7 @@ export default function Navbar({navItems}: {navItems: HEADERMENU_QUERYResult}) {
           </div>
           <div className="lg:hidden">
             <button
-              className="relative top-[5px] ml-auto h-6 max-h-[40px] w-6 max-w-[40px] select-none rounded-lg text-center align-middle text-xs font-medium uppercase text-inherit transition-all hover:bg-transparent focus:bg-transparent active:bg-transparent disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+              className="relative top-[2.5px] ml-auto h-6 max-h-[40px] w-6 max-w-[40px] select-none rounded-lg text-center align-middle text-xs font-medium uppercase text-inherit transition-all hover:bg-transparent focus:bg-transparent active:bg-transparent disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               onClick={toggleMobileMenu}
               type="button"
             >
@@ -114,7 +114,7 @@ export default function Navbar({navItems}: {navItems: HEADERMENU_QUERYResult}) {
               isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
             } lg:hidden z-50`}
           >
-            <div className="flex flex-row items-center border-b border-rose-900 pb-4 bg-white">
+            <div className="flex flex-row items-center border-b border-gold-900 pb-4 bg-white h-[70px]">
               <Link
                 href="/"
                 className="cursor-pointer font-bold text-xl pt-4 ps-4 logo"
@@ -149,7 +149,7 @@ export default function Navbar({navItems}: {navItems: HEADERMENU_QUERYResult}) {
                     key={index}
                     className="flex items-center p-1 text-lg gap-x-2"
                   >
-                    <Link href={(nav.link?.slug === 'home' ? '/' : nav.link?.slug) ?? nav.externalUrl ?? '#'} className="flex items-center" onClick={toggleMobileMenu}>
+                    <Link href={(nav.link?.slug === 'home' ? '/' : nav.link?.slug) ?? nav.externalUrl ?? '#'} className="flex items-center family-dancing-script" onClick={toggleMobileMenu}>
                     {nav.text}
                     </Link>
                   </li>
@@ -164,7 +164,7 @@ export default function Navbar({navItems}: {navItems: HEADERMENU_QUERYResult}) {
                     key={index}
                     className="flex items-center p-1 text-lg gap-x-2"
                   >
-                    <Link href={(nav.link?.slug === 'home' ? '/' : nav.link?.slug) ?? nav.externalUrl ?? '#'} className="flex items-center" onClick={toggleMobileMenu}>
+                    <Link href={(nav.link?.slug === 'home' ? '/' : nav.link?.slug) ?? nav.externalUrl ?? '#'} className="flex items-center family-dancing-script" onClick={toggleMobileMenu}>
                     {nav.text}
                     </Link>
                   </li>
