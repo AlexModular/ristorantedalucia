@@ -21,5 +21,11 @@ export const dishType = defineType({
       type: "number",
       title: "Price"
     }),
+    defineField({
+      name: "subcategory",
+      type: "string",
+      title: "Subcategory",
+      description: "Optional subcategory for the dish, e.g. 'White Wine', 'Red Wine', etc. (in order to group dishes in the category menu)",
+    }),
   ]
 });

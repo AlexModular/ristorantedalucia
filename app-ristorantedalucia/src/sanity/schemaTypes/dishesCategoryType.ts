@@ -19,6 +19,13 @@ export const dishesCategoryType = defineType({
       type: "icon"
     }),
     defineField({
+      title: "Flaticon Class",
+      name: "flaticonClass",
+      type: "string",
+      description: "Optional class for Flaticon icon, e.g. 'flaticon-pizza'",
+      validation: Rule => Rule.max(100).warning("Flaticon class should not exceed 100 characters.")
+    }),
+    defineField({
       name: "dishes",
       type: "array",
       title: "Dishes",

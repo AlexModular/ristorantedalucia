@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import 'css/food-flaticon.css';
+
 @font-face {
   font-family: 'RobotoCondensed';
   src: url('/fonts/Roboto_Condensed/RobotoCondensed-VariableFont_wght.ttf');
@@ -30,6 +32,13 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'DancingScript';
+  src: url('/fonts/Dancing_Script/DancingScript-VariableFont_wght.ttf');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
 :root {
   --background: #fff;
   --foreground: #030304;
@@ -50,6 +59,10 @@
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
@@ -58,6 +71,10 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Oswald';
+}
+
+h2 {
+  font-family: 'DancingScript', 'Oswald';
 }
 
 h1 { font-size: 55px }

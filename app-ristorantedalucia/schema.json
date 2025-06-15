@@ -295,34 +295,54 @@
                     "value": {
                       "type": "array",
                       "of": {
-                        "type": "object",
-                        "attributes": {
-                          "href": {
-                            "type": "objectAttribute",
-                            "value": {
-                              "type": "string"
+                        "type": "union",
+                        "of": [
+                          {
+                            "type": "object",
+                            "attributes": {
+                              "_key": {
+                                "type": "objectAttribute",
+                                "value": {
+                                  "type": "string"
+                                }
+                              }
                             },
-                            "optional": true
-                          },
-                          "_type": {
-                            "type": "objectAttribute",
-                            "value": {
-                              "type": "string",
-                              "value": "link"
+                            "rest": {
+                              "type": "inline",
+                              "name": "color"
                             }
-                          }
-                        },
-                        "rest": {
-                          "type": "object",
-                          "attributes": {
-                            "_key": {
-                              "type": "objectAttribute",
-                              "value": {
-                                "type": "string"
+                          },
+                          {
+                            "type": "object",
+                            "attributes": {
+                              "href": {
+                                "type": "objectAttribute",
+                                "value": {
+                                  "type": "string"
+                                },
+                                "optional": true
+                              },
+                              "_type": {
+                                "type": "objectAttribute",
+                                "value": {
+                                  "type": "string",
+                                  "value": "link"
+                                }
+                              }
+                            },
+                            "rest": {
+                              "type": "object",
+                              "attributes": {
+                                "_key": {
+                                  "type": "objectAttribute",
+                                  "value": {
+                                    "type": "string"
+                                  }
+                                }
                               }
                             }
                           }
-                        }
+                        ]
                       }
                     },
                     "optional": true
@@ -723,7 +743,15 @@
               },
               {
                 "type": "string",
+                "value": "00:15"
+              },
+              {
+                "type": "string",
                 "value": "00:30"
+              },
+              {
+                "type": "string",
+                "value": "00:45"
               },
               {
                 "type": "string",
@@ -731,7 +759,15 @@
               },
               {
                 "type": "string",
+                "value": "01:15"
+              },
+              {
+                "type": "string",
                 "value": "01:30"
+              },
+              {
+                "type": "string",
+                "value": "01:45"
               },
               {
                 "type": "string",
@@ -739,7 +775,15 @@
               },
               {
                 "type": "string",
+                "value": "02:15"
+              },
+              {
+                "type": "string",
                 "value": "02:30"
+              },
+              {
+                "type": "string",
+                "value": "02:45"
               },
               {
                 "type": "string",
@@ -747,7 +791,15 @@
               },
               {
                 "type": "string",
+                "value": "03:15"
+              },
+              {
+                "type": "string",
                 "value": "03:30"
+              },
+              {
+                "type": "string",
+                "value": "03:45"
               },
               {
                 "type": "string",
@@ -755,7 +807,15 @@
               },
               {
                 "type": "string",
+                "value": "04:15"
+              },
+              {
+                "type": "string",
                 "value": "04:30"
+              },
+              {
+                "type": "string",
+                "value": "04:45"
               },
               {
                 "type": "string",
@@ -763,7 +823,15 @@
               },
               {
                 "type": "string",
+                "value": "05:15"
+              },
+              {
+                "type": "string",
                 "value": "05:30"
+              },
+              {
+                "type": "string",
+                "value": "05:45"
               },
               {
                 "type": "string",
@@ -771,7 +839,15 @@
               },
               {
                 "type": "string",
+                "value": "06:15"
+              },
+              {
+                "type": "string",
                 "value": "06:30"
+              },
+              {
+                "type": "string",
+                "value": "06:45"
               },
               {
                 "type": "string",
@@ -779,7 +855,15 @@
               },
               {
                 "type": "string",
+                "value": "07:15"
+              },
+              {
+                "type": "string",
                 "value": "07:30"
+              },
+              {
+                "type": "string",
+                "value": "07:45"
               },
               {
                 "type": "string",
@@ -787,7 +871,15 @@
               },
               {
                 "type": "string",
+                "value": "08:15"
+              },
+              {
+                "type": "string",
                 "value": "08:30"
+              },
+              {
+                "type": "string",
+                "value": "08:45"
               },
               {
                 "type": "string",
@@ -795,7 +887,15 @@
               },
               {
                 "type": "string",
+                "value": "09:15"
+              },
+              {
+                "type": "string",
                 "value": "09:30"
+              },
+              {
+                "type": "string",
+                "value": "09:45"
               },
               {
                 "type": "string",
@@ -803,7 +903,15 @@
               },
               {
                 "type": "string",
+                "value": "10:15"
+              },
+              {
+                "type": "string",
                 "value": "10:30"
+              },
+              {
+                "type": "string",
+                "value": "10:45"
               },
               {
                 "type": "string",
@@ -811,7 +919,15 @@
               },
               {
                 "type": "string",
+                "value": "11:15"
+              },
+              {
+                "type": "string",
                 "value": "11:30"
+              },
+              {
+                "type": "string",
+                "value": "11:45"
               },
               {
                 "type": "string",
@@ -819,7 +935,15 @@
               },
               {
                 "type": "string",
+                "value": "12:15"
+              },
+              {
+                "type": "string",
                 "value": "12:30"
+              },
+              {
+                "type": "string",
+                "value": "12:45"
               },
               {
                 "type": "string",
@@ -827,7 +951,15 @@
               },
               {
                 "type": "string",
+                "value": "13:15"
+              },
+              {
+                "type": "string",
                 "value": "13:30"
+              },
+              {
+                "type": "string",
+                "value": "13:45"
               },
               {
                 "type": "string",
@@ -835,7 +967,15 @@
               },
               {
                 "type": "string",
+                "value": "14:15"
+              },
+              {
+                "type": "string",
                 "value": "14:30"
+              },
+              {
+                "type": "string",
+                "value": "14:45"
               },
               {
                 "type": "string",
@@ -843,7 +983,15 @@
               },
               {
                 "type": "string",
+                "value": "15:15"
+              },
+              {
+                "type": "string",
                 "value": "15:30"
+              },
+              {
+                "type": "string",
+                "value": "15:45"
               },
               {
                 "type": "string",
@@ -851,7 +999,15 @@
               },
               {
                 "type": "string",
+                "value": "16:15"
+              },
+              {
+                "type": "string",
                 "value": "16:30"
+              },
+              {
+                "type": "string",
+                "value": "16:45"
               },
               {
                 "type": "string",
@@ -859,7 +1015,15 @@
               },
               {
                 "type": "string",
+                "value": "17:15"
+              },
+              {
+                "type": "string",
                 "value": "17:30"
+              },
+              {
+                "type": "string",
+                "value": "17:45"
               },
               {
                 "type": "string",
@@ -867,7 +1031,15 @@
               },
               {
                 "type": "string",
+                "value": "18:15"
+              },
+              {
+                "type": "string",
                 "value": "18:30"
+              },
+              {
+                "type": "string",
+                "value": "18:45"
               },
               {
                 "type": "string",
@@ -875,7 +1047,15 @@
               },
               {
                 "type": "string",
+                "value": "19:15"
+              },
+              {
+                "type": "string",
                 "value": "19:30"
+              },
+              {
+                "type": "string",
+                "value": "19:45"
               },
               {
                 "type": "string",
@@ -883,7 +1063,15 @@
               },
               {
                 "type": "string",
+                "value": "20:15"
+              },
+              {
+                "type": "string",
                 "value": "20:30"
+              },
+              {
+                "type": "string",
+                "value": "20:45"
               },
               {
                 "type": "string",
@@ -891,7 +1079,15 @@
               },
               {
                 "type": "string",
+                "value": "21:15"
+              },
+              {
+                "type": "string",
                 "value": "21:30"
+              },
+              {
+                "type": "string",
+                "value": "21:45"
               },
               {
                 "type": "string",
@@ -899,7 +1095,15 @@
               },
               {
                 "type": "string",
+                "value": "22:15"
+              },
+              {
+                "type": "string",
                 "value": "22:30"
+              },
+              {
+                "type": "string",
+                "value": "22:45"
               },
               {
                 "type": "string",
@@ -907,7 +1111,15 @@
               },
               {
                 "type": "string",
+                "value": "23:15"
+              },
+              {
+                "type": "string",
                 "value": "23:30"
+              },
+              {
+                "type": "string",
+                "value": "23:45"
               }
             ]
           },
@@ -924,7 +1136,15 @@
               },
               {
                 "type": "string",
+                "value": "00:15"
+              },
+              {
+                "type": "string",
                 "value": "00:30"
+              },
+              {
+                "type": "string",
+                "value": "00:45"
               },
               {
                 "type": "string",
@@ -932,7 +1152,15 @@
               },
               {
                 "type": "string",
+                "value": "01:15"
+              },
+              {
+                "type": "string",
                 "value": "01:30"
+              },
+              {
+                "type": "string",
+                "value": "01:45"
               },
               {
                 "type": "string",
@@ -940,7 +1168,15 @@
               },
               {
                 "type": "string",
+                "value": "02:15"
+              },
+              {
+                "type": "string",
                 "value": "02:30"
+              },
+              {
+                "type": "string",
+                "value": "02:45"
               },
               {
                 "type": "string",
@@ -948,7 +1184,15 @@
               },
               {
                 "type": "string",
+                "value": "03:15"
+              },
+              {
+                "type": "string",
                 "value": "03:30"
+              },
+              {
+                "type": "string",
+                "value": "03:45"
               },
               {
                 "type": "string",
@@ -956,7 +1200,15 @@
               },
               {
                 "type": "string",
+                "value": "04:15"
+              },
+              {
+                "type": "string",
                 "value": "04:30"
+              },
+              {
+                "type": "string",
+                "value": "04:45"
               },
               {
                 "type": "string",
@@ -964,7 +1216,15 @@
               },
               {
                 "type": "string",
+                "value": "05:15"
+              },
+              {
+                "type": "string",
                 "value": "05:30"
+              },
+              {
+                "type": "string",
+                "value": "05:45"
               },
               {
                 "type": "string",
@@ -972,7 +1232,15 @@
               },
               {
                 "type": "string",
+                "value": "06:15"
+              },
+              {
+                "type": "string",
                 "value": "06:30"
+              },
+              {
+                "type": "string",
+                "value": "06:45"
               },
               {
                 "type": "string",
@@ -980,7 +1248,15 @@
               },
               {
                 "type": "string",
+                "value": "07:15"
+              },
+              {
+                "type": "string",
                 "value": "07:30"
+              },
+              {
+                "type": "string",
+                "value": "07:45"
               },
               {
                 "type": "string",
@@ -988,7 +1264,15 @@
               },
               {
                 "type": "string",
+                "value": "08:15"
+              },
+              {
+                "type": "string",
                 "value": "08:30"
+              },
+              {
+                "type": "string",
+                "value": "08:45"
               },
               {
                 "type": "string",
@@ -996,7 +1280,15 @@
               },
               {
                 "type": "string",
+                "value": "09:15"
+              },
+              {
+                "type": "string",
                 "value": "09:30"
+              },
+              {
+                "type": "string",
+                "value": "09:45"
               },
               {
                 "type": "string",
@@ -1004,7 +1296,15 @@
               },
               {
                 "type": "string",
+                "value": "10:15"
+              },
+              {
+                "type": "string",
                 "value": "10:30"
+              },
+              {
+                "type": "string",
+                "value": "10:45"
               },
               {
                 "type": "string",
@@ -1012,7 +1312,15 @@
               },
               {
                 "type": "string",
+                "value": "11:15"
+              },
+              {
+                "type": "string",
                 "value": "11:30"
+              },
+              {
+                "type": "string",
+                "value": "11:45"
               },
               {
                 "type": "string",
@@ -1020,7 +1328,15 @@
               },
               {
                 "type": "string",
+                "value": "12:15"
+              },
+              {
+                "type": "string",
                 "value": "12:30"
+              },
+              {
+                "type": "string",
+                "value": "12:45"
               },
               {
                 "type": "string",
@@ -1028,7 +1344,15 @@
               },
               {
                 "type": "string",
+                "value": "13:15"
+              },
+              {
+                "type": "string",
                 "value": "13:30"
+              },
+              {
+                "type": "string",
+                "value": "13:45"
               },
               {
                 "type": "string",
@@ -1036,7 +1360,15 @@
               },
               {
                 "type": "string",
+                "value": "14:15"
+              },
+              {
+                "type": "string",
                 "value": "14:30"
+              },
+              {
+                "type": "string",
+                "value": "14:45"
               },
               {
                 "type": "string",
@@ -1044,7 +1376,15 @@
               },
               {
                 "type": "string",
+                "value": "15:15"
+              },
+              {
+                "type": "string",
                 "value": "15:30"
+              },
+              {
+                "type": "string",
+                "value": "15:45"
               },
               {
                 "type": "string",
@@ -1052,7 +1392,15 @@
               },
               {
                 "type": "string",
+                "value": "16:15"
+              },
+              {
+                "type": "string",
                 "value": "16:30"
+              },
+              {
+                "type": "string",
+                "value": "16:45"
               },
               {
                 "type": "string",
@@ -1060,7 +1408,15 @@
               },
               {
                 "type": "string",
+                "value": "17:15"
+              },
+              {
+                "type": "string",
                 "value": "17:30"
+              },
+              {
+                "type": "string",
+                "value": "17:45"
               },
               {
                 "type": "string",
@@ -1068,7 +1424,15 @@
               },
               {
                 "type": "string",
+                "value": "18:15"
+              },
+              {
+                "type": "string",
                 "value": "18:30"
+              },
+              {
+                "type": "string",
+                "value": "18:45"
               },
               {
                 "type": "string",
@@ -1076,7 +1440,15 @@
               },
               {
                 "type": "string",
+                "value": "19:15"
+              },
+              {
+                "type": "string",
                 "value": "19:30"
+              },
+              {
+                "type": "string",
+                "value": "19:45"
               },
               {
                 "type": "string",
@@ -1084,7 +1456,15 @@
               },
               {
                 "type": "string",
+                "value": "20:15"
+              },
+              {
+                "type": "string",
                 "value": "20:30"
+              },
+              {
+                "type": "string",
+                "value": "20:45"
               },
               {
                 "type": "string",
@@ -1092,7 +1472,15 @@
               },
               {
                 "type": "string",
+                "value": "21:15"
+              },
+              {
+                "type": "string",
                 "value": "21:30"
+              },
+              {
+                "type": "string",
+                "value": "21:45"
               },
               {
                 "type": "string",
@@ -1100,7 +1488,15 @@
               },
               {
                 "type": "string",
+                "value": "22:15"
+              },
+              {
+                "type": "string",
                 "value": "22:30"
+              },
+              {
+                "type": "string",
+                "value": "22:45"
               },
               {
                 "type": "string",
@@ -1108,7 +1504,15 @@
               },
               {
                 "type": "string",
+                "value": "23:15"
+              },
+              {
+                "type": "string",
                 "value": "23:30"
+              },
+              {
+                "type": "string",
+                "value": "23:45"
               }
             ]
           },
@@ -1125,7 +1529,15 @@
               },
               {
                 "type": "string",
+                "value": "00:15"
+              },
+              {
+                "type": "string",
                 "value": "00:30"
+              },
+              {
+                "type": "string",
+                "value": "00:45"
               },
               {
                 "type": "string",
@@ -1133,7 +1545,15 @@
               },
               {
                 "type": "string",
+                "value": "01:15"
+              },
+              {
+                "type": "string",
                 "value": "01:30"
+              },
+              {
+                "type": "string",
+                "value": "01:45"
               },
               {
                 "type": "string",
@@ -1141,7 +1561,15 @@
               },
               {
                 "type": "string",
+                "value": "02:15"
+              },
+              {
+                "type": "string",
                 "value": "02:30"
+              },
+              {
+                "type": "string",
+                "value": "02:45"
               },
               {
                 "type": "string",
@@ -1149,7 +1577,15 @@
               },
               {
                 "type": "string",
+                "value": "03:15"
+              },
+              {
+                "type": "string",
                 "value": "03:30"
+              },
+              {
+                "type": "string",
+                "value": "03:45"
               },
               {
                 "type": "string",
@@ -1157,7 +1593,15 @@
               },
               {
                 "type": "string",
+                "value": "04:15"
+              },
+              {
+                "type": "string",
                 "value": "04:30"
+              },
+              {
+                "type": "string",
+                "value": "04:45"
               },
               {
                 "type": "string",
@@ -1165,7 +1609,15 @@
               },
               {
                 "type": "string",
+                "value": "05:15"
+              },
+              {
+                "type": "string",
                 "value": "05:30"
+              },
+              {
+                "type": "string",
+                "value": "05:45"
               },
               {
                 "type": "string",
@@ -1173,7 +1625,15 @@
               },
               {
                 "type": "string",
+                "value": "06:15"
+              },
+              {
+                "type": "string",
                 "value": "06:30"
+              },
+              {
+                "type": "string",
+                "value": "06:45"
               },
               {
                 "type": "string",
@@ -1181,7 +1641,15 @@
               },
               {
                 "type": "string",
+                "value": "07:15"
+              },
+              {
+                "type": "string",
                 "value": "07:30"
+              },
+              {
+                "type": "string",
+                "value": "07:45"
               },
               {
                 "type": "string",
@@ -1189,7 +1657,15 @@
               },
               {
                 "type": "string",
+                "value": "08:15"
+              },
+              {
+                "type": "string",
                 "value": "08:30"
+              },
+              {
+                "type": "string",
+                "value": "08:45"
               },
               {
                 "type": "string",
@@ -1197,7 +1673,15 @@
               },
               {
                 "type": "string",
+                "value": "09:15"
+              },
+              {
+                "type": "string",
                 "value": "09:30"
+              },
+              {
+                "type": "string",
+                "value": "09:45"
               },
               {
                 "type": "string",
@@ -1205,7 +1689,15 @@
               },
               {
                 "type": "string",
+                "value": "10:15"
+              },
+              {
+                "type": "string",
                 "value": "10:30"
+              },
+              {
+                "type": "string",
+                "value": "10:45"
               },
               {
                 "type": "string",
@@ -1213,7 +1705,15 @@
               },
               {
                 "type": "string",
+                "value": "11:15"
+              },
+              {
+                "type": "string",
                 "value": "11:30"
+              },
+              {
+                "type": "string",
+                "value": "11:45"
               },
               {
                 "type": "string",
@@ -1221,7 +1721,15 @@
               },
               {
                 "type": "string",
+                "value": "12:15"
+              },
+              {
+                "type": "string",
                 "value": "12:30"
+              },
+              {
+                "type": "string",
+                "value": "12:45"
               },
               {
                 "type": "string",
@@ -1229,7 +1737,15 @@
               },
               {
                 "type": "string",
+                "value": "13:15"
+              },
+              {
+                "type": "string",
                 "value": "13:30"
+              },
+              {
+                "type": "string",
+                "value": "13:45"
               },
               {
                 "type": "string",
@@ -1237,7 +1753,15 @@
               },
               {
                 "type": "string",
+                "value": "14:15"
+              },
+              {
+                "type": "string",
                 "value": "14:30"
+              },
+              {
+                "type": "string",
+                "value": "14:45"
               },
               {
                 "type": "string",
@@ -1245,7 +1769,15 @@
               },
               {
                 "type": "string",
+                "value": "15:15"
+              },
+              {
+                "type": "string",
                 "value": "15:30"
+              },
+              {
+                "type": "string",
+                "value": "15:45"
               },
               {
                 "type": "string",
@@ -1253,7 +1785,15 @@
               },
               {
                 "type": "string",
+                "value": "16:15"
+              },
+              {
+                "type": "string",
                 "value": "16:30"
+              },
+              {
+                "type": "string",
+                "value": "16:45"
               },
               {
                 "type": "string",
@@ -1261,7 +1801,15 @@
               },
               {
                 "type": "string",
+                "value": "17:15"
+              },
+              {
+                "type": "string",
                 "value": "17:30"
+              },
+              {
+                "type": "string",
+                "value": "17:45"
               },
               {
                 "type": "string",
@@ -1269,7 +1817,15 @@
               },
               {
                 "type": "string",
+                "value": "18:15"
+              },
+              {
+                "type": "string",
                 "value": "18:30"
+              },
+              {
+                "type": "string",
+                "value": "18:45"
               },
               {
                 "type": "string",
@@ -1277,7 +1833,15 @@
               },
               {
                 "type": "string",
+                "value": "19:15"
+              },
+              {
+                "type": "string",
                 "value": "19:30"
+              },
+              {
+                "type": "string",
+                "value": "19:45"
               },
               {
                 "type": "string",
@@ -1285,7 +1849,15 @@
               },
               {
                 "type": "string",
+                "value": "20:15"
+              },
+              {
+                "type": "string",
                 "value": "20:30"
+              },
+              {
+                "type": "string",
+                "value": "20:45"
               },
               {
                 "type": "string",
@@ -1293,7 +1865,15 @@
               },
               {
                 "type": "string",
+                "value": "21:15"
+              },
+              {
+                "type": "string",
                 "value": "21:30"
+              },
+              {
+                "type": "string",
+                "value": "21:45"
               },
               {
                 "type": "string",
@@ -1301,7 +1881,15 @@
               },
               {
                 "type": "string",
+                "value": "22:15"
+              },
+              {
+                "type": "string",
                 "value": "22:30"
+              },
+              {
+                "type": "string",
+                "value": "22:45"
               },
               {
                 "type": "string",
@@ -1309,7 +1897,15 @@
               },
               {
                 "type": "string",
+                "value": "23:15"
+              },
+              {
+                "type": "string",
                 "value": "23:30"
+              },
+              {
+                "type": "string",
+                "value": "23:45"
               }
             ]
           },
@@ -1326,7 +1922,15 @@
               },
               {
                 "type": "string",
+                "value": "00:15"
+              },
+              {
+                "type": "string",
                 "value": "00:30"
+              },
+              {
+                "type": "string",
+                "value": "00:45"
               },
               {
                 "type": "string",
@@ -1334,7 +1938,15 @@
               },
               {
                 "type": "string",
+                "value": "01:15"
+              },
+              {
+                "type": "string",
                 "value": "01:30"
+              },
+              {
+                "type": "string",
+                "value": "01:45"
               },
               {
                 "type": "string",
@@ -1342,7 +1954,15 @@
               },
               {
                 "type": "string",
+                "value": "02:15"
+              },
+              {
+                "type": "string",
                 "value": "02:30"
+              },
+              {
+                "type": "string",
+                "value": "02:45"
               },
               {
                 "type": "string",
@@ -1350,7 +1970,15 @@
               },
               {
                 "type": "string",
+                "value": "03:15"
+              },
+              {
+                "type": "string",
                 "value": "03:30"
+              },
+              {
+                "type": "string",
+                "value": "03:45"
               },
               {
                 "type": "string",
@@ -1358,7 +1986,15 @@
               },
               {
                 "type": "string",
+                "value": "04:15"
+              },
+              {
+                "type": "string",
                 "value": "04:30"
+              },
+              {
+                "type": "string",
+                "value": "04:45"
               },
               {
                 "type": "string",
@@ -1366,7 +2002,15 @@
               },
               {
                 "type": "string",
+                "value": "05:15"
+              },
+              {
+                "type": "string",
                 "value": "05:30"
+              },
+              {
+                "type": "string",
+                "value": "05:45"
               },
               {
                 "type": "string",
@@ -1374,7 +2018,15 @@
               },
               {
                 "type": "string",
+                "value": "06:15"
+              },
+              {
+                "type": "string",
                 "value": "06:30"
+              },
+              {
+                "type": "string",
+                "value": "06:45"
               },
               {
                 "type": "string",
@@ -1382,7 +2034,15 @@
               },
               {
                 "type": "string",
+                "value": "07:15"
+              },
+              {
+                "type": "string",
                 "value": "07:30"
+              },
+              {
+                "type": "string",
+                "value": "07:45"
               },
               {
                 "type": "string",
@@ -1390,7 +2050,15 @@
               },
               {
                 "type": "string",
+                "value": "08:15"
+              },
+              {
+                "type": "string",
                 "value": "08:30"
+              },
+              {
+                "type": "string",
+                "value": "08:45"
               },
               {
                 "type": "string",
@@ -1398,7 +2066,15 @@
               },
               {
                 "type": "string",
+                "value": "09:15"
+              },
+              {
+                "type": "string",
                 "value": "09:30"
+              },
+              {
+                "type": "string",
+                "value": "09:45"
               },
               {
                 "type": "string",
@@ -1406,7 +2082,15 @@
               },
               {
                 "type": "string",
+                "value": "10:15"
+              },
+              {
+                "type": "string",
                 "value": "10:30"
+              },
+              {
+                "type": "string",
+                "value": "10:45"
               },
               {
                 "type": "string",
@@ -1414,7 +2098,15 @@
               },
               {
                 "type": "string",
+                "value": "11:15"
+              },
+              {
+                "type": "string",
                 "value": "11:30"
+              },
+              {
+                "type": "string",
+                "value": "11:45"
               },
               {
                 "type": "string",
@@ -1422,7 +2114,15 @@
               },
               {
                 "type": "string",
+                "value": "12:15"
+              },
+              {
+                "type": "string",
                 "value": "12:30"
+              },
+              {
+                "type": "string",
+                "value": "12:45"
               },
               {
                 "type": "string",
@@ -1430,7 +2130,15 @@
               },
               {
                 "type": "string",
+                "value": "13:15"
+              },
+              {
+                "type": "string",
                 "value": "13:30"
+              },
+              {
+                "type": "string",
+                "value": "13:45"
               },
               {
                 "type": "string",
@@ -1438,7 +2146,15 @@
               },
               {
                 "type": "string",
+                "value": "14:15"
+              },
+              {
+                "type": "string",
                 "value": "14:30"
+              },
+              {
+                "type": "string",
+                "value": "14:45"
               },
               {
                 "type": "string",
@@ -1446,7 +2162,15 @@
               },
               {
                 "type": "string",
+                "value": "15:15"
+              },
+              {
+                "type": "string",
                 "value": "15:30"
+              },
+              {
+                "type": "string",
+                "value": "15:45"
               },
               {
                 "type": "string",
@@ -1454,7 +2178,15 @@
               },
               {
                 "type": "string",
+                "value": "16:15"
+              },
+              {
+                "type": "string",
                 "value": "16:30"
+              },
+              {
+                "type": "string",
+                "value": "16:45"
               },
               {
                 "type": "string",
@@ -1462,7 +2194,15 @@
               },
               {
                 "type": "string",
+                "value": "17:15"
+              },
+              {
+                "type": "string",
                 "value": "17:30"
+              },
+              {
+                "type": "string",
+                "value": "17:45"
               },
               {
                 "type": "string",
@@ -1470,7 +2210,15 @@
               },
               {
                 "type": "string",
+                "value": "18:15"
+              },
+              {
+                "type": "string",
                 "value": "18:30"
+              },
+              {
+                "type": "string",
+                "value": "18:45"
               },
               {
                 "type": "string",
@@ -1478,7 +2226,15 @@
               },
               {
                 "type": "string",
+                "value": "19:15"
+              },
+              {
+                "type": "string",
                 "value": "19:30"
+              },
+              {
+                "type": "string",
+                "value": "19:45"
               },
               {
                 "type": "string",
@@ -1486,7 +2242,15 @@
               },
               {
                 "type": "string",
+                "value": "20:15"
+              },
+              {
+                "type": "string",
                 "value": "20:30"
+              },
+              {
+                "type": "string",
+                "value": "20:45"
               },
               {
                 "type": "string",
@@ -1494,7 +2258,15 @@
               },
               {
                 "type": "string",
+                "value": "21:15"
+              },
+              {
+                "type": "string",
                 "value": "21:30"
+              },
+              {
+                "type": "string",
+                "value": "21:45"
               },
               {
                 "type": "string",
@@ -1502,7 +2274,15 @@
               },
               {
                 "type": "string",
+                "value": "22:15"
+              },
+              {
+                "type": "string",
                 "value": "22:30"
+              },
+              {
+                "type": "string",
+                "value": "22:45"
               },
               {
                 "type": "string",
@@ -1510,9 +2290,31 @@
               },
               {
                 "type": "string",
+                "value": "23:15"
+              },
+              {
+                "type": "string",
                 "value": "23:30"
+              },
+              {
+                "type": "string",
+                "value": "23:45"
               }
             ]
+          },
+          "optional": true
+        },
+        "morningClosed": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
+        "eveningClosed": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
           },
           "optional": true
         },
@@ -1538,7 +2340,15 @@
         },
         {
           "type": "string",
+          "value": "00:15"
+        },
+        {
+          "type": "string",
           "value": "00:30"
+        },
+        {
+          "type": "string",
+          "value": "00:45"
         },
         {
           "type": "string",
@@ -1546,7 +2356,15 @@
         },
         {
           "type": "string",
+          "value": "01:15"
+        },
+        {
+          "type": "string",
           "value": "01:30"
+        },
+        {
+          "type": "string",
+          "value": "01:45"
         },
         {
           "type": "string",
@@ -1554,7 +2372,15 @@
         },
         {
           "type": "string",
+          "value": "02:15"
+        },
+        {
+          "type": "string",
           "value": "02:30"
+        },
+        {
+          "type": "string",
+          "value": "02:45"
         },
         {
           "type": "string",
@@ -1562,7 +2388,15 @@
         },
         {
           "type": "string",
+          "value": "03:15"
+        },
+        {
+          "type": "string",
           "value": "03:30"
+        },
+        {
+          "type": "string",
+          "value": "03:45"
         },
         {
           "type": "string",
@@ -1570,7 +2404,15 @@
         },
         {
           "type": "string",
+          "value": "04:15"
+        },
+        {
+          "type": "string",
           "value": "04:30"
+        },
+        {
+          "type": "string",
+          "value": "04:45"
         },
         {
           "type": "string",
@@ -1578,7 +2420,15 @@
         },
         {
           "type": "string",
+          "value": "05:15"
+        },
+        {
+          "type": "string",
           "value": "05:30"
+        },
+        {
+          "type": "string",
+          "value": "05:45"
         },
         {
           "type": "string",
@@ -1586,7 +2436,15 @@
         },
         {
           "type": "string",
+          "value": "06:15"
+        },
+        {
+          "type": "string",
           "value": "06:30"
+        },
+        {
+          "type": "string",
+          "value": "06:45"
         },
         {
           "type": "string",
@@ -1594,7 +2452,15 @@
         },
         {
           "type": "string",
+          "value": "07:15"
+        },
+        {
+          "type": "string",
           "value": "07:30"
+        },
+        {
+          "type": "string",
+          "value": "07:45"
         },
         {
           "type": "string",
@@ -1602,7 +2468,15 @@
         },
         {
           "type": "string",
+          "value": "08:15"
+        },
+        {
+          "type": "string",
           "value": "08:30"
+        },
+        {
+          "type": "string",
+          "value": "08:45"
         },
         {
           "type": "string",
@@ -1610,7 +2484,15 @@
         },
         {
           "type": "string",
+          "value": "09:15"
+        },
+        {
+          "type": "string",
           "value": "09:30"
+        },
+        {
+          "type": "string",
+          "value": "09:45"
         },
         {
           "type": "string",
@@ -1618,7 +2500,15 @@
         },
         {
           "type": "string",
+          "value": "10:15"
+        },
+        {
+          "type": "string",
           "value": "10:30"
+        },
+        {
+          "type": "string",
+          "value": "10:45"
         },
         {
           "type": "string",
@@ -1626,7 +2516,15 @@
         },
         {
           "type": "string",
+          "value": "11:15"
+        },
+        {
+          "type": "string",
           "value": "11:30"
+        },
+        {
+          "type": "string",
+          "value": "11:45"
         },
         {
           "type": "string",
@@ -1634,7 +2532,15 @@
         },
         {
           "type": "string",
+          "value": "12:15"
+        },
+        {
+          "type": "string",
           "value": "12:30"
+        },
+        {
+          "type": "string",
+          "value": "12:45"
         },
         {
           "type": "string",
@@ -1642,7 +2548,15 @@
         },
         {
           "type": "string",
+          "value": "13:15"
+        },
+        {
+          "type": "string",
           "value": "13:30"
+        },
+        {
+          "type": "string",
+          "value": "13:45"
         },
         {
           "type": "string",
@@ -1650,7 +2564,15 @@
         },
         {
           "type": "string",
+          "value": "14:15"
+        },
+        {
+          "type": "string",
           "value": "14:30"
+        },
+        {
+          "type": "string",
+          "value": "14:45"
         },
         {
           "type": "string",
@@ -1658,7 +2580,15 @@
         },
         {
           "type": "string",
+          "value": "15:15"
+        },
+        {
+          "type": "string",
           "value": "15:30"
+        },
+        {
+          "type": "string",
+          "value": "15:45"
         },
         {
           "type": "string",
@@ -1666,7 +2596,15 @@
         },
         {
           "type": "string",
+          "value": "16:15"
+        },
+        {
+          "type": "string",
           "value": "16:30"
+        },
+        {
+          "type": "string",
+          "value": "16:45"
         },
         {
           "type": "string",
@@ -1674,7 +2612,15 @@
         },
         {
           "type": "string",
+          "value": "17:15"
+        },
+        {
+          "type": "string",
           "value": "17:30"
+        },
+        {
+          "type": "string",
+          "value": "17:45"
         },
         {
           "type": "string",
@@ -1682,7 +2628,15 @@
         },
         {
           "type": "string",
+          "value": "18:15"
+        },
+        {
+          "type": "string",
           "value": "18:30"
+        },
+        {
+          "type": "string",
+          "value": "18:45"
         },
         {
           "type": "string",
@@ -1690,7 +2644,15 @@
         },
         {
           "type": "string",
+          "value": "19:15"
+        },
+        {
+          "type": "string",
           "value": "19:30"
+        },
+        {
+          "type": "string",
+          "value": "19:45"
         },
         {
           "type": "string",
@@ -1698,7 +2660,15 @@
         },
         {
           "type": "string",
+          "value": "20:15"
+        },
+        {
+          "type": "string",
           "value": "20:30"
+        },
+        {
+          "type": "string",
+          "value": "20:45"
         },
         {
           "type": "string",
@@ -1706,7 +2676,15 @@
         },
         {
           "type": "string",
+          "value": "21:15"
+        },
+        {
+          "type": "string",
           "value": "21:30"
+        },
+        {
+          "type": "string",
+          "value": "21:45"
         },
         {
           "type": "string",
@@ -1714,7 +2692,15 @@
         },
         {
           "type": "string",
+          "value": "22:15"
+        },
+        {
+          "type": "string",
           "value": "22:30"
+        },
+        {
+          "type": "string",
+          "value": "22:45"
         },
         {
           "type": "string",
@@ -1722,7 +2708,15 @@
         },
         {
           "type": "string",
+          "value": "23:15"
+        },
+        {
+          "type": "string",
           "value": "23:30"
+        },
+        {
+          "type": "string",
+          "value": "23:45"
         }
       ]
     }
@@ -1760,6 +2754,13 @@
             "type": "number"
           },
           "optional": true
+        },
+        "subcategory": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
         }
       }
     }
@@ -1789,6 +2790,13 @@
           "value": {
             "type": "inline",
             "name": "icon"
+          },
+          "optional": true
+        },
+        "flaticonClass": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
           },
           "optional": true
         },
@@ -1967,34 +2975,54 @@
                     "value": {
                       "type": "array",
                       "of": {
-                        "type": "object",
-                        "attributes": {
-                          "href": {
-                            "type": "objectAttribute",
-                            "value": {
-                              "type": "string"
+                        "type": "union",
+                        "of": [
+                          {
+                            "type": "object",
+                            "attributes": {
+                              "_key": {
+                                "type": "objectAttribute",
+                                "value": {
+                                  "type": "string"
+                                }
+                              }
                             },
-                            "optional": true
-                          },
-                          "_type": {
-                            "type": "objectAttribute",
-                            "value": {
-                              "type": "string",
-                              "value": "link"
+                            "rest": {
+                              "type": "inline",
+                              "name": "color"
                             }
-                          }
-                        },
-                        "rest": {
-                          "type": "object",
-                          "attributes": {
-                            "_key": {
-                              "type": "objectAttribute",
-                              "value": {
-                                "type": "string"
+                          },
+                          {
+                            "type": "object",
+                            "attributes": {
+                              "href": {
+                                "type": "objectAttribute",
+                                "value": {
+                                  "type": "string"
+                                },
+                                "optional": true
+                              },
+                              "_type": {
+                                "type": "objectAttribute",
+                                "value": {
+                                  "type": "string",
+                                  "value": "link"
+                                }
+                              }
+                            },
+                            "rest": {
+                              "type": "object",
+                              "attributes": {
+                                "_key": {
+                                  "type": "objectAttribute",
+                                  "value": {
+                                    "type": "string"
+                                  }
+                                }
                               }
                             }
                           }
-                        }
+                        ]
                       }
                     },
                     "optional": true
@@ -3043,34 +4071,54 @@
                       "value": {
                         "type": "array",
                         "of": {
-                          "type": "object",
-                          "attributes": {
-                            "href": {
-                              "type": "objectAttribute",
-                              "value": {
-                                "type": "string"
+                          "type": "union",
+                          "of": [
+                            {
+                              "type": "object",
+                              "attributes": {
+                                "_key": {
+                                  "type": "objectAttribute",
+                                  "value": {
+                                    "type": "string"
+                                  }
+                                }
                               },
-                              "optional": true
-                            },
-                            "_type": {
-                              "type": "objectAttribute",
-                              "value": {
-                                "type": "string",
-                                "value": "link"
+                              "rest": {
+                                "type": "inline",
+                                "name": "color"
                               }
-                            }
-                          },
-                          "rest": {
-                            "type": "object",
-                            "attributes": {
-                              "_key": {
-                                "type": "objectAttribute",
-                                "value": {
-                                  "type": "string"
+                            },
+                            {
+                              "type": "object",
+                              "attributes": {
+                                "href": {
+                                  "type": "objectAttribute",
+                                  "value": {
+                                    "type": "string"
+                                  },
+                                  "optional": true
+                                },
+                                "_type": {
+                                  "type": "objectAttribute",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "link"
+                                  }
+                                }
+                              },
+                              "rest": {
+                                "type": "object",
+                                "attributes": {
+                                  "_key": {
+                                    "type": "objectAttribute",
+                                    "value": {
+                                      "type": "string"
+                                    }
+                                  }
                                 }
                               }
                             }
-                          }
+                          ]
                         }
                       },
                       "optional": true
@@ -3431,34 +4479,54 @@
                       "value": {
                         "type": "array",
                         "of": {
-                          "type": "object",
-                          "attributes": {
-                            "href": {
-                              "type": "objectAttribute",
-                              "value": {
-                                "type": "string"
+                          "type": "union",
+                          "of": [
+                            {
+                              "type": "object",
+                              "attributes": {
+                                "_key": {
+                                  "type": "objectAttribute",
+                                  "value": {
+                                    "type": "string"
+                                  }
+                                }
                               },
-                              "optional": true
-                            },
-                            "_type": {
-                              "type": "objectAttribute",
-                              "value": {
-                                "type": "string",
-                                "value": "link"
+                              "rest": {
+                                "type": "inline",
+                                "name": "color"
                               }
-                            }
-                          },
-                          "rest": {
-                            "type": "object",
-                            "attributes": {
-                              "_key": {
-                                "type": "objectAttribute",
-                                "value": {
-                                  "type": "string"
+                            },
+                            {
+                              "type": "object",
+                              "attributes": {
+                                "href": {
+                                  "type": "objectAttribute",
+                                  "value": {
+                                    "type": "string"
+                                  },
+                                  "optional": true
+                                },
+                                "_type": {
+                                  "type": "objectAttribute",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "link"
+                                  }
+                                }
+                              },
+                              "rest": {
+                                "type": "object",
+                                "attributes": {
+                                  "_key": {
+                                    "type": "objectAttribute",
+                                    "value": {
+                                      "type": "string"
+                                    }
+                                  }
                                 }
                               }
                             }
-                          }
+                          ]
                         }
                       },
                       "optional": true
@@ -3737,34 +4805,54 @@
                 "value": {
                   "type": "array",
                   "of": {
-                    "type": "object",
-                    "attributes": {
-                      "href": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "string"
+                    "type": "union",
+                    "of": [
+                      {
+                        "type": "object",
+                        "attributes": {
+                          "_key": {
+                            "type": "objectAttribute",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
                         },
-                        "optional": true
-                      },
-                      "_type": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "string",
-                          "value": "link"
+                        "rest": {
+                          "type": "inline",
+                          "name": "color"
                         }
-                      }
-                    },
-                    "rest": {
-                      "type": "object",
-                      "attributes": {
-                        "_key": {
-                          "type": "objectAttribute",
-                          "value": {
-                            "type": "string"
+                      },
+                      {
+                        "type": "object",
+                        "attributes": {
+                          "href": {
+                            "type": "objectAttribute",
+                            "value": {
+                              "type": "string"
+                            },
+                            "optional": true
+                          },
+                          "_type": {
+                            "type": "objectAttribute",
+                            "value": {
+                              "type": "string",
+                              "value": "link"
+                            }
+                          }
+                        },
+                        "rest": {
+                          "type": "object",
+                          "attributes": {
+                            "_key": {
+                              "type": "objectAttribute",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
                           }
                         }
                       }
-                    }
+                    ]
                   }
                 },
                 "optional": true

@@ -46,7 +46,7 @@ export default async function Page({ params }: { params: Promise<QueryParams> })
       <main className="relative bg-white">
         <PageIntro data={{title: page?.title ?? '', introImage: page?.introImage}} />
         <div className="page-container">
-          {page?.subtitle && <h2 className="text-center uppercase pt-20" data-aos="zoom-in">{page?.subtitle}</h2>}
+          {page?.subtitle && <h2 className="text-center font-bold pt-20" data-aos="zoom-in">{page?.subtitle}</h2>}
           <PageMaker page={page} />
         </div>
       </main>
