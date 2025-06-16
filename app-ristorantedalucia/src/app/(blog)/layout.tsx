@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Ristorante Enoteca Da Lucia',
     description: 'The official Next.js Course Dashboard, built with App Router.',
-    url: 'https://donnasofi.com',
+    url: 'https://ristorantedalucia.it',
     siteName: 'Ristorante Enoteca Da Lucia',
     images: [
       {

@@ -120,7 +120,7 @@ export default function Navbar({navItems}: {navItems: HEADERMENU_QUERYResult}) {
                 className="cursor-pointer font-bold text-xl pt-4 ps-4 logo"
                 onClick={toggleMobileMenu}
               >
-                <Image priority={true} src="/images/donnasofi.svg" height={0} width={0} alt="Ristorante Enoteca Da Lucia, Bologna Centro Storico" className="logo" />
+                <Image priority={true} src="/images/logo.png" height={0} width={0} alt="Ristorante Enoteca Da Lucia, Bologna Centro Storico" className="logo" />
               </Link>
               <button
                 onClick={toggleMobileMenu}
