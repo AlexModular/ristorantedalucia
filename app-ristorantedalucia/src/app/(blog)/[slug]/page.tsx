@@ -16,15 +16,15 @@ export async function generateMetadata({ params }: { params: Promise<QueryParams
       template: `%s - ${page?.metaTitle || page?.title}`,
     },
     description: page?.metaDescription || page?.subtitle,
-    metadataBase: new URL('https://donnasofi.com'),
+    metadataBase: new URL('https://ristorantedalucia.it'),
     openGraph: {
       title: page?.title,
       description: page?.subtitle,
-      url: `https://donnasofi.com/${page?.slug}`,
+      url: `https://ristorantedalucia.it/${page?.slug}`,
       siteName: 'Donna Sofì - Pizzeria',
       images: [
         {
-          url: 'https://donnasofi.com/images/donnasofi.svg',
+          url: 'https://ristorantedalucia.it/images/logo.png',
           width: 800,
           height: 600,
           alt: page?.title,
