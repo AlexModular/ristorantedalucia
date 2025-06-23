@@ -24,7 +24,7 @@
 }
 
 .swiper-button-prev:after, .swiper-button-next:after {
-  color: var(--gold);
+  color: var(--black);
   text-shadow: 0 0 12px #fff;
 }
 
