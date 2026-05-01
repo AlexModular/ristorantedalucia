@@ -1,12 +1,12 @@
 'use client'
 import Link from "next/link";
 import React, { useState, useEffect } from 'react';
-import { HEADERMENU_QUERYResult } from "../../sanity.types";
+import { HEADERMENU_QUERY_RESULT } from "../../sanity.types";
 import { usePathname } from 'next/navigation'
 import { useMediaQuery } from 'react-responsive';
 import Logo from "./Logo";
 
-export default function Navbar({ navItems, theme }: { navItems: HEADERMENU_QUERYResult, theme: string }) {
+export default function Navbar({ navItems, theme }: { navItems: HEADERMENU_QUERY_RESULT, theme: string }) {
   const isMobile = useMediaQuery({ query: `(max-width: 1024px)` });
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

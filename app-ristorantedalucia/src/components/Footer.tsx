@@ -4,7 +4,7 @@ import Link from "next/link"
 import Image from 'next/image'
 import iconSet from '@/config/icomoon/selection.json'
 import IcomoonReact from "icomoon-react";
-import { LOCATIONS_QUERYResult, SOCIALS_QUERYResult, COPYRIGHT_QUERYResult } from "../../sanity.types";
+import { LOCATIONS_QUERY_RESULT, SOCIALS_QUERY_RESULT, COPYRIGHT_QUERY_RESULT } from "../../sanity.types";
 import { Icon } from '@iconify/react';
 import { PortableText } from "next-sanity";
 import { FaAngleDoubleUp } from "react-icons/fa";
@@ -16,7 +16,7 @@ function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-export default function Footer ({locations, socials, copyright}: {locations: LOCATIONS_QUERYResult, socials: SOCIALS_QUERYResult, copyright: COPYRIGHT_QUERYResult}) {
+export default function Footer ({locations, socials, copyright}: {locations: LOCATIONS_QUERY_RESULT, socials: SOCIALS_QUERY_RESULT, copyright: COPYRIGHT_QUERY_RESULT}) {
   return (
     <footer className="text-center pt-12 pb-6 px-4" aria-labelledby="footer-heading">
       <h2 id="footer-heading" className="sr-only">Footer Information</h2>
