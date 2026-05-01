@@ -77,4 +77,5 @@ export type SlideshowForPageMaker = {
     _type: "image";
     _key: string;
   }>;
+  effect?: 'fade' | 'slide' | 'creative' | 'coverflow';
 };

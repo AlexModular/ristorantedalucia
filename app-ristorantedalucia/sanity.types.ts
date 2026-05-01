@@ -12,7 +12,23 @@
  * ---------------------------------------------------------------------------------
  */
 
+export declare const internalGroqTypeReferenceTo: unique symbol;
+
 // Source: schema.json
+export type SanityImageAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+};
+
+export type Logo = {
+  asset?: SanityImageAssetReference;
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  _type: "image";
+};
+
 export type SanityImagePaletteSwatch = {
   _type: "sanity.imagePaletteSwatch";
   background?: string;
@@ -39,45 +55,104 @@ export type SanityImageDimensions = {
   aspectRatio?: number;
 };
 
+export type SanityImageMetadata = {
+  _type: "sanity.imageMetadata";
+  location?: Geopoint;
+  dimensions?: SanityImageDimensions;
+  palette?: SanityImagePalette;
+  lqip?: string;
+  blurHash?: string;
+  hasAlpha?: boolean;
+  isOpaque?: boolean;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+};
+
+export type Geopoint = {
+  _type: "geopoint";
+  lat?: number;
+  lng?: number;
+  alt?: number;
+};
+
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
+};
+
+export type SanityAssetSourceData = {
+  _type: "sanity.assetSourceData";
+  name?: string;
+  id?: string;
+  url?: string;
+};
+
+export type Settings = {
+  _id: string;
+  _type: "settings";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  theme?: "light" | "dark" | "cream" | "auto";
+};
+
 export type Copyright = {
   _id: string;
   _type: "copyright";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  content?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
-    listItem?: "bullet";
-    markDefs?: Array<{
-      _key: string;
-    } & Color | {
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-    _key: string;
-  }>;
+  content?: BlockContent;
 };
+
+export type BlockContent = Array<
+  | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
+      listItem?: "bullet";
+      markDefs?: Array<
+        | ({
+            _key: string;
+          } & Color)
+        | {
+            href?: string;
+            _type: "link";
+            _key: string;
+          }
+      >;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }
+  | {
+      asset?: SanityImageAssetReference;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+      _key: string;
+    }
+>;
 
 export type Socials = {
   _id: string;
@@ -85,9 +160,11 @@ export type Socials = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  socials?: Array<{
-    _key: string;
-  } & Social>;
+  socials?: Array<
+    {
+      _key: string;
+    } & Social
+  >;
 };
 
 export type Social = {
@@ -95,6 +172,18 @@ export type Social = {
   title?: string;
   link?: string;
   icon?: Icon;
+};
+
+export type Icon = {
+  _type: "icon";
+  name?: string;
+};
+
+export type DishesMenuReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "dishesMenu";
 };
 
 export type Locations = {
@@ -109,12 +198,7 @@ export type Locations = {
   postalCode?: string;
   email?: string;
   phone?: string;
-  menu?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "dishesMenu";
-  };
+  menu?: DishesMenuReference;
   monday?: Duration;
   tuesday?: Duration;
   wednesday?: Duration;
@@ -126,16 +210,112 @@ export type Locations = {
 
 export type Duration = {
   _type: "duration";
-  morningStart?: "00:00" | "00:15" | "00:30" | "00:45" | "01:00" | "01:15" | "01:30" | "01:45" | "02:00" | "02:15" | "02:30" | "02:45" | "03:00" | "03:15" | "03:30" | "03:45" | "04:00" | "04:15" | "04:30" | "04:45" | "05:00" | "05:15" | "05:30" | "05:45" | "06:00" | "06:15" | "06:30" | "06:45" | "07:00" | "07:15" | "07:30" | "07:45" | "08:00" | "08:15" | "08:30" | "08:45" | "09:00" | "09:15" | "09:30" | "09:45" | "10:00" | "10:15" | "10:30" | "10:45" | "11:00" | "11:15" | "11:30" | "11:45" | "12:00" | "12:15" | "12:30" | "12:45" | "13:00" | "13:15" | "13:30" | "13:45" | "14:00" | "14:15" | "14:30" | "14:45" | "15:00" | "15:15" | "15:30" | "15:45" | "16:00" | "16:15" | "16:30" | "16:45" | "17:00" | "17:15" | "17:30" | "17:45" | "18:00" | "18:15" | "18:30" | "18:45" | "19:00" | "19:15" | "19:30" | "19:45" | "20:00" | "20:15" | "20:30" | "20:45" | "21:00" | "21:15" | "21:30" | "21:45" | "22:00" | "22:15" | "22:30" | "22:45" | "23:00" | "23:15" | "23:30" | "23:45";
-  morningEnd?: "00:00" | "00:15" | "00:30" | "00:45" | "01:00" | "01:15" | "01:30" | "01:45" | "02:00" | "02:15" | "02:30" | "02:45" | "03:00" | "03:15" | "03:30" | "03:45" | "04:00" | "04:15" | "04:30" | "04:45" | "05:00" | "05:15" | "05:30" | "05:45" | "06:00" | "06:15" | "06:30" | "06:45" | "07:00" | "07:15" | "07:30" | "07:45" | "08:00" | "08:15" | "08:30" | "08:45" | "09:00" | "09:15" | "09:30" | "09:45" | "10:00" | "10:15" | "10:30" | "10:45" | "11:00" | "11:15" | "11:30" | "11:45" | "12:00" | "12:15" | "12:30" | "12:45" | "13:00" | "13:15" | "13:30" | "13:45" | "14:00" | "14:15" | "14:30" | "14:45" | "15:00" | "15:15" | "15:30" | "15:45" | "16:00" | "16:15" | "16:30" | "16:45" | "17:00" | "17:15" | "17:30" | "17:45" | "18:00" | "18:15" | "18:30" | "18:45" | "19:00" | "19:15" | "19:30" | "19:45" | "20:00" | "20:15" | "20:30" | "20:45" | "21:00" | "21:15" | "21:30" | "21:45" | "22:00" | "22:15" | "22:30" | "22:45" | "23:00" | "23:15" | "23:30" | "23:45";
-  eveningStart?: "00:00" | "00:15" | "00:30" | "00:45" | "01:00" | "01:15" | "01:30" | "01:45" | "02:00" | "02:15" | "02:30" | "02:45" | "03:00" | "03:15" | "03:30" | "03:45" | "04:00" | "04:15" | "04:30" | "04:45" | "05:00" | "05:15" | "05:30" | "05:45" | "06:00" | "06:15" | "06:30" | "06:45" | "07:00" | "07:15" | "07:30" | "07:45" | "08:00" | "08:15" | "08:30" | "08:45" | "09:00" | "09:15" | "09:30" | "09:45" | "10:00" | "10:15" | "10:30" | "10:45" | "11:00" | "11:15" | "11:30" | "11:45" | "12:00" | "12:15" | "12:30" | "12:45" | "13:00" | "13:15" | "13:30" | "13:45" | "14:00" | "14:15" | "14:30" | "14:45" | "15:00" | "15:15" | "15:30" | "15:45" | "16:00" | "16:15" | "16:30" | "16:45" | "17:00" | "17:15" | "17:30" | "17:45" | "18:00" | "18:15" | "18:30" | "18:45" | "19:00" | "19:15" | "19:30" | "19:45" | "20:00" | "20:15" | "20:30" | "20:45" | "21:00" | "21:15" | "21:30" | "21:45" | "22:00" | "22:15" | "22:30" | "22:45" | "23:00" | "23:15" | "23:30" | "23:45";
-  eveningEnd?: "00:00" | "00:15" | "00:30" | "00:45" | "01:00" | "01:15" | "01:30" | "01:45" | "02:00" | "02:15" | "02:30" | "02:45" | "03:00" | "03:15" | "03:30" | "03:45" | "04:00" | "04:15" | "04:30" | "04:45" | "05:00" | "05:15" | "05:30" | "05:45" | "06:00" | "06:15" | "06:30" | "06:45" | "07:00" | "07:15" | "07:30" | "07:45" | "08:00" | "08:15" | "08:30" | "08:45" | "09:00" | "09:15" | "09:30" | "09:45" | "10:00" | "10:15" | "10:30" | "10:45" | "11:00" | "11:15" | "11:30" | "11:45" | "12:00" | "12:15" | "12:30" | "12:45" | "13:00" | "13:15" | "13:30" | "13:45" | "14:00" | "14:15" | "14:30" | "14:45" | "15:00" | "15:15" | "15:30" | "15:45" | "16:00" | "16:15" | "16:30" | "16:45" | "17:00" | "17:15" | "17:30" | "17:45" | "18:00" | "18:15" | "18:30" | "18:45" | "19:00" | "19:15" | "19:30" | "19:45" | "20:00" | "20:15" | "20:30" | "20:45" | "21:00" | "21:15" | "21:30" | "21:45" | "22:00" | "22:15" | "22:30" | "22:45" | "23:00" | "23:15" | "23:30" | "23:45";
+  morningStart?: TimeValue;
+  morningEnd?: TimeValue;
+  eveningStart?: TimeValue;
+  eveningEnd?: TimeValue;
   morningClosed?: boolean;
   eveningClosed?: boolean;
   closed?: boolean;
 };
 
-export type TimeValue = "00:00" | "00:15" | "00:30" | "00:45" | "01:00" | "01:15" | "01:30" | "01:45" | "02:00" | "02:15" | "02:30" | "02:45" | "03:00" | "03:15" | "03:30" | "03:45" | "04:00" | "04:15" | "04:30" | "04:45" | "05:00" | "05:15" | "05:30" | "05:45" | "06:00" | "06:15" | "06:30" | "06:45" | "07:00" | "07:15" | "07:30" | "07:45" | "08:00" | "08:15" | "08:30" | "08:45" | "09:00" | "09:15" | "09:30" | "09:45" | "10:00" | "10:15" | "10:30" | "10:45" | "11:00" | "11:15" | "11:30" | "11:45" | "12:00" | "12:15" | "12:30" | "12:45" | "13:00" | "13:15" | "13:30" | "13:45" | "14:00" | "14:15" | "14:30" | "14:45" | "15:00" | "15:15" | "15:30" | "15:45" | "16:00" | "16:15" | "16:30" | "16:45" | "17:00" | "17:15" | "17:30" | "17:45" | "18:00" | "18:15" | "18:30" | "18:45" | "19:00" | "19:15" | "19:30" | "19:45" | "20:00" | "20:15" | "20:30" | "20:45" | "21:00" | "21:15" | "21:30" | "21:45" | "22:00" | "22:15" | "22:30" | "22:45" | "23:00" | "23:15" | "23:30" | "23:45";
+export type TimeValue =
+  | "00:00"
+  | "00:15"
+  | "00:30"
+  | "00:45"
+  | "01:00"
+  | "01:15"
+  | "01:30"
+  | "01:45"
+  | "02:00"
+  | "02:15"
+  | "02:30"
+  | "02:45"
+  | "03:00"
+  | "03:15"
+  | "03:30"
+  | "03:45"
+  | "04:00"
+  | "04:15"
+  | "04:30"
+  | "04:45"
+  | "05:00"
+  | "05:15"
+  | "05:30"
+  | "05:45"
+  | "06:00"
+  | "06:15"
+  | "06:30"
+  | "06:45"
+  | "07:00"
+  | "07:15"
+  | "07:30"
+  | "07:45"
+  | "08:00"
+  | "08:15"
+  | "08:30"
+  | "08:45"
+  | "09:00"
+  | "09:15"
+  | "09:30"
+  | "09:45"
+  | "10:00"
+  | "10:15"
+  | "10:30"
+  | "10:45"
+  | "11:00"
+  | "11:15"
+  | "11:30"
+  | "11:45"
+  | "12:00"
+  | "12:15"
+  | "12:30"
+  | "12:45"
+  | "13:00"
+  | "13:15"
+  | "13:30"
+  | "13:45"
+  | "14:00"
+  | "14:15"
+  | "14:30"
+  | "14:45"
+  | "15:00"
+  | "15:15"
+  | "15:30"
+  | "15:45"
+  | "16:00"
+  | "16:15"
+  | "16:30"
+  | "16:45"
+  | "17:00"
+  | "17:15"
+  | "17:30"
+  | "17:45"
+  | "18:00"
+  | "18:15"
+  | "18:30"
+  | "18:45"
+  | "19:00"
+  | "19:15"
+  | "19:30"
+  | "19:45"
+  | "20:00"
+  | "20:15"
+  | "20:30"
+  | "20:45"
+  | "21:00"
+  | "21:15"
+  | "21:30"
+  | "21:45"
+  | "22:00"
+  | "22:15"
+  | "22:30"
+  | "22:45"
+  | "23:00"
+  | "23:15"
+  | "23:30"
+  | "23:45";
 
 export type Dish = {
   _type: "dish";
@@ -150,9 +330,11 @@ export type DishesCategory = {
   title?: string;
   icon?: Icon;
   flaticonClass?: string;
-  dishes?: Array<{
-    _key: string;
-  } & Dish>;
+  dishes?: Array<
+    {
+      _key: string;
+    } & Dish
+  >;
 };
 
 export type DishesMenu = {
@@ -162,68 +344,42 @@ export type DishesMenu = {
   _updatedAt: string;
   _rev: string;
   title?: string;
-  introText?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
+  introText?: BlockContent;
+  categories?: Array<
+    {
       _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
-    listItem?: "bullet";
-    markDefs?: Array<{
-      _key: string;
-    } & Color | {
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-    _key: string;
-  }>;
-  categories?: Array<{
-    _key: string;
-  } & DishesCategory>;
+    } & DishesCategory
+  >;
 };
 
 export type Map = {
   _type: "map";
   heading?: string;
   mapCenter?: Geopoint;
-  locations?: Array<{
-    _key: string;
-  } & Geopoint>;
+  locations?: Array<
+    {
+      _key: string;
+    } & Geopoint
+  >;
 };
 
-export type Geopoint = {
-  _type: "geopoint";
-  lat?: number;
-  lng?: number;
-  alt?: number;
+export type PageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "page";
 };
 
 export type Link = {
   _type: "link";
-  internalLink?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "page";
-  };
+  internalLink?: PageReference;
   externalUrl?: string;
+};
+
+export type NavigationItem = {
+  _type: "navigationItem";
+  text?: string;
+  navigationItemUrl?: Link;
 };
 
 export type Navigation = {
@@ -234,9 +390,11 @@ export type Navigation = {
   _rev: string;
   title?: string;
   navId?: Slug;
-  items?: Array<{
-    _key: string;
-  } & NavigationItem>;
+  items?: Array<
+    {
+      _key: string;
+    } & NavigationItem
+  >;
 };
 
 export type Separator = {
@@ -247,32 +405,18 @@ export type Separator = {
 export type Slideshow = {
   _type: "slideshow";
   images?: Array<{
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     heading?: string;
     subtitle?: string;
     cta?: NavigationItem;
     alt?: string;
-    logo?: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      _type: "image";
-    };
+    logo?: Logo;
     _type: "image";
     _key: string;
   }>;
+  effect?: "fade" | "slide" | "creative" | "coverflow";
 };
 
 export type Slider = {
@@ -280,24 +424,14 @@ export type Slider = {
   heading?: string;
   subtitle?: string;
   backgroundImage?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
     _type: "image";
   };
   images?: Array<{
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
@@ -306,17 +440,19 @@ export type Slider = {
   }>;
 };
 
+export type SanityFileAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+};
+
 export type Video = {
   _type: "video";
   videoLabel?: string;
   cssClasses?: string;
   file?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
-    };
+    asset?: SanityFileAssetReference;
     _type: "file";
   };
 };
@@ -333,12 +469,7 @@ export type Gallery = {
   heading?: string;
   subtitle?: string;
   images?: Array<{
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
@@ -350,45 +481,9 @@ export type Gallery = {
 export type TextWithIllustration = {
   _type: "textWithIllustration";
   heading?: string;
-  text?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
-    listItem?: "bullet";
-    markDefs?: Array<{
-      _key: string;
-    } & Color | {
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-    _key: string;
-  }>;
+  text?: BlockContent;
   image?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
@@ -403,38 +498,7 @@ export type Banner = {
   heading?: string;
   headingCSSClasses?: string;
   subtitle?: string;
-  text?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
-    listItem?: "bullet";
-    markDefs?: Array<{
-      _key: string;
-    } & Color | {
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-    _key: string;
-  }>;
+  text?: BlockContent;
 };
 
 export type Promotion = {
@@ -444,39 +508,6 @@ export type Promotion = {
   direction?: "left" | "right";
   speed?: number;
 };
-
-export type BlockContent = Array<{
-  children?: Array<{
-    marks?: Array<string>;
-    text?: string;
-    _type: "span";
-    _key: string;
-  }>;
-  style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
-  listItem?: "bullet";
-  markDefs?: Array<{
-    _key: string;
-  } & Color | {
-    href?: string;
-    _type: "link";
-    _key: string;
-  }>;
-  level?: number;
-  _type: "block";
-  _key: string;
-} | {
-  asset?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-  };
-  hotspot?: SanityImageHotspot;
-  crop?: SanityImageCrop;
-  alt?: string;
-  _type: "image";
-  _key: string;
-}>;
 
 export type Page = {
   _id: string;
@@ -490,44 +521,57 @@ export type Page = {
   metaTitle?: string;
   metaDescription?: string;
   introImage?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
   };
   fullWidth?: boolean;
-  pageBuilder?: Array<{
-    _key: string;
-  } & Banner | {
-    _key: string;
-  } & TextWithIllustration | {
-    _key: string;
-  } & Gallery | {
-    _key: string;
-  } & Slider | {
-    _key: string;
-  } & Slideshow | {
-    _key: string;
-  } & Form | {
-    _key: string;
-  } & Video | {
-    _key: string;
-  } & Promotion | {
-    _key: string;
-  } & Separator | {
-    _key: string;
-  } & Map | {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "dishesMenu";
-  }>;
+  theme?: "light" | "dark" | "cream" | "auto";
+  pageBuilder?: Array<
+    | ({
+        _key: string;
+      } & Banner)
+    | ({
+        _key: string;
+      } & TextWithIllustration)
+    | ({
+        _key: string;
+      } & Gallery)
+    | ({
+        _key: string;
+      } & Slider)
+    | ({
+        _key: string;
+      } & Slideshow)
+    | ({
+        _key: string;
+      } & Form)
+    | ({
+        _key: string;
+      } & Video)
+    | ({
+        _key: string;
+      } & Promotion)
+    | ({
+        _key: string;
+      } & Separator)
+    | ({
+        _key: string;
+      } & Map)
+    | ({
+        _key: string;
+      } & DishesMenuReference)
+  >;
+};
+
+export type Color = {
+  _type: "color";
+  hex?: string;
+  alpha?: number;
+  hsl?: HslaColor;
+  hsv?: HsvaColor;
+  rgb?: RgbaColor;
 };
 
 export type SanityFileAsset = {
@@ -552,28 +596,6 @@ export type SanityFileAsset = {
   source?: SanityAssetSourceData;
 };
 
-export type NavigationItem = {
-  _type: "navigationItem";
-  text?: string;
-  navigationItemUrl?: Link;
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
-};
-
 export type SanityImageAsset = {
   _id: string;
   _type: "sanity.imageAsset";
@@ -595,39 +617,6 @@ export type SanityImageAsset = {
   url?: string;
   metadata?: SanityImageMetadata;
   source?: SanityAssetSourceData;
-};
-
-export type SanityAssetSourceData = {
-  _type: "sanity.assetSourceData";
-  name?: string;
-  id?: string;
-  url?: string;
-};
-
-export type SanityImageMetadata = {
-  _type: "sanity.imageMetadata";
-  location?: Geopoint;
-  dimensions?: SanityImageDimensions;
-  palette?: SanityImagePalette;
-  lqip?: string;
-  blurHash?: string;
-  hasAlpha?: boolean;
-  isOpaque?: boolean;
-};
-
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
-};
-
-export type Color = {
-  _type: "color";
-  hex?: string;
-  alpha?: number;
-  hsl?: HslaColor;
-  hsv?: HsvaColor;
-  rgb?: RgbaColor;
 };
 
 export type RgbaColor = {
@@ -654,17 +643,65 @@ export type HslaColor = {
   a?: number;
 };
 
-export type Icon = {
-  _type: "icon";
-  name?: string;
-};
+export type AllSanitySchemaTypes =
+  | SanityImageAssetReference
+  | Logo
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityImageMetadata
+  | SanityImageHotspot
+  | SanityImageCrop
+  | Geopoint
+  | Slug
+  | SanityAssetSourceData
+  | Settings
+  | Copyright
+  | BlockContent
+  | Socials
+  | Social
+  | Icon
+  | DishesMenuReference
+  | Locations
+  | Duration
+  | TimeValue
+  | Dish
+  | DishesCategory
+  | DishesMenu
+  | Map
+  | PageReference
+  | Link
+  | NavigationItem
+  | Navigation
+  | Separator
+  | Slideshow
+  | Slider
+  | SanityFileAssetReference
+  | Video
+  | Form
+  | Gallery
+  | TextWithIllustration
+  | Banner
+  | Promotion
+  | Page
+  | Color
+  | SanityFileAsset
+  | SanityImageAsset
+  | RgbaColor
+  | HsvaColor
+  | HslaColor;
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | Copyright | Socials | Social | Locations | Duration | TimeValue | Dish | DishesCategory | DishesMenu | Map | Geopoint | Link | Navigation | Separator | Slideshow | Slider | Video | Form | Gallery | TextWithIllustration | Banner | Promotion | BlockContent | Page | SanityFileAsset | NavigationItem | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Slug | Color | RgbaColor | HsvaColor | HslaColor | Icon;
-export declare const internalGroqTypeReferenceTo: unique symbol;
-// Source: ./src/sanity/lib/queries.ts
+// Source: src/sanity/lib/queries.ts
+// Variable: SETTINGS_QUERY
+// Query: *[_type == "settings"][0]{  theme}
+export type SETTINGS_QUERY_RESULT = {
+  theme: "auto" | "cream" | "dark" | "light" | null;
+} | null;
+
+// Source: src/sanity/lib/queries.ts
 // Variable: HEADERMENU_QUERY
 // Query: *[navId.current match "main-menu*"]{  'navId': navId.current,  'items':  items[] {    'link': *[      _type == "page" &&      _id == ^.navigationItemUrl.internalLink._ref    ][0]{      'slug': slug.current    },    'externalUrl': navigationItemUrl.externalUrl,    text  }}
-export type HEADERMENU_QUERYResult = Array<{
+export type HEADERMENU_QUERY_RESULT = Array<{
   navId: string | null;
   items: Array<{
     link: {
@@ -674,14 +711,20 @@ export type HEADERMENU_QUERYResult = Array<{
     text: string | null;
   }> | null;
 }>;
+
+// Source: src/sanity/lib/queries.ts
 // Variable: SOCIALS_QUERY
 // Query: *[_type == "socials"][0].socials
-export type SOCIALS_QUERYResult = Array<{
-  _key: string;
-} & Social> | null;
+export type SOCIALS_QUERY_RESULT = Array<
+  {
+    _key: string;
+  } & Social
+> | null;
+
+// Source: src/sanity/lib/queries.ts
 // Variable: LOCATIONS_QUERY
 // Query: *[_type == "locations"]{  title,  city,  address,  postalCode,  phone,  email,  monday,  tuesday,  wednesday,  thursday,  friday,  saturday,  sunday}
-export type LOCATIONS_QUERYResult = Array<{
+export type LOCATIONS_QUERY_RESULT = Array<{
   title: string | null;
   city: string | null;
   address: string | null;
@@ -696,495 +739,309 @@ export type LOCATIONS_QUERYResult = Array<{
   saturday: Duration | null;
   sunday: Duration | null;
 }>;
+
+// Source: src/sanity/lib/queries.ts
 // Variable: COPYRIGHT_QUERY
 // Query: *[_type == "copyright"][0].content
-export type COPYRIGHT_QUERYResult = Array<{
-  children?: Array<{
-    marks?: Array<string>;
-    text?: string;
-    _type: "span";
-    _key: string;
-  }>;
-  style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
-  listItem?: "bullet";
-  markDefs?: Array<{
-    _key: string;
-  } & Color | {
-    href?: string;
-    _type: "link";
-    _key: string;
-  }>;
-  level?: number;
-  _type: "block";
-  _key: string;
-} | {
-  asset?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-  };
-  hotspot?: SanityImageHotspot;
-  crop?: SanityImageCrop;
-  alt?: string;
-  _type: "image";
-  _key: string;
-}> | null;
+export type COPYRIGHT_QUERY_RESULT = BlockContent | null;
+
+// Source: src/sanity/lib/queries.ts
 // Variable: HOMEPAGE_QUERY
-// Query: *[slug.current match "home*"][0]{  title,  subtitle,  slug,  metaTitle,  metaDescription,  fullWidth,  pageBuilder[]{    _type == "video" => {      _type,      videoLabel,      cssClasses,      file    },    _type == "banner" => {      _type,      heading,      text,      headingCSSClasses,      subtitle    },    _type == "separator" => {      _type,      separatorColor    },    _type == "slider" => {      _type,      heading,      subtitle,      backgroundImage,      images    },    _type == "slideshow" => {      _type,      'images':  images[] {        asset,        hotspot,        crop,        alt,        heading,        subtitle,        logo,        'link': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{          'slug': slug.current        },        'externalUrl': cta.navigationItemUrl.externalUrl,        'ctaText': cta.text      }    },    _type == "textWithIllustration" => {      _type,      heading,      text,      image,      imagePosition,      gridSize    },    _type == "gallery" => {      _type,      heading,      subtitle,      images    },    _type == "form" => {      _type,      heading,      label,      form    },    _type == "promotion" => {      _type,      title,      link,      direction,      speed    },    _type == "map" => {      _type,      heading,      mapCenter,      locations    },    _type == "dishesMenu" => {      _type,      _ref,      "menu": *[ _type == "dishesMenu" && menu._ref == ^._id ][0] {        title,        introText,        categories      }    }  },}
-export type HOMEPAGE_QUERYResult = {
+// Query: *[slug.current match "home*"][0]{  title,  subtitle,  slug,  metaTitle,  metaDescription,  fullWidth,  theme,  pageBuilder[]{    _type == "video" => {      _type,      videoLabel,      cssClasses,      file    },    _type == "banner" => {      _type,      heading,      text,      headingCSSClasses,      subtitle    },    _type == "separator" => {      _type,      separatorColor    },    _type == "slider" => {      _type,      heading,      subtitle,      backgroundImage,      images    },    _type == "slideshow" => {      _type,      'images':  images[] {        asset,        hotspot,        crop,        alt,        heading,        subtitle,        logo,        'link': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{          'slug': slug.current        },        'externalUrl': cta.navigationItemUrl.externalUrl,        'ctaText': cta.text      }    },    _type == "textWithIllustration" => {      _type,      heading,      text,      image,      imagePosition,      gridSize    },    _type == "gallery" => {      _type,      heading,      subtitle,      images    },    _type == "form" => {      _type,      heading,      label,      form    },    _type == "promotion" => {      _type,      title,      link,      direction,      speed    },    _type == "map" => {      _type,      heading,      mapCenter,      locations    },    _type == "dishesMenu" => {      _type,      _ref,      "menu": *[ _type == "dishesMenu" && menu._ref == ^._id ][0] {        title,        introText,        categories      }    }  },}
+export type HOMEPAGE_QUERY_RESULT = {
   title: string | null;
   subtitle: string | null;
   slug: Slug | null;
   metaTitle: string | null;
   metaDescription: string | null;
   fullWidth: boolean | null;
-  pageBuilder: Array<{
-    _type: "banner";
-    heading: string | null;
-    text: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
-      listItem?: "bullet";
-      markDefs?: Array<{
-        _key: string;
-      } & Color | {
-        href?: string;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    } | {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      _type: "image";
-      _key: string;
-    }> | null;
-    headingCSSClasses: string | null;
-    subtitle: string | null;
-  } | {
-    _type: "form";
-    heading: string | null;
-    label: string | null;
-    form: "contact" | "newsletter" | "register" | null;
-  } | {
-    _type: "gallery";
-    heading: string | null;
-    subtitle: string | null;
-    images: Array<{
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      _type: "image";
-      _key: string;
-    }> | null;
-  } | {
-    _type: "map";
-    heading: string | null;
-    mapCenter: Geopoint | null;
-    locations: Array<{
-      _key: string;
-    } & Geopoint> | null;
-  } | {
-    _type: "promotion";
-    title: string | null;
-    link: string | null;
-    direction: "left" | "right" | null;
-    speed: number | null;
-  } | {
-    _type: "separator";
-    separatorColor: Color | null;
-  } | {
-    _type: "slider";
-    heading: string | null;
-    subtitle: string | null;
-    backgroundImage: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      _type: "image";
-    } | null;
-    images: Array<{
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      _type: "image";
-      _key: string;
-    }> | null;
-  } | {
-    _type: "slideshow";
-    images: Array<{
-      asset: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      } | null;
-      hotspot: SanityImageHotspot | null;
-      crop: SanityImageCrop | null;
-      alt: string | null;
-      heading: string | null;
-      subtitle: string | null;
-      logo: {
-        asset?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-        };
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-        _type: "image";
-      } | null;
-      link: {
-        slug: string | null;
-      } | null;
-      externalUrl: string | null;
-      ctaText: string | null;
-    }> | null;
-  } | {
-    _type: "textWithIllustration";
-    heading: string | null;
-    text: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
-      listItem?: "bullet";
-      markDefs?: Array<{
-        _key: string;
-      } & Color | {
-        href?: string;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    } | {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      _type: "image";
-      _key: string;
-    }> | null;
-    image: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      _type: "image";
-    } | null;
-    imagePosition: "left" | "right" | null;
-    gridSize: "grid-cols-2" | "grid-cols-3" | null;
-  } | {
-    _type: "video";
-    videoLabel: string | null;
-    cssClasses: string | null;
-    file: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
-      };
-      _type: "file";
-    } | null;
-  } | {}> | null;
+  theme: "auto" | "cream" | "dark" | "light" | null;
+  pageBuilder: Array<
+    | {
+        _type: "banner";
+        heading: string | null;
+        text: BlockContent | null;
+        headingCSSClasses: string | null;
+        subtitle: string | null;
+      }
+    | {
+        _type: "form";
+        heading: string | null;
+        label: string | null;
+        form: "contact" | "newsletter" | "register" | null;
+      }
+    | {
+        _type: "gallery";
+        heading: string | null;
+        subtitle: string | null;
+        images: Array<{
+          asset?: SanityImageAssetReference;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+          _key: string;
+        }> | null;
+      }
+    | {
+        _type: "map";
+        heading: string | null;
+        mapCenter: Geopoint | null;
+        locations: Array<
+          {
+            _key: string;
+          } & Geopoint
+        > | null;
+      }
+    | {
+        _type: "promotion";
+        title: string | null;
+        link: string | null;
+        direction: "left" | "right" | null;
+        speed: number | null;
+      }
+    | {
+        _type: "separator";
+        separatorColor: Color | null;
+      }
+    | {
+        _type: "slider";
+        heading: string | null;
+        subtitle: string | null;
+        backgroundImage: {
+          asset?: SanityImageAssetReference;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+        } | null;
+        images: Array<{
+          asset?: SanityImageAssetReference;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+          _key: string;
+        }> | null;
+      }
+    | {
+        _type: "slideshow";
+        images: Array<{
+          asset: SanityImageAssetReference | null;
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          alt: string | null;
+          heading: string | null;
+          subtitle: string | null;
+          logo: Logo | null;
+          link: {
+            slug: string | null;
+          } | null;
+          externalUrl: string | null;
+          ctaText: string | null;
+        }> | null;
+      }
+    | {
+        _type: "textWithIllustration";
+        heading: string | null;
+        text: BlockContent | null;
+        image: {
+          asset?: SanityImageAssetReference;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt?: string;
+          _type: "image";
+        } | null;
+        imagePosition: "left" | "right" | null;
+        gridSize: "grid-cols-2" | "grid-cols-3" | null;
+      }
+    | {
+        _type: "video";
+        videoLabel: string | null;
+        cssClasses: string | null;
+        file: {
+          asset?: SanityFileAssetReference;
+          _type: "file";
+        } | null;
+      }
+    | {}
+  > | null;
 } | null;
+
+// Source: src/sanity/lib/queries.ts
 // Variable: PAGE_QUERY
-// Query: *[slug.current == $slug][0]{  title,  subtitle,  slug,  metaTitle,  metaDescription,  introImage,  fullWidth,  pageBuilder[]{    _type == "video" => {      _type,      videoLabel,      cssClasses,      file    },    _type == "banner" => {      _type,      heading,      text,      headingCSSClasses,      subtitle    },    _type == "separator" => {      _type,      separatorColor    },    _type == "slider" => {      _type,      title,      subtitle,      backgroundImage,      images    },    _type == "slideshow" => {      _type,      'images':  images[] {        asset,        hotspot,        crop,        alt,        heading,        subtitle,        logo,        'link': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{          'slug': slug.current        },        'externalUrl': cta.navigationItemUrl.externalUrl,        'ctaText': cta.text      }    },    _type == "textWithIllustration" => {      _type,      heading,      text,      image,      imagePosition,      gridSize    },    _type == "gallery" => {      _type,      heading,      subtitle,      images    },    _type == "form" => {      _type,      heading,      label,      form    },    _type == "promotion" => {      _type,      title,      link,      direction,      speed    },    _type == "map" => {      _type,      heading,      mapCenter,      locations    },    _type == "dishesMenu" => {      _type,      _ref,      "menu": *[_type == "dishesMenu" && ^._ref == _id][0] {        _id,        title,        introText,        categories      }    }  },}
-export type PAGE_QUERYResult = {
-  title: null;
-  subtitle: null;
-  slug: null;
-  metaTitle: null;
-  metaDescription: null;
-  introImage: null;
-  fullWidth: null;
-  pageBuilder: null;
-} | {
-  title: string | null;
-  subtitle: null;
-  slug: null;
-  metaTitle: null;
-  metaDescription: null;
-  introImage: null;
-  fullWidth: null;
-  pageBuilder: null;
-} | {
-  title: string | null;
-  subtitle: string | null;
-  slug: Slug | null;
-  metaTitle: string | null;
-  metaDescription: string | null;
-  introImage: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  } | null;
-  fullWidth: boolean | null;
-  pageBuilder: Array<{
-    _type: "banner";
-    heading: string | null;
-    text: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
-      listItem?: "bullet";
-      markDefs?: Array<{
-        _key: string;
-      } & Color | {
-        href?: string;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    } | {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      _type: "image";
-      _key: string;
-    }> | null;
-    headingCSSClasses: string | null;
-    subtitle: string | null;
-  } | {
-    _type: "form";
-    heading: string | null;
-    label: string | null;
-    form: "contact" | "newsletter" | "register" | null;
-  } | {
-    _type: "gallery";
-    heading: string | null;
-    subtitle: string | null;
-    images: Array<{
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      _type: "image";
-      _key: string;
-    }> | null;
-  } | {
-    _type: "map";
-    heading: string | null;
-    mapCenter: Geopoint | null;
-    locations: Array<{
-      _key: string;
-    } & Geopoint> | null;
-  } | {
-    _type: "promotion";
-    title: string | null;
-    link: string | null;
-    direction: "left" | "right" | null;
-    speed: number | null;
-  } | {
-    _type: "separator";
-    separatorColor: Color | null;
-  } | {
-    _type: "slider";
-    title: null;
-    subtitle: string | null;
-    backgroundImage: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      _type: "image";
-    } | null;
-    images: Array<{
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      _type: "image";
-      _key: string;
-    }> | null;
-  } | {
-    _type: "slideshow";
-    images: Array<{
-      asset: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      } | null;
-      hotspot: SanityImageHotspot | null;
-      crop: SanityImageCrop | null;
-      alt: string | null;
-      heading: string | null;
+// Query: *[slug.current == $slug][0]{  title,  subtitle,  slug,  metaTitle,  metaDescription,  introImage,  fullWidth,  theme,  pageBuilder[]{    _type == "video" => {      _type,      videoLabel,      cssClasses,      file    },    _type == "banner" => {      _type,      heading,      text,      headingCSSClasses,      subtitle    },    _type == "separator" => {      _type,      separatorColor    },    _type == "slider" => {      _type,      title,      subtitle,      backgroundImage,      images    },    _type == "slideshow" => {      _type,      'images':  images[] {        asset,        hotspot,        crop,        alt,        heading,        subtitle,        logo,        'link': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{          'slug': slug.current        },        'externalUrl': cta.navigationItemUrl.externalUrl,        'ctaText': cta.text      }    },    _type == "textWithIllustration" => {      _type,      heading,      text,      image,      imagePosition,      gridSize    },    _type == "gallery" => {      _type,      heading,      subtitle,      images    },    _type == "form" => {      _type,      heading,      label,      form    },    _type == "promotion" => {      _type,      title,      link,      direction,      speed    },    _type == "map" => {      _type,      heading,      mapCenter,      locations    },    _type == "dishesMenu" => {      _type,      _ref,      "menu": *[_type == "dishesMenu" && ^._ref == _id][0] {        _id,        title,        introText,        categories      }    }  },}
+export type PAGE_QUERY_RESULT =
+  | {
+      title: null;
+      subtitle: null;
+      slug: null;
+      metaTitle: null;
+      metaDescription: null;
+      introImage: null;
+      fullWidth: null;
+      theme: null;
+      pageBuilder: null;
+    }
+  | {
+      title: string | null;
+      subtitle: null;
+      slug: null;
+      metaTitle: null;
+      metaDescription: null;
+      introImage: null;
+      fullWidth: null;
+      theme: null;
+      pageBuilder: null;
+    }
+  | {
+      title: null;
+      subtitle: null;
+      slug: null;
+      metaTitle: null;
+      metaDescription: null;
+      introImage: null;
+      fullWidth: null;
+      theme: "auto" | "cream" | "dark" | "light" | null;
+      pageBuilder: null;
+    }
+  | {
+      title: string | null;
       subtitle: string | null;
-      logo: {
-        asset?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-        };
+      slug: Slug | null;
+      metaTitle: string | null;
+      metaDescription: string | null;
+      introImage: {
+        asset?: SanityImageAssetReference;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: "image";
       } | null;
-      link: {
-        slug: string | null;
-      } | null;
-      externalUrl: string | null;
-      ctaText: string | null;
-    }> | null;
-  } | {
-    _type: "textWithIllustration";
-    heading: string | null;
-    text: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
-      listItem?: "bullet";
-      markDefs?: Array<{
-        _key: string;
-      } & Color | {
-        href?: string;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    } | {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      _type: "image";
-      _key: string;
-    }> | null;
-    image: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      _type: "image";
-    } | null;
-    imagePosition: "left" | "right" | null;
-    gridSize: "grid-cols-2" | "grid-cols-3" | null;
-  } | {
-    _type: "video";
-    videoLabel: string | null;
-    cssClasses: string | null;
-    file: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
-      };
-      _type: "file";
-    } | null;
-  } | {}> | null;
-} | null;
+      fullWidth: boolean | null;
+      theme: "auto" | "cream" | "dark" | "light" | null;
+      pageBuilder: Array<
+        | {
+            _type: "banner";
+            heading: string | null;
+            text: BlockContent | null;
+            headingCSSClasses: string | null;
+            subtitle: string | null;
+          }
+        | {
+            _type: "form";
+            heading: string | null;
+            label: string | null;
+            form: "contact" | "newsletter" | "register" | null;
+          }
+        | {
+            _type: "gallery";
+            heading: string | null;
+            subtitle: string | null;
+            images: Array<{
+              asset?: SanityImageAssetReference;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              _type: "image";
+              _key: string;
+            }> | null;
+          }
+        | {
+            _type: "map";
+            heading: string | null;
+            mapCenter: Geopoint | null;
+            locations: Array<
+              {
+                _key: string;
+              } & Geopoint
+            > | null;
+          }
+        | {
+            _type: "promotion";
+            title: string | null;
+            link: string | null;
+            direction: "left" | "right" | null;
+            speed: number | null;
+          }
+        | {
+            _type: "separator";
+            separatorColor: Color | null;
+          }
+        | {
+            _type: "slider";
+            title: null;
+            subtitle: string | null;
+            backgroundImage: {
+              asset?: SanityImageAssetReference;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              _type: "image";
+            } | null;
+            images: Array<{
+              asset?: SanityImageAssetReference;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              _type: "image";
+              _key: string;
+            }> | null;
+          }
+        | {
+            _type: "slideshow";
+            images: Array<{
+              asset: SanityImageAssetReference | null;
+              hotspot: SanityImageHotspot | null;
+              crop: SanityImageCrop | null;
+              alt: string | null;
+              heading: string | null;
+              subtitle: string | null;
+              logo: Logo | null;
+              link: {
+                slug: string | null;
+              } | null;
+              externalUrl: string | null;
+              ctaText: string | null;
+            }> | null;
+          }
+        | {
+            _type: "textWithIllustration";
+            heading: string | null;
+            text: BlockContent | null;
+            image: {
+              asset?: SanityImageAssetReference;
+              hotspot?: SanityImageHotspot;
+              crop?: SanityImageCrop;
+              alt?: string;
+              _type: "image";
+            } | null;
+            imagePosition: "left" | "right" | null;
+            gridSize: "grid-cols-2" | "grid-cols-3" | null;
+          }
+        | {
+            _type: "video";
+            videoLabel: string | null;
+            cssClasses: string | null;
+            file: {
+              asset?: SanityFileAssetReference;
+              _type: "file";
+            } | null;
+          }
+        | {}
+      > | null;
+    }
+  | null;
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[navId.current match \"main-menu*\"]{\n  'navId': navId.current,\n  'items':  items[] {\n    'link': *[\n      _type == \"page\" &&\n      _id == ^.navigationItemUrl.internalLink._ref\n    ][0]{\n      'slug': slug.current\n    },\n    'externalUrl': navigationItemUrl.externalUrl,\n    text\n  }\n}": HEADERMENU_QUERYResult;
-    "*[_type == \"socials\"][0].socials": SOCIALS_QUERYResult;
-    "*[_type == \"locations\"]{\n  title,\n  city,\n  address,\n  postalCode,\n  phone,\n  email,\n  monday,\n  tuesday,\n  wednesday,\n  thursday,\n  friday,\n  saturday,\n  sunday\n}": LOCATIONS_QUERYResult;
-    "*[_type == \"copyright\"][0].content": COPYRIGHT_QUERYResult;
-    "*[slug.current match \"home*\"][0]{\n  title,\n  subtitle,\n  slug,\n  metaTitle,\n  metaDescription,\n  fullWidth,\n  pageBuilder[]{\n    _type == \"video\" => {\n      _type,\n      videoLabel,\n      cssClasses,\n      file\n    },\n    _type == \"banner\" => {\n      _type,\n      heading,\n      text,\n      headingCSSClasses,\n      subtitle\n    },\n    _type == \"separator\" => {\n      _type,\n      separatorColor\n    },\n    _type == \"slider\" => {\n      _type,\n      heading,\n      subtitle,\n      backgroundImage,\n      images\n    },\n    _type == \"slideshow\" => {\n      _type,\n      'images':  images[] {\n        asset,\n        hotspot,\n        crop,\n        alt,\n        heading,\n        subtitle,\n        logo,\n        'link': *[_type == \"page\" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{\n          'slug': slug.current\n        },\n        'externalUrl': cta.navigationItemUrl.externalUrl,\n        'ctaText': cta.text\n      }\n    },\n    _type == \"textWithIllustration\" => {\n      _type,\n      heading,\n      text,\n      image,\n      imagePosition,\n      gridSize\n    },\n    _type == \"gallery\" => {\n      _type,\n      heading,\n      subtitle,\n      images\n    },\n    _type == \"form\" => {\n      _type,\n      heading,\n      label,\n      form\n    },\n    _type == \"promotion\" => {\n      _type,\n      title,\n      link,\n      direction,\n      speed\n    },\n    _type == \"map\" => {\n      _type,\n      heading,\n      mapCenter,\n      locations\n    },\n    _type == \"dishesMenu\" => {\n      _type,\n      _ref,\n      \"menu\": *[ _type == \"dishesMenu\" && menu._ref == ^._id ][0] {\n        title,\n        introText,\n        categories\n      }\n    }\n  },\n}": HOMEPAGE_QUERYResult;
-    "*[slug.current == $slug][0]{\n  title,\n  subtitle,\n  slug,\n  metaTitle,\n  metaDescription,\n  introImage,\n  fullWidth,\n  pageBuilder[]{\n    _type == \"video\" => {\n      _type,\n      videoLabel,\n      cssClasses,\n      file\n    },\n    _type == \"banner\" => {\n      _type,\n      heading,\n      text,\n      headingCSSClasses,\n      subtitle\n    },\n    _type == \"separator\" => {\n      _type,\n      separatorColor\n    },\n    _type == \"slider\" => {\n      _type,\n      title,\n      subtitle,\n      backgroundImage,\n      images\n    },\n    _type == \"slideshow\" => {\n      _type,\n      'images':  images[] {\n        asset,\n        hotspot,\n        crop,\n        alt,\n        heading,\n        subtitle,\n        logo,\n        'link': *[_type == \"page\" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{\n          'slug': slug.current\n        },\n        'externalUrl': cta.navigationItemUrl.externalUrl,\n        'ctaText': cta.text\n      }\n    },\n    _type == \"textWithIllustration\" => {\n      _type,\n      heading,\n      text,\n      image,\n      imagePosition,\n      gridSize\n    },\n    _type == \"gallery\" => {\n      _type,\n      heading,\n      subtitle,\n      images\n    },\n    _type == \"form\" => {\n      _type,\n      heading,\n      label,\n      form\n    },\n    _type == \"promotion\" => {\n      _type,\n      title,\n      link,\n      direction,\n      speed\n    },\n    _type == \"map\" => {\n      _type,\n      heading,\n      mapCenter,\n      locations\n    },\n    _type == \"dishesMenu\" => {\n      _type,\n      _ref,\n      \"menu\": *[_type == \"dishesMenu\" && ^._ref == _id][0] {\n        _id,\n        title,\n        introText,\n        categories\n      }\n    }\n  },\n}": PAGE_QUERYResult;
+    '*[_type == "settings"][0]{\n  theme\n}': SETTINGS_QUERY_RESULT;
+    "*[navId.current match \"main-menu*\"]{\n  'navId': navId.current,\n  'items':  items[] {\n    'link': *[\n      _type == \"page\" &&\n      _id == ^.navigationItemUrl.internalLink._ref\n    ][0]{\n      'slug': slug.current\n    },\n    'externalUrl': navigationItemUrl.externalUrl,\n    text\n  }\n}": HEADERMENU_QUERY_RESULT;
+    '*[_type == "socials"][0].socials': SOCIALS_QUERY_RESULT;
+    '*[_type == "locations"]{\n  title,\n  city,\n  address,\n  postalCode,\n  phone,\n  email,\n  monday,\n  tuesday,\n  wednesday,\n  thursday,\n  friday,\n  saturday,\n  sunday\n}': LOCATIONS_QUERY_RESULT;
+    '*[_type == "copyright"][0].content': COPYRIGHT_QUERY_RESULT;
+    '*[slug.current match "home*"][0]{\n  title,\n  subtitle,\n  slug,\n  metaTitle,\n  metaDescription,\n  fullWidth,\n  theme,\n  pageBuilder[]{\n    _type == "video" => {\n      _type,\n      videoLabel,\n      cssClasses,\n      file\n    },\n    _type == "banner" => {\n      _type,\n      heading,\n      text,\n      headingCSSClasses,\n      subtitle\n    },\n    _type == "separator" => {\n      _type,\n      separatorColor\n    },\n    _type == "slider" => {\n      _type,\n      heading,\n      subtitle,\n      backgroundImage,\n      images\n    },\n    _type == "slideshow" => {\n      _type,\n      \'images\':  images[] {\n        asset,\n        hotspot,\n        crop,\n        alt,\n        heading,\n        subtitle,\n        logo,\n        \'link\': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{\n          \'slug\': slug.current\n        },\n        \'externalUrl\': cta.navigationItemUrl.externalUrl,\n        \'ctaText\': cta.text\n      }\n    },\n    _type == "textWithIllustration" => {\n      _type,\n      heading,\n      text,\n      image,\n      imagePosition,\n      gridSize\n    },\n    _type == "gallery" => {\n      _type,\n      heading,\n      subtitle,\n      images\n    },\n    _type == "form" => {\n      _type,\n      heading,\n      label,\n      form\n    },\n    _type == "promotion" => {\n      _type,\n      title,\n      link,\n      direction,\n      speed\n    },\n    _type == "map" => {\n      _type,\n      heading,\n      mapCenter,\n      locations\n    },\n    _type == "dishesMenu" => {\n      _type,\n      _ref,\n      "menu": *[ _type == "dishesMenu" && menu._ref == ^._id ][0] {\n        title,\n        introText,\n        categories\n      }\n    }\n  },\n}': HOMEPAGE_QUERY_RESULT;
+    '*[slug.current == $slug][0]{\n  title,\n  subtitle,\n  slug,\n  metaTitle,\n  metaDescription,\n  introImage,\n  fullWidth,\n  theme,\n  pageBuilder[]{\n    _type == "video" => {\n      _type,\n      videoLabel,\n      cssClasses,\n      file\n    },\n    _type == "banner" => {\n      _type,\n      heading,\n      text,\n      headingCSSClasses,\n      subtitle\n    },\n    _type == "separator" => {\n      _type,\n      separatorColor\n    },\n    _type == "slider" => {\n      _type,\n      title,\n      subtitle,\n      backgroundImage,\n      images\n    },\n    _type == "slideshow" => {\n      _type,\n      \'images\':  images[] {\n        asset,\n        hotspot,\n        crop,\n        alt,\n        heading,\n        subtitle,\n        logo,\n        \'link\': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{\n          \'slug\': slug.current\n        },\n        \'externalUrl\': cta.navigationItemUrl.externalUrl,\n        \'ctaText\': cta.text\n      }\n    },\n    _type == "textWithIllustration" => {\n      _type,\n      heading,\n      text,\n      image,\n      imagePosition,\n      gridSize\n    },\n    _type == "gallery" => {\n      _type,\n      heading,\n      subtitle,\n      images\n    },\n    _type == "form" => {\n      _type,\n      heading,\n      label,\n      form\n    },\n    _type == "promotion" => {\n      _type,\n      title,\n      link,\n      direction,\n      speed\n    },\n    _type == "map" => {\n      _type,\n      heading,\n      mapCenter,\n      locations\n    },\n    _type == "dishesMenu" => {\n      _type,\n      _ref,\n      "menu": *[_type == "dishesMenu" && ^._ref == _id][0] {\n        _id,\n        title,\n        introText,\n        categories\n      }\n    }\n  },\n}': PAGE_QUERY_RESULT;
   }
 }
