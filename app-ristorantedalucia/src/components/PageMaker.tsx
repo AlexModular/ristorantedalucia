@@ -1,4 +1,4 @@
-import { HOMEPAGE_QUERYResult, Slider as S, Gallery as G, Banner as B, Video as V, TextWithIllustration as T, Form as F, Map as MAP, Promotion as P, Separator, PAGE_QUERYResult } from '../../sanity.types';
+import { HOMEPAGE_QUERY_RESULT, Slider as S, Gallery as G, Banner as B, Video as V, TextWithIllustration as T, Form as F, Map as MAP, Promotion as P, Separator, PAGE_QUERY_RESULT } from '../../sanity.types';
 import { DishesMenuForPageMaker, SlideshowForPageMaker } from '../../sanity.types.custom';
 import Video from "./blocks/Video";
 import Banner from "./blocks/Banner";
@@ -75,7 +75,7 @@ const makeBlock = (item: B | V | S | SlideshowForPageMaker | G | T | F | MAP | P
   }
 };
 
-export default function PageMaker({ page }: { page: HOMEPAGE_QUERYResult | PAGE_QUERYResult }) {
+export default function PageMaker({ page }: { page: HOMEPAGE_QUERY_RESULT | PAGE_QUERY_RESULT }) {
   const pageBuilder = page?.pageBuilder || [];
   return (
     <div className={page?.slug?.current?.includes('home') ? "homepage" : ("page-content" + (page?.fullWidth ? " full-width" : ""))}>
