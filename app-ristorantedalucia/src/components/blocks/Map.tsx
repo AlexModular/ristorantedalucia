@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { APIProvider, Map as GoogleMap, AdvancedMarker, useMap } from "@vis.gl/react-google-maps";
 import { Map as MAP } from "../../../sanity.types";
 import Image from 'next/image';
@@ -49,7 +49,7 @@ export default function Map(params: { item: MAP }) {
             colorScheme="DARK"
           >
             {item.locations?.filter(location => location?.lat !== undefined && location?.lng !== undefined).map((location, index) => (
-              <AdvancedMarker position={{ lat: location?.lat!, lng: location?.lng! }} key={index}>
+              <AdvancedMarker position={{ lat: location.lat!, lng: location.lng! }} key={index}>
                 <div className="marker-container">
                   <Image src="/images/marker.svg" alt="marker" width={45} height={45} />
                 </div>

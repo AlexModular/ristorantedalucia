@@ -1,40 +1,22 @@
 'use client'
 
 import { DishesMenuForPageMaker } from "../../../sanity.types.custom";
-import { useEffect, useRef, useState } from "react";
+import { useState, useMemo } from "react";
 import { Icon } from '@iconify/react';
 import { PortableText } from "next-sanity";
 import AOSComponent from "../AOS";
 import { useFormatter } from "next-intl"
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function DishesMenu({ item }: { item: DishesMenuForPageMaker }) {
-  const uuid = item._ref; // Use _ref
-  // Initialize Isotope
   const format = useFormatter();
-  const isotope = useRef<Isotope | null>();
-  const [filterKey, setFilterKey] = useState<string>("cat-0-" + uuid);
-  useEffect(() => {
-    (async () => {
-      console.log("Initializing Isotope for DishesMenu with uuid:", uuid);
-      if (isotope.current) {
-        isotope.current.destroy(); // Destroy previous instance if it exists
-      }
-      const Isotope = (await import('isotope-layout')).default;
-      isotope.current = new Isotope(`#filter-container-${uuid}`, {
-        itemSelector: `#filter-container-${uuid} .filter-item`,
-        layoutMode: 'fitRows',
-        filter: `.${filterKey}`,
-      });
-    })();
-  }, [isotope]);
+  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>(0);
 
-  useEffect(() => {
-    if (isotope) {
-      isotope.current?.arrange({ filter: `.${filterKey}` });
-    }
-  }, [isotope, filterKey]);
-
-  const handleFilterKeyChange = (filter: string) => () => setFilterKey(filter);
+  const categories = useMemo(() => item.menu?.categories || [], [item.menu?.categories]);
+  
+  const filteredDishes = useMemo(() => {
+    return categories[selectedCategoryIndex]?.dishes || [];
+  }, [categories, selectedCategoryIndex]);
 
   return (
     <AOSComponent>
@@ -45,26 +27,57 @@ export default function DishesMenu({ item }: { item: DishesMenuForPageMaker }) {
             <PortableText value={item.menu?.introText || []} />
           </div>
         )}
+        
+        {/* Category Filter */}
         <ul className="filter-list flex justify-center flex-wrap pb-10">
-          {item.menu?.categories?.map((category, index) => (
-            <li key={index} onClick={handleFilterKeyChange('cat-' + index + '-' + uuid)} className={'filter-item cursor-pointer text-center flex flex-col md:px-5 px-2 pb-5 justify-center items-center' + (filterKey === 'cat-' + index + '-' + uuid ? " active" : "")}>
-              <Icon icon={category.icon?.name || 'mdi:food'} className="md:text-5xl text-4xl text-center md:mb-5 mb-2 text-white" />
-              <h6 className="text-gold uppercase md:text-2xl text-md">{category.title}</h6>
+          {categories.map((category, index) => (
+            <li 
+              key={index} 
+              onClick={() => setSelectedCategoryIndex(index)} 
+              className={`filter-item cursor-pointer text-center flex flex-col md:px-5 px-2 pb-5 justify-center items-center transition-all duration-300 ${selectedCategoryIndex === index ? "active scale-110" : "opacity-60 grayscale hover:opacity-100 hover:grayscale-0"}`}
+            >
+              <Icon 
+                icon={category.icon?.name || 'mdi:food'} 
+                className={`md:text-5xl text-4xl text-center md:mb-5 mb-2 transition-colors duration-300 ${selectedCategoryIndex === index ? 'text-gold' : 'text-white'}`} 
+              />
+              <h6 className={`uppercase md:text-2xl text-md font-bold tracking-widest transition-colors duration-300 ${selectedCategoryIndex === index ? 'text-foreground' : 'text-gold'}`}>
+                {category.title}
+              </h6>
             </li>
           ))}
         </ul>
-        <div className="filter-container" id={`filter-container-${uuid}`}>
-          {item.menu?.categories?.map((category, index) =>
-            category.dishes?.map((dish, idx) => (
-              <div key={'dish-' + idx} className={`filter-item cat-${index}-${uuid}`}>
-                <h6 className="family-oswald text-gold uppercase">
-                  <span>{dish.title}</span>
-                  {dish.price && <span className="price">{format.number(dish.price, { style: 'currency', currency: 'EUR' })}</span>}
-                </h6>
-                {dish.description && <div className="dish-description">{dish.description}</div>}
-              </div>
-            )
+
+        {/* Dishes Grid */}
+        <div className="filter-container flex flex-wrap justify-center min-h-[400px]">
+          <AnimatePresence mode="popLayout">
+            {filteredDishes.map((dish, idx) => (
+              <motion.div
+                key={`${selectedCategoryIndex}-${idx}`}
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                className="filter-item w-full md:w-[calc(50%-40px)] m-5 text-left border-b border-gold/20 pb-5"
+              >
+                <div className="flex justify-between items-baseline gap-4 mb-2">
+                  <h6 className="family-oswald text-gold uppercase font-bold text-xl tracking-wide">
+                    {dish.title}
+                  </h6>
+                  {dish.price && (
+                    <span className="price text-foreground font-bold font-mono">
+                      {format.number(dish.price, { style: 'currency', currency: 'EUR' })}
+                    </span>
+                  )}
+                </div>
+                {dish.description && (
+                  <div className="dish-description text-gray-500 italic text-sm leading-relaxed">
+                    {dish.description}
+                  </div>
+                )}
+              </motion.div>
             ))}
+          </AnimatePresence>
         </div>
       </div>
     </AOSComponent>
