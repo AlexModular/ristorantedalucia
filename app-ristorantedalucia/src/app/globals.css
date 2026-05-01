@@ -1,8 +1,17 @@
+@import 'css/animations.css';
+@import 'css/header.css';
+@import 'css/banner.css';
+@import 'css/slider.css';
+@import 'css/page.css';
+@import 'css/contact-form.css';
+@import 'css/promotional-text.css';
+@import 'css/dishes-menu.css';
+@import 'css/footer.css';
+@import 'css/food-flaticon.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import 'css/food-flaticon.css';
 
 @font-face {
   font-family: 'RobotoFlex';
@@ -45,8 +54,17 @@
   --swiper-theme-color: var(--gold) !important;
 }
 
-/* Dark Theme (Deep Green) - Activated via Sanity or System Pref */
-.dark,
+/* Dark Theme (Deep Green) - Activated via Sanity */
+.dark {
+  --background: #213a33;
+  --foreground: #FAF3E0;
+  --gold: #B99B5B;
+  --gold-hover: #D4AF37;
+  --gray: #a8b2af;
+  --cream: #2a4940;
+}
+
+/* Dark Theme - Activated via System Preference */
 @media (prefers-color-scheme: dark) {
   :root:not(.light) {
     --background: #213a33;
@@ -196,13 +214,3 @@ p {
 .iub__us-widget {
   display: none !important;
 }
-
-@import 'css/animations.css';
-@import 'css/header.css';
-@import 'css/banner.css';
-@import 'css/slider.css';
-@import 'css/page.css';
-@import 'css/contact-form.css';
-@import 'css/promotional-text.css';
-@import 'css/dishes-menu.css';
-@import 'css/footer.css';
