@@ -48,7 +48,7 @@ export default function DishesMenu({ item }: { item: DishesMenuForPageMaker }) {
         </ul>
 
         {/* Dishes Grid */}
-        <div className="filter-container flex flex-wrap justify-center min-h-[400px]">
+        <div className="filter-container flex flex-wrap justify-start min-h-[400px] md:px-10 px-4">
           <AnimatePresence mode="popLayout">
             {filteredDishes.map((dish, idx) => (
               <motion.div
