@@ -128,3 +128,8 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+#
+scratch/menu_data.json
+scratch/menu_import.ndjson
+scratch/generate_ndjson.mjs

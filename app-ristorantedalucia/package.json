@@ -30,6 +30,7 @@
     "aos": "^2.3.4",
     "bootstrap": "^5.3.3",
     "flickr-justified-gallery": "^2.2.0",
+    "framer-motion": "^12.38.0",
     "icomoon-react": "^3.0.0",
     "isotope-layout": "^3.0.6",
     "lightgallery": "^2.8.2",
