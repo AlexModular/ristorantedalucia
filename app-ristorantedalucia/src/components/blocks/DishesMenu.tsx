@@ -7,7 +7,7 @@ import { PortableText } from "next-sanity";
 import AOSComponent from "../AOS";
 import { useFormatter } from "next-intl"
 
-export default function DishesMenu({item}: {item: DishesMenuForPageMaker}) {
+export default function DishesMenu({ item }: { item: DishesMenuForPageMaker }) {
   const uuid = item._ref; // Use _ref
   // Initialize Isotope
   const format = useFormatter();
@@ -59,12 +59,12 @@ export default function DishesMenu({item}: {item: DishesMenuForPageMaker}) {
               <div key={'dish-' + idx} className={`filter-item cat-${index}-${uuid}`}>
                 <h6 className="family-oswald text-gold uppercase">
                   <span>{dish.title}</span>
-                  {dish.price && <span className="price">{format.number(dish.price, {style: 'currency', currency: 'EUR'})}</span>}
+                  {dish.price && <span className="price">{format.number(dish.price, { style: 'currency', currency: 'EUR' })}</span>}
                 </h6>
                 {dish.description && <div className="dish-description">{dish.description}</div>}
               </div>
             )
-          ))}
+            ))}
         </div>
       </div>
     </AOSComponent>
