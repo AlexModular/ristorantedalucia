@@ -34,6 +34,21 @@ export const pageType = defineType({
       type: 'boolean',
     }),
     defineField({
+      name: "theme",
+      title: "Theme",
+      type: "string",
+      options: {
+        list: [
+          { title: "Light", value: "light" },
+          { title: "Dark", value: "dark" },
+          { title: "Cream", value: "cream" },
+          { title: "Auto (System Preference)", value: "auto" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "light",
+    }),
+    defineField({
       name: 'pageBuilder',
       type: 'array',
       title: 'Page builder',

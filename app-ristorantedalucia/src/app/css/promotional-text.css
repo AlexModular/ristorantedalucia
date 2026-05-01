@@ -1,14 +1,21 @@
 .looper__listInstance {
-  font-size: 40px;
-  font-family: 'Oswald';
-  padding: 15px;
-  color: var(--gold)
+  font-size: 5rem;
+  font-family: 'Oswald', sans-serif;
+  padding: 30px;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.looper__listInstance:hover {
+  opacity: 1;
 }
 
 @media screen and (max-width: 768px) {
   .looper__listInstance {
-    font-size: 25px;
-    padding: 10px;
+    font-size: 2.5rem;
+    padding: 15px;
   }
-  
 }

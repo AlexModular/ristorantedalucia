@@ -49,5 +49,19 @@ export const imageSlideshowType = defineType({
         layout: 'grid',
       },
     }),
+    defineField({
+      name: 'effect',
+      title: 'Transition Effect',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Elegant Fade', value: 'fade' },
+          { title: 'Standard Slide', value: 'slide' },
+          { title: 'Creative Push', value: 'creative' },
+          { title: 'Coverflow', value: 'coverflow' },
+        ],
+      },
+      initialValue: 'fade',
+    }),
   ],
 })

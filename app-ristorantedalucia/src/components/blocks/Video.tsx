@@ -7,7 +7,7 @@ export default function Video(params: {key: number, item: V }) {
   const fileAsset = item?.file ? getFileAsset(item.file as SanityFileSource, opts) : null;
   const fileUrl = fileAsset ? buildFileUrl(fileAsset, opts) : '';
   return (
-    <video className={item?.cssClasses} autoPlay muted loop title={item?.videoLabel}>
+    <video className={`${item?.cssClasses} transparent-header-trigger`} autoPlay muted loop title={item?.videoLabel}>
       <source src={fileUrl} type="video/mp4" />
     </video>
   );

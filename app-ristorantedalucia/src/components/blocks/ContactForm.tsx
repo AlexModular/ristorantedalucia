@@ -78,9 +78,11 @@ export default function ContactForm(params: {item: Form}) {
               </div>
             </div>
           </label>
-          <button type="submit" className="border-gold border-2 bg-gold text-white hover:bg-white full-width col-span-2 transition-all hover:text-black"disabled={disabled}>
-              Invia
-          </button>
+          <div className="col-span-2 flex justify-center">
+            <button type="submit" className="cta-btn" disabled={disabled}>
+                Invia Messaggio
+            </button>
+          </div>
         </form>
       </section>
     </AOSComponent>

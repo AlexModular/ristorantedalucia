@@ -30,7 +30,7 @@ export default function PageIntro({data}: {data: PageIntroProps}) {
   }
   return (
     <AOSComponent>
-      <div className="page-head" style={style}>
+      <div className="page-head transparent-header-trigger" style={style}>
         <h1 className="text-white uppercase" data-aos="zoom-in">{data.title}</h1>
       </div>
       <div className="breadcrumbs border-t-0 border-b-2 border-gold px-5 sm:px-10">

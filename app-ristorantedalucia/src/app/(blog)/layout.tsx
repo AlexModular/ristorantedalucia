@@ -16,7 +16,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { Metadata } from 'next';
 import { sanityFetch } from "@/sanity/lib/live"
-import { COPYRIGHT_QUERY, HEADERMENU_QUERY, LOCATIONS_QUERY, SOCIALS_QUERY } from "@/sanity/lib/queries"
+import { COPYRIGHT_QUERY, HEADERMENU_QUERY, LOCATIONS_QUERY, SOCIALS_QUERY, SETTINGS_QUERY } from "@/sanity/lib/queries"
 import Footer from "@/components/Footer";
 import { ReCaptchaProvider } from "next-recaptcha-v3";
 import {NextIntlClientProvider} from 'next-intl';
@@ -79,9 +79,16 @@ export default async function RootLayout({
   const {data: copyright } = await sanityFetch({
     query: COPYRIGHT_QUERY
   });
+  const {data: settings} = await sanityFetch({
+    query: SETTINGS_QUERY
+  });
+
   const locale = await getLocale();
+  const theme = settings?.theme || 'light';
+  const themeClass = theme === 'auto' ? '' : theme;
+
   return (
-    <html lang={locale} data-theme="light" className="light">
+    <html lang={locale} data-theme={theme} className={themeClass}>
       <head>
         {/* Meta Pixel Code */}
         <script
@@ -112,11 +119,11 @@ export default async function RootLayout({
         {/* End Meta Pixel Code */}
       </head>
       <GoogleAnalytics gaId="UA-119546408-1" />
-      <body cz-shortcut-listen="true" className="dark:bg-white dark:text-black">
+      <body cz-shortcut-listen="true" className="bg-background text-foreground">
         <NextIntlClientProvider>
           <ReCaptchaProvider>
               <div className="min-h-screen">
-                <Navigation navItems={navItems} />
+                <Navigation navItems={navItems} theme={theme} />
                 <IubendaProvider bannerConfig={iubendaBannerConfig}>
                   <PixelLoader/>
                   {children}
