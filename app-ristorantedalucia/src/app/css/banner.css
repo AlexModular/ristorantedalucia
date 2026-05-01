@@ -1,84 +1,74 @@
-
 .banner {
-    max-width: 1024px;
-    margin: auto;
-  }
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 100px 20px !important;
+}
 
 .banner h1 {
-  font-family: 'Oswald';
-  font-size: 35px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 3.5rem;
   color: var(--gold);
   text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+}
+
+.banner h2.banner-motto {
+  font-family: 'DancingScript', cursive;
+  font-size: 2.5rem !important;
+  color: var(--foreground);
+  margin-bottom: 3rem;
+  font-weight: 400;
 }
 
 .banner .banner-text {
-  font-family: 'Cabin';
-  font-size: 15px;
-
+  font-family: 'Cabin', sans-serif;
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: #444;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-.banner h2.banner-text.banner-motto {
-  font-family: 'Oswald';
-  font-style: italic;
-  font-size: 23px;
+.banner h1.with-basil {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.banner h1.with-basil::before,
+.banner h1.with-basil::after {
+  content: "";
+  background: url(/images/basilico.svg) no-repeat;
+  background-size: contain;
+  width: 80px;
+  height: 80px;
+  display: block;
 }
 
 .banner h1.with-basil::before {
-  content: "";
-  background: url(/images/basilico.svg) no-repeat;
-  background-size: 100%;
-  background-position: center center;
-  width: 160px;
-  height: 150px;
-  display: block;
-  float: inline-start;
-  position: relative;
-  top: 0;
-  -webkit-transform: scaleX(-1);
-  transform: scaleX(-1);
-  rotate: 45deg;
+  transform: scaleX(-1) rotate(15deg);
 }
 
-@media screen {
-  .banner h1.with-basil::before {
-    width: 65px;
-    height: 55px;
-  }
+.banner h1.with-basil::after {
+  transform: rotate(-15deg);
 }
-@media screen and (min-width: 640px) { 
+
+@media screen and (max-width: 768px) {
+  .banner {
+    padding: 60px 20px !important;
+  }
   .banner h1 {
-    font-size: 55px;
-  }  
-  .banner h2.banner-text.banner-motto {
-    font-size: 25px;
+    font-size: 2.5rem;
   }
- 
-}
-@media screen and (min-width: 768px) {
-  .banner h1 {
-    padding-top: 25px;
+  .banner h2.banner-motto {
+    font-size: 1.8rem !important;
   }
- 
-  .banner .banner-text {
-    padding-top: 25px;
-    padding-bottom: 25px;
-  }
-}
-@media screen and (min-width: 1024px) {
-  
-  .banner h1.with-basil::after,
-  .banner h1.with-basil::before {
-    width: 160px;
-    height: 150px;
-  }
+  .banner h1.with-basil::before,
   .banner h1.with-basil::after {
-    content: "";
-    background: url(/images/basilico.svg) no-repeat;
-    background-size: 100%;
-    background-position: center center;
-    display: block;
-    float: inline-end;
-    position: relative;
-    rotate: -45deg;
+    width: 40px;
+    height: 40px;
   }
 }

@@ -53,13 +53,15 @@ export default function DishesMenu({item}: {item: DishesMenuForPageMaker}) {
             </li>
           ))}
         </ul>
-        <div className="filter-container text-center" id={`filter-container-${uuid}`}>
+        <div className="filter-container" id={`filter-container-${uuid}`}>
           {item.menu?.categories?.map((category, index) =>
             category.dishes?.map((dish, idx) => (
-              <div key={'dish-' + idx} className={`filter-item cat-${index}-${uuid} border-b-2 border-dotted border-gold pt-0 md:p-[15px]`}>
-                <h6 className="md:text-2xl text-xl family-oswald text-gold uppercase">{dish.title} {dish.price && format.number(dish.price, {style: 'currency', currency: 'EUR'})}</h6>
-                <div className="dish-description m-2">{dish.description || dish.title}</div>
-                <p className="text-lg"></p>
+              <div key={'dish-' + idx} className={`filter-item cat-${index}-${uuid}`}>
+                <h6 className="family-oswald text-gold uppercase">
+                  <span>{dish.title}</span>
+                  {dish.price && <span className="price">{format.number(dish.price, {style: 'currency', currency: 'EUR'})}</span>}
+                </h6>
+                {dish.description && <div className="dish-description">{dish.description}</div>}
               </div>
             )
           ))}

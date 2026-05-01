@@ -23,6 +23,7 @@ import { socialType } from './socialType';
 import { socialsType } from './socialsType';
 import { copyrightType } from './copyrightType';
 import { imageSlideshowType } from './imageSlideshow';
+import { settingsType } from './settingsType';
 
 // schemas
 export const schema: { types: SchemaTypeDefinition[] } = {
@@ -50,7 +51,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     locationsType,
     socialType,
     socialsType,
-    copyrightType
+    copyrightType,
+    settingsType
   ],
 }
 

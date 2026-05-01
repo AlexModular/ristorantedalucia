@@ -1,82 +1,159 @@
 header {
-  font-family: 'Oswald', 'LeckerliOne', 'Oswald';
-  padding-top: 0;
-  padding-bottom: 0;
+  font-family: 'Oswald', sans-serif;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+header.sticky {
+  position: fixed;
+  animation: slideInDown 0.5s both;
+  z-index: 1000;
 }
 
 header nav {
-  padding-bottom: .5rem;
+  transition: all 0.4s ease;
 }
 
-
-header li a{
-  color: var(--gray);
-  transition: all 0.2s ease-in-out;
+header.sticky nav {
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
 }
 
-header .menu-left li a {
-  background-image: linear-gradient(var(--gold), var(--gold));
-  background-size: 0% 0.2em;
-  background-position-y: 100%;
-  background-position-x: 0%;
-  background-repeat: no-repeat;
-  font-size: 22px;
-  font-weight: 500;
-  height: 40px;
-}
-header .menu-left li a:hover,
-header .menu-left li a.active {
-  color: var(--white);
-  background-size: 50% 0.2em;
-}
-header .menu-right li a {
-  background-image: linear-gradient(var(--gold), var(--gold));
-  background-size: 0% 0.2em;
-  background-position-y: 100%;
-  background-position-x: 100%;
-  background-repeat: no-repeat;
-  font-size: 22px;
-  font-weight: 500;
-  height: 40px;
+header li a {
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  position: relative;
+  transition: color 0.3s ease;
 }
 
-header .menu-right li a:hover,
-header .menu-right li a.active {
-  color: var(--white);
-  background-size: 50% 0.2em;
+header li a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--gold);
+  transition: width 0.3s ease;
+}
+
+header li a:hover::after,
+header li a.active::after {
+  width: 100%;
+}
+
+header li a:hover {
+  color: var(--gold) !important;
+}
+
+.logo-container {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140px;
+  height: 140px;
+  top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s ease;
+  z-index: 100;
+}
+
+header.sticky .logo-container {
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 110px;
+  height: 110px;
+}
+
+.logo-container .logo-img {
+  transition: all 0.4s ease;
+  width: 100% !important;
+  height: auto !important;
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Hamburger Menu */
+.hamburger-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10001;
+}
+
+.hamburger-menu span {
+  width: 100%;
+  height: 2px;
+  background: var(--gold) !important;
+  border-radius: 10px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hamburger-menu.open span:first-child {
+  transform: translateY(4px) rotate(45deg);
+}
+
+.hamburger-menu.open span:last-child {
+  transform: translateY(-4px) rotate(-45deg);
 }
 
 .mobile-menu {
-  width: 100% !important;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
 }
 
-@media screen and (min-width: 1024px) {
-  
-  header nav {
-    padding-top: 25px;
-    padding-bottom: 25px;
+@media screen and (max-width: 1024px) {
+  header {
+    position: fixed;
+    background: transparent;
   }
 
-  header.sticky {
-    animation-duration: .1s;
-    animation-delay: .3s;
-    animation-fill-mode: both;
-    -webkit-animation-duration: .1s;
-    -webkit-animation-delay: .3s;
-    -webkit-animation-fill-mode: both;
-    animation-name: slideInDown;
-    -webkit-animation-name: slideInDown;
-    background: #00000047;
+  header.sticky nav {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    min-height: 70px;
+  }
+
+  header nav {
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+    min-height: 90px;
+    display: flex;
+    align-items: center;
   }
 
   .logo-container {
-    position: absolute;
-    border-radius: 50%;
-    left: calc(50% - 71px);
-    width: 142px;
-    height: 142px;
-    top: 1px;
-    border-bottom: 5px solid var(--gold);
-    box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.5);
+    width: 90px;
+    height: 90px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  header.sticky .logo-container {
+    width: 90px;
+    height: 90px;
   }
 }

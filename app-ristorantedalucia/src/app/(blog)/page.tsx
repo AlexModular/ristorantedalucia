@@ -44,7 +44,7 @@ export default async function Page() {
     query: HOMEPAGE_QUERY
   });
   return (
-      <main className="relative bg-white">
+      <main className={`relative bg-background text-foreground ${page?.theme ?? ''}`}>
         <PageMaker page={page} />
       </main>
   );

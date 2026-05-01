@@ -5,29 +5,23 @@
 @import 'css/food-flaticon.css';
 
 @font-face {
-  font-family: 'RobotoCondensed';
-  src: url('/fonts/Roboto_Condensed/RobotoCondensed-VariableFont_wght.ttf');
-  font-weight: 100 900;
+  font-family: 'RobotoFlex';
+  src: url('/fonts/RobotoFlex-VariableFont.ttf') format('truetype');
+  font-weight: 100 1000;
+  font-stretch: 25% 150%;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Cabin';
-  src: url('/fonts/Cabin/Cabin-VariableFont_wdth-wght.ttf');
-  font-weight: 100 900;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'LeckerliOne';
-  src: url('/fonts/Leckerli_One/LeckerliOne-Regular.ttf');
-  font-weight: 400;
-  font-display: swap;
+  font-family: 'Matura-SC';
+  src: url('/fonts/matura-mt-script-capitals.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
   font-family: 'Oswald';
-  src: url('/fonts/Oswald/Oswald-VariableFont_wght.ttf');
+  src: url('/fonts/Oswald/Oswald-VariableFont_wght.ttf') format('truetype');
   font-weight: 100 900;
   font-display: swap;
 }
@@ -40,23 +34,56 @@
 }
 
 :root {
-  --background: #fff;
-  --foreground: #030304;
-  --gold: #c5a86a;
-  --gray: #323232;
-  --swiper-navigation-color: var(--background) !important;
-  --swiper-theme-color: var(--background) !important;
+  /* Light Theme (Default) */
+  --background: #ffffff;
+  --foreground: #1A1A1A;
+  --gold: #B99B5B;
+  --gold-hover: #9A7E46;
+  --gray: #333333;
+  --cream: #ffffff;
+  --swiper-navigation-color: var(--gold) !important;
+  --swiper-theme-color: var(--gold) !important;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --background: #fff;
-    --foreground: #0a0a0a;
-    --gold: #b99b5b;
-    --gray: #323232;
-    --swiper-navigation-color: var(--foreground) !important;
-    --swiper-theme-color: var(--foreground) !important;
+/* Dark Theme (Deep Green) - Activated via Sanity or System Pref */
+.dark,
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --background: #213a33;
+    --foreground: #FAF3E0;
+    --gold: #B99B5B;
+    --gold-hover: #D4AF37;
+    --gray: #a8b2af;
+    --cream: #2a4940;
   }
+}
+
+/* Specific class overrides from Sanity */
+.light {
+  --background: #ffffff;
+  --foreground: #1A1A1A;
+  --gold: #B99B5B;
+  --gold-hover: #9A7E46;
+  --gray: #333333;
+  --cream: #ffffff;
+}
+
+.dark {
+  --background: #213a33;
+  --foreground: #FAF3E0;
+  --gold: #B99B5B;
+  --gold-hover: #D4AF37;
+  --gray: #a8b2af;
+  --cream: #2a4940;
+}
+
+.cream {
+  --background: #FAF3E0;
+  --foreground: #1A1A1A;
+  --gold: #B99B5B;
+  --gold-hover: #9A7E46;
+  --gray: #333333;
+  --cream: #FAF3E0;
 }
 
 html {
@@ -66,10 +93,18 @@ html {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: 'Cabin', Helvetica, sans-serif;
+  font-family: 'RobotoFlex', sans-serif;
+  font-size: 13px;
+  font-weight: 350;
+  line-height: 1.6;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Oswald';
 }
 
@@ -77,13 +112,17 @@ h2 {
   font-family: 'DancingScript', 'Oswald';
 }
 
-h1 { font-size: 55px }
+h1 {
+  font-size: 55px
+}
 
 h2 {
   font-size: 35px;
 }
 
-h3, h4, h5 {
+h3,
+h4,
+h5 {
   padding-top: 10px;
   padding-bottom: 10px;
   font-size: 25px;
@@ -100,7 +139,9 @@ h3, h4, h5 {
     padding-bottom: 25px;
   }
 
-  h3, h4, h5 {
+  h3,
+  h4,
+  h5 {
     font-size: 35px;
     padding-top: 25px;
     padding-bottom: 25px;
@@ -108,7 +149,7 @@ h3, h4, h5 {
 }
 
 div.separator {
-  border-bottom: 10px solid rgb(136 19 55 / var(--tw-border-opacity, 1));
+  border-bottom: 10px solid rgb(33 58 5 / var(--tw-border-opacity, 1));
 }
 
 @media (max-width: 640px) {
@@ -116,11 +157,13 @@ div.separator {
     font-size: 45px;
     line-height: 50px;
   }
+
   video {
     min-height: 400px;
     overflow: hidden;
     object-fit: cover;
   }
+
   div.separator {
     border-bottom-width: 5px;
   }
@@ -143,11 +186,17 @@ div.separator {
 }
 
 p {
-  font-size: 18px
+  font-size: 15px
 }
 
-.grecaptcha-badge { visibility: hidden; }
-.iub__us-widget { display: none !important; }
+.grecaptcha-badge {
+  visibility: hidden;
+}
+
+.iub__us-widget {
+  display: none !important;
+}
+
 @import 'css/animations.css';
 @import 'css/header.css';
 @import 'css/banner.css';

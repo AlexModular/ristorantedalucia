@@ -43,7 +43,7 @@ export default async function Page({ params }: { params: Promise<QueryParams> })
     params: await params,
   });
   return (
-      <main className="relative bg-white">
+      <main className={`relative bg-background text-foreground ${page?.theme ?? ''}`}>
         <PageIntro data={{title: page?.title ?? '', introImage: page?.introImage}} />
         <div className="page-container">
           {page?.subtitle && <h2 className="text-center font-bold pt-20" data-aos="zoom-in">{page?.subtitle}</h2>}

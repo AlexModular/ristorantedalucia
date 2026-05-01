@@ -1,27 +1,76 @@
+.dishes-menu-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 20px;
+}
+
+.dishes-menu-container .filter-list .filter-item {
+  transition: all 0.3s ease;
+  opacity: 0.6;
+  filter: grayscale(1);
+}
+
+.dishes-menu-container .filter-list .filter-item:hover,
+.dishes-menu-container .filter-list .filter-item.active {
+  opacity: 1;
+  filter: grayscale(0);
+  transform: translateY(-5px);
+}
+
+.dishes-menu-container .filter-list .filter-item h6 {
+  transition: color 0.3s ease;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.dishes-menu-container .filter-list .filter-item.active h6 {
+  color: var(--foreground);
+}
+
+.dishes-menu-container .filter-list .filter-item svg {
+  color: var(--gold) !important;
+  margin-bottom: 15px;
+}
+
 .dishes-menu-container .filter-container .filter-item {
-  width: calc(33.3% - 30px);
+  width: calc(50% - 40px);
   display: inline-block;
-  min-height: 122px;
-  margin: 15px;
+  margin: 20px;
+  text-align: left;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  padding-bottom: 20px !important;
+  vertical-align: top;
 }
-.dishes-menu-container li.filter-item h6 {
-  padding-bottom: 5px;
-  border-bottom: 2px solid var(--background);
+
+.dishes-menu-container .filter-container .filter-item h6 {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 15px;
+  margin-bottom: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
 }
-.dishes-menu-container li.filter-item.active h6 {
-  border-bottom-color: var(--foreground);
+
+.dishes-menu-container .filter-container .filter-item .dish-description {
+  color: #666;
+  font-style: italic;
+  font-size: 0.95rem;
+  line-height: 1.6;
 }
-@media screen and (min-width: 1318px) {
-  .dishes-menu-container li.filter-item {
-    min-width: 180px;
-  }
-}
-@media screen and (max-width: 768px) {
+
+@media screen and (max-width: 1024px) {
   .dishes-menu-container .filter-container .filter-item {
-    width: calc(100% - 30px);
+    width: calc(100% - 40px);
   }
-  .filter-list li:nth-child(3n) {
-    break-after: always;
+}
+
+@media screen and (max-width: 768px) {
+  .dishes-menu-container {
+    padding: 40px 15px;
   }
   
+  .dishes-menu-container .filter-list .filter-item h6 {
+    font-size: 0.8rem;
+  }
 }

@@ -1,126 +1,140 @@
 div.page-head {
-  height: 190px;
-  background-position: center 30%;
+  height: 300px;
+  background-position: center;
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: cover;
   display: flex;
-  align-content: center;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
 div.page-head::before {
   content: '';
-  background-color: #0000006e;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
   position: absolute;
-  z-index: 0;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  max-height: 190px;
+  z-index: 1;
 }
 
 div.page-head h1 {
   width: 100%;
   text-align: center;
-  font-family: 'Oswald';
+  font-family: 'Oswald', sans-serif;
   position: relative;
-  z-index: 1;
-  /*color: var(--gold);*/
-  max-height: 100px;
-  align-self: center;
-  text-shadow: 0 0 4px #000;
-  cursor: default;
+  z-index: 2;
+  color: white;
+  font-size: 3rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-shadow: 2px 4px 10px rgba(0,0,0,0.5);
 }
 
 .breadcrumbs {
-  background: #494949;
+  background: var(--cream);
   width: 100%;
-  height: 45px;
-  display: flex;
-  position: relative;
-  z-index: 1;
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
 .breadcrumbs ul {
-  max-width: 1536px;
+  max-width: 1200px;
   width: 100%;
-  margin: auto;
-  font-family: 'Oswald';
+  margin: 0 auto;
+  padding: 0 20px;
+  font-family: 'Oswald', sans-serif;
   text-transform: uppercase;
-  align-self: flex-start;
-  vertical-align: middle;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
 }
+
 .breadcrumbs ul li {
-  float: left;
-  color: #a5a5a5;
+  display: inline-flex;
+  align-items: center;
+  color: #888;
+}
+
+.breadcrumbs ul li a {
+  transition: color 0.3s ease;
 }
 
 .breadcrumbs ul li a:hover {
   color: var(--gold);
-  transition: color ease-in-out .2s;
 }
 
 .breadcrumbs ul li:last-child {
-  color: #fff;
-  cursor: default;
+  color: var(--foreground);
+  font-weight: 600;
 }
 
 .breadcrumbs ul li:not(:last-child)::after {
-  content: '/';
-  padding: 0 20px;
+  content: '\203A';
+  padding: 0 15px;
+  font-size: 1.2rem;
+  color: #ccc;
 }
 
 div.page-content {
-  margin: auto;
+  max-width: 1200px !important;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+
+.text-with-illustration {
+  transition: background-color 0.4s ease;
+  overflow: hidden;
+}
+
+.text-with-illustration:nth-child(even) {
+  background-color: var(--cream);
+}
+
+.text-with-illustration h3 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
   position: relative;
-  z-index: 1;
 }
 
-div.page-content:not(.full-width) {
-  max-width: 1536px;
+.text-with-illustration h3::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background-color: var(--gold);
 }
 
-div.page-content h2.page-title {
-  color: var(--gold);
-  text-transform: uppercase;
+.text-with-illustration .image-container img {
+  border-radius: 8px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-div.page-content h3.subtitle {
-  font-family: 'Oswald';
-  padding-bottom: 30px;
-}
-
-h4.subtitle {
-  font-family: 'Oswald';
-  font-size: 35px;
+.text-with-illustration:hover .image-container img {
+  transform: scale(1.02);
 }
 
 @media screen and (min-width: 768px) {
   div.page-head {
-    height: 380px;
+    height: 450px;
   }
-    div.page-head::before {
-    max-height: 380px;
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  div.page-head {
-    height: 400px;
-  }
-  div.page-head::before {
-    max-height: 400px;
-  }
-}
-
-@media screen and (min-width: 1536px) {
   div.page-head h1 {
-    font-size: 100px;
+    font-size: 5rem;
   }
-  div.page-content h2.page-title {
-    font-size: 60px;
+}
+
+@media screen and (max-width: 768px) {
+  div.page-head h1 {
+    font-size: 2.5rem;
   }
-  h4.subtitle {
-    font-size: 50px;
+  div.page-content {
+    padding: 40px 15px;
+  }
+  .text-with-illustration h3 {
+    font-size: 2rem;
   }
 }

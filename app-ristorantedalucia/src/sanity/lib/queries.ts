@@ -1,5 +1,9 @@
 import {defineQuery} from 'next-sanity'
 
+export const SETTINGS_QUERY = defineQuery(`*[_type == "settings"][0]{
+  theme
+}`)
+
 export const HEADERMENU_QUERY = defineQuery(`*[navId.current match "main-menu*"]{
   'navId': navId.current,
   'items':  items[] {
@@ -41,6 +45,7 @@ export const HOMEPAGE_QUERY = defineQuery(`*[slug.current match "home*"][0]{
   metaTitle,
   metaDescription,
   fullWidth,
+  theme,
   pageBuilder[]{
     _type == "video" => {
       _type,
@@ -136,6 +141,7 @@ export const PAGE_QUERY = defineQuery(`*[slug.current == $slug][0]{
   metaDescription,
   introImage,
   fullWidth,
+  theme,
   pageBuilder[]{
     _type == "video" => {
       _type,
