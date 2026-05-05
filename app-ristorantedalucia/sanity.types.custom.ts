@@ -1,5 +1,5 @@
 import { SanityImageCrop, SanityImageHotspot } from '@sanity/asset-utils';
-import { DishesCategory, internalGroqTypeReferenceTo } from './sanity.types';
+import { internalGroqTypeReferenceTo } from './sanity.types';
 
 export type DishesMenuForPageMaker = {
   _ref: string;
@@ -50,7 +50,16 @@ export type DishesMenuForPageMaker = {
       };
     categories?: Array<{
       _key: string;
-    } & DishesCategory>;
+      title?: string;
+      icon?: any;
+      flaticonClass?: string;
+      dishes?: Array<{
+        title?: string;
+        description?: string;
+        price?: number;
+        subcategory?: string;
+      }>;
+    }>;
   }
 };
 

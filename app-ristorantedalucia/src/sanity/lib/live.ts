@@ -6,7 +6,8 @@ import { client } from "@/sanity/lib/client";
 import { token } from "@/sanity/lib/token";
 
 export const { sanityFetch, SanityLive } = defineLive({
-  client: client.withConfig({apiVersion: "vX"}),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  client: client.withConfig({apiVersion: "vX"}) as any,
   browserToken: token,
   serverToken: token,
 });

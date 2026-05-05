@@ -3,7 +3,13 @@ import { Banner as B } from "../../../sanity.types";
 import AOSComponent from "../AOS";
 import { components } from "../PortableTextComponents";
 
-export default function Banner(params: {item: B}) {
+// Overriding types because GROQ coalesce returns strings, but Sanity types might still say LocalizedString
+type BannerProps = Omit<B, 'heading' | 'subtitle'> & { 
+  heading?: string; 
+  subtitle?: string;
+};
+
+export default function Banner(params: {item: BannerProps}) {
   const { item } = params;
   return (
     <AOSComponent>

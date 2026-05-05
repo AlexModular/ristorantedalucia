@@ -1,5 +1,3 @@
-import { HOMEPAGE_QUERYResult, Slider as S, Gallery as G, Banner as B, Video as V, TextWithIllustration as T, Form as F, Map as MAP, Promotion as P, Separator, PAGE_QUERYResult } from '../../sanity.types';
-import { DishesMenuForPageMaker, SlideshowForPageMaker } from '../../sanity.types.custom';
 import Video from "./blocks/Video";
 import Banner from "./blocks/Banner";
 import Slider from "./blocks/Slider";
@@ -11,7 +9,8 @@ import ContactForm from "./blocks/ContactForm";
 import DishesMenu from "./blocks/DishesMenu";
 import Slideshow from './blocks/Slideshow';
 
-const makeBlock = (item: B | V | S | SlideshowForPageMaker | G | T | F | MAP | P | DishesMenuForPageMaker | Separator, index: number): JSX.Element | null => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const makeBlock = (item: any, index: number): JSX.Element | null => {
   switch(item?._type) {
     case 'video':
       return (
@@ -75,12 +74,14 @@ const makeBlock = (item: B | V | S | SlideshowForPageMaker | G | T | F | MAP | P
   }
 };
 
-export default function PageMaker({ page }: { page: HOMEPAGE_QUERYResult | PAGE_QUERYResult }) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function PageMaker({ page }: { page: any }) {
   const pageBuilder = page?.pageBuilder || [];
   return (
     <div className={page?.slug?.current?.includes('home') ? "homepage" : ("page-content" + (page?.fullWidth ? " full-width" : ""))}>
-      {pageBuilder?.map((item, index) =>  {
-        return makeBlock(item as (B | V | S | SlideshowForPageMaker | G | T | F | MAP | P | DishesMenuForPageMaker | Separator), index);
+      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+      {pageBuilder?.map((item: any, index: number) =>  {
+        return makeBlock(item, index);
       })}
     </div>
   );

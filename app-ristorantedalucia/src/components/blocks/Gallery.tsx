@@ -19,7 +19,12 @@ import { useMediaQuery } from 'react-responsive';
 
 export const licenseKey = process.env.LIGHTGALLERY_LICENSE_KEY;
 
-export default function Gallery({item}: {item: G}) {
+type GalleryProps = Omit<G, 'heading' | 'subtitle'> & { 
+  heading?: string; 
+  subtitle?: string;
+};
+
+export default function Gallery({item}: {item: GalleryProps}) {
   const isMobile = useMediaQuery({ query: `(max-width: 768px)` });
   const isTablet = useMediaQuery({ query: `(max-width: 1024px)` });
   useEffect(() => {

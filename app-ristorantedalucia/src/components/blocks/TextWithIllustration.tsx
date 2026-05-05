@@ -4,15 +4,9 @@ import { PortableText } from "@portabletext/react";
 import React from "react";
 import { components } from "../PortableTextComponents";
 
-type T = SanityT & { 
-  backgroundImage?: any;
-  backgroundFixed?: boolean;
-  hasOverlay?: boolean;
-  overlayColor?: 'dark' | 'light';
-};
-
-export default function TextWithIllustration(params: {item: T}) {
-  const { item } = params;
+export default function TextWithIllustration({item: rawItem}: {item: SanityT}) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const item = rawItem as any; 
   const hasBg = !!item.backgroundImage;
   const showOverlay = item.hasOverlay ?? true;
   const overlayColor = item.overlayColor ?? 'dark';
@@ -80,7 +74,7 @@ export default function TextWithIllustration(params: {item: T}) {
   const textColorClasses = overlayColor === 'light' ? 'text-gray-900' : 'text-white';
 
   const bgStyle = hasBg ? {
-    backgroundImage: `url(${urlFor(item.backgroundImage).width(1920).url()})`,
+    backgroundImage: `url(${urlFor(item.backgroundImage!).width(1920).url()})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundAttachment: isFixed ? 'fixed' : 'scroll',
@@ -113,7 +107,7 @@ export default function TextWithIllustration(params: {item: T}) {
             
             {/* Mobile Image (Top layout) */}
             {item.imagePosition === 'top' && mobileImageElement}
-
+ 
             <div className={`portable-text-container ${hasBg ? textColorClasses : 'text-white'} ${hasBg ? 'text-lg md:text-xl leading-relaxed' : 'text-lg'}`}>
               <PortableText value={item?.text || []} components={components} />
             </div>

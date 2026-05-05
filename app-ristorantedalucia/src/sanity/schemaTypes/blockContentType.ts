@@ -10,17 +10,21 @@ import {
   MdFormatAlignRight,
   MdFormatAlignJustify
 } from 'react-icons/md'
-import style from 'styled-jsx/style'
 
 /**
  * Componente personalizzato per mostrare l'allineamento 
  * direttamente nell'editor di Sanity Studio.
  * Usiamo uno span con display: block per evitare conflitti con l'editor.
  */
-const TextAlignRender = ({ children, value }: any) => 
+interface TextAlignRenderProps {
+  children: React.ReactNode;
+  value: string;
+}
+
+const TextAlignRender = ({ children, value }: TextAlignRenderProps) => 
   React.createElement(
     'span', 
-    { style: { display: 'block', textAlign: value, width: '100%' } }, 
+    { style: { display: 'block', textAlign: value as 'left' | 'center' | 'right' | 'justify', width: '100%' } }, 
     children
   );
 

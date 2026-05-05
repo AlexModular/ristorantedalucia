@@ -1,6 +1,5 @@
 'use client'
 
-import { Link } from '@/i18n/routing';
 import { FormEvent } from 'react'
 import { Form } from '../../../sanity.types';
 import AOSComponent from '../AOS';
@@ -9,7 +8,7 @@ import { useState, useCallback } from 'react';
 import { useReCaptcha } from "next-recaptcha-v3";
 import { useTranslations } from 'next-intl';
 
-export default function ContactForm(params: {item: Form}) {
+export default function ContactForm(params: {item: Omit<Form, 'heading'> & { heading?: string }}) {
   const { item } = params;
   const t = useTranslations('ContactForm');
   const [disabled, setDisabled] = useState(false);

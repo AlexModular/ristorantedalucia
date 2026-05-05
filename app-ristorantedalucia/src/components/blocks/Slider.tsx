@@ -11,11 +11,17 @@ import { urlFor } from "@/sanity/lib/image";
 import 'swiper/css/bundle';
 import AOSComponent from '../AOS';
 
-export default function Slider(params: {key: number, item: S}) {
+type SliderProps = Omit<S, 'heading' | 'subtitle'> & { 
+  heading?: string; 
+  subtitle?: string;
+  backgroundFixed?: boolean;
+};
+
+export default function Slider(params: {key: number, item: SliderProps}) {
   const isMobile = useMediaQuery({ query: `(max-width: 768px)` });
   const isTablet = useMediaQuery({ query: `(max-width: 1024px)` });
-  const data: S = params?.item;
-  const isFixed = (data as any).backgroundFixed ?? false;
+  const data = params?.item;
+  const isFixed = data.backgroundFixed ?? false;
 
   const bgStyle = data.backgroundImage ? {
     backgroundImage: `url(${urlFor(data.backgroundImage).width(1920).url()})`,

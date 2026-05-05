@@ -21,7 +21,7 @@ export default function Slideshow(params: { key: number, item: SlideshowForPageM
   const globalContent = useGlobalContent ? slidesWithContent[0] : null;
   const effect = data?.effect || 'fade';
 
-  const renderContent = (item: any) => (
+  const renderContent = (item: NonNullable<SlideshowForPageMaker['images']>[number]) => (
     <div className='slide-contents absolute inset-0 z-10' data-aos='fade' data-aos-duration='1000'>
       {item?.heading && (<div className='family-dancing-script slide-title text-4xl sm:text-5xl md:text-6xl lg:text-8xl text-white'>{item.heading}</div>)}
       <div className='slide-content-items'>

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { HEADERMENU_QUERYResult, LOCATIONS_QUERYResult } from "../../sanity.types";
 import { useMediaQuery } from 'react-responsive';
 import Logo from "./Logo";
-import { Phone, Globe } from 'lucide-react';
+import { Phone } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 
 export default function Navbar({ navItems, theme, locations }: { navItems: HEADERMENU_QUERYResult, theme: string, locations: LOCATIONS_QUERYResult }) {
@@ -108,18 +108,22 @@ export default function Navbar({ navItems, theme, locations }: { navItems: HEADE
               </Link>
             )}
             <ul className="flex flex-row items-center gap-8">
-              {navItems?.map((item: any) => {
+              {navItems?.map((item) => {
                 if (item.navId === 'main-menu-left' && item?.items) {
-                  return item.items.map((nav: any, index: number) => (
-                    <li
-                      key={index}
-                      className={`flex items-center p-1 text-lg gap-x-2 uppercase transition-colors duration-300 family-oswald ${headerIsTransparent ? 'text-white' : 'text-foreground'}`}
-                    >
-                      <Link href={(nav.link?.slug === 'home' ? '/' : `/${nav.link?.slug}`) ?? nav.externalUrl ?? '#'} className={`flex items-center${pathname == '/' + nav.link?.slug || (nav.link?.slug === 'home' && pathname == '/') ? ' active' : ''}`}>
-                        {nav.text}
-                      </Link>
-                    </li>
-                  ));
+                  return item.items.map((nav, index: number) => {
+                    const href = nav.link?.slug ? (nav.link.slug === 'home' ? '/' : `/${nav.link.slug}`) : (nav.externalUrl ?? '#');
+                    const isActive = nav.link?.slug ? (pathname === (nav.link.slug === 'home' ? '/' : `/${nav.link.slug}`)) : false;
+                    return (
+                      <li
+                        key={index}
+                        className={`flex items-center p-1 text-lg gap-x-2 uppercase transition-colors duration-300 family-oswald ${headerIsTransparent ? 'text-white' : 'text-foreground'}`}
+                      >
+                        <Link href={href} className={`flex items-center${isActive ? ' active' : ''}`}>
+                          {(nav.text as unknown as string)}
+                        </Link>
+                      </li>
+                    );
+                  });
                 }
                 return null;
               })}
@@ -139,18 +143,21 @@ export default function Navbar({ navItems, theme, locations }: { navItems: HEADE
           {/* Desktop Menu Right */}
           <div className="hidden lg:flex flex-1 justify-end menu-right items-center gap-8">
             <ul className="flex flex-row items-center gap-8">
-              {navItems?.map((item: any) => {
+              {navItems?.map((item) => {
                 if (item.navId === 'main-menu-right' && item?.items) {
-                  return item.items.map((nav: any, index: number) => (
-                    <li
-                      key={index}
-                      className={`flex items-center p-1 text-lg gap-x-2 uppercase transition-colors duration-300 family-oswald ${headerIsTransparent ? 'text-white' : 'text-foreground'}`}
-                    >
-                      <Link href={(nav.link?.slug === 'home' ? '/' : `/${nav.link?.slug}`) ?? nav.externalUrl ?? '#'} className="flex items-center">
-                        {nav.text}
-                      </Link>
-                    </li>
-                  ));
+                  return item.items.map((nav, index: number) => {
+                    const href = nav.link?.slug ? (nav.link.slug === 'home' ? '/' : `/${nav.link.slug}`) : (nav.externalUrl ?? '#');
+                    return (
+                      <li
+                        key={index}
+                        className={`flex items-center p-1 text-lg gap-x-2 uppercase transition-colors duration-300 family-oswald ${headerIsTransparent ? 'text-white' : 'text-foreground'}`}
+                      >
+                        <Link href={href} className="flex items-center">
+                          {(nav.text as unknown as string)}
+                        </Link>
+                      </li>
+                    );
+                  });
                 }
                 return null;
               })}
@@ -188,20 +195,23 @@ export default function Navbar({ navItems, theme, locations }: { navItems: HEADE
                 <Logo className="w-32 h-32 text-foreground" />
               </div>
               <ul className="flex flex-col gap-8 text-center">
-                {navItems?.map((item: any) => {
-                  if ((item.navId === 'main-menu-left' || item.navId === 'main-menu-right') && item?.items) {
-                    return item.items.map((nav: any, index: number) => (
-                      <li
-                        key={`${item.navId}-${index}`}
-                        className="border-b border-white/10 pb-4"
-                      >
-                        <Link href={(nav.link?.slug === 'home' ? '/' : `/${nav.link?.slug}`) ?? nav.externalUrl ?? '#'}
-                          className="text-2xl family-oswald uppercase tracking-widest text-foreground hover:text-gold transition-colors"
-                          onClick={toggleMobileMenu}>
-                          {nav.text}
-                        </Link>
-                      </li>
-                    ));
+                {navItems?.map((item) => {
+                  if (item?.items) {
+                    return item.items.map((nav, index: number) => {
+                      const href = nav.link?.slug ? (nav.link.slug === 'home' ? '/' : `/${nav.link.slug}`) : (nav.externalUrl ?? '#');
+                      return (
+                        <li
+                          key={`${item.navId}-${index}`}
+                          className="border-b border-white/10 pb-4"
+                        >
+                          <Link href={href}
+                            className="text-2xl family-oswald uppercase tracking-widest text-foreground hover:text-gold transition-colors"
+                            onClick={toggleMobileMenu}>
+                            {(nav.text as unknown as string)}
+                          </Link>
+                        </li>
+                      );
+                    });
                   }
                   return null;
                 })}

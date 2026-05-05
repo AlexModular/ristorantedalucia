@@ -2,8 +2,6 @@
 
 import { Link } from "@/i18n/routing";
 import Image from 'next/image'
-import iconSet from '@/config/icomoon/selection.json'
-import IcomoonReact from "icomoon-react";
 import { LOCATIONS_QUERYResult, SOCIALS_QUERYResult, COPYRIGHT_QUERYResult } from "../../sanity.types";
 import { Icon } from '@iconify/react';
 import { PortableText } from "next-sanity";
@@ -78,7 +76,7 @@ export default function Footer ({locations, socials, copyright}: {locations: LOC
           </span>
         </button>
         <div className="px-2 pt-[25px] opacity-70">
-          <PortableText value={copyright as any || []} components={components} />
+          <PortableText value={copyright || []} components={components} />
         </div>
         <small className="pt-2 block opacity-50 text-xs">
           This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer">Terms of Service</a> apply.
