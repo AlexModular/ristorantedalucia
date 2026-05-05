@@ -687,7 +687,7 @@ export type AllSanitySchemaTypes = QuickActions | Settings | Copyright | Socials
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: SETTINGS_QUERY
-// Query: *[_type == "settings"][0]{  theme}
+// Query: *[_type == "settings"] | order(_updatedAt desc)[0]{  theme}
 export type SETTINGS_QUERYResult = {
   theme: "auto" | "cream" | "dark" | "light" | null;
 } | null;
@@ -1736,7 +1736,7 @@ export type PAGE_QUERYResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[_type == \"settings\"][0]{\n  theme\n}": SETTINGS_QUERYResult;
+    "*[_type == \"settings\"] | order(_updatedAt desc)[0]{\n  theme\n}": SETTINGS_QUERYResult;
     "*[navId.current match \"main-menu*\"]{\n  'navId': navId.current,\n  'items':  items[] {\n    'link': *[\n      _type == \"page\" &&\n      _id == ^.navigationItemUrl.internalLink._ref\n    ][0]{\n      'slug': slug.current\n    },\n    'externalUrl': navigationItemUrl.externalUrl,\n    \"text\": coalesce(text[$locale], text.it, text)\n  }\n}": HEADERMENU_QUERYResult;
     "*[_type == \"socials\"][0].socials": SOCIALS_QUERYResult;
     "*[_type == \"locations\"]{\n  \"title\": coalesce(title[$locale], title.it, title),\n  location,\n  city,\n  address,\n  postalCode,\n  phone,\n  email,\n  monday,\n  tuesday,\n  wednesday,\n  thursday,\n  friday,\n  saturday,\n  sunday\n}": LOCATIONS_QUERYResult;
