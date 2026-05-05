@@ -46,9 +46,9 @@ export default function DishesMenu({ item }: { item: TransformedDishesMenu }) {
                   className={`md:text-5xl text-4xl text-center md:mb-5 mb-2 transition-colors duration-300 ${selectedCategoryIndex === index ? 'text-gold' : 'text-white'}`} 
                 />
               )}
-              <h6 className={`uppercase md:text-2xl text-md font-bold tracking-widest transition-colors duration-300 ${selectedCategoryIndex === index ? 'text-foreground' : 'text-gold'}`}>
+              <h3 className={`uppercase md:text-2xl text-md font-bold tracking-widest transition-colors duration-300 ${selectedCategoryIndex === index ? 'text-foreground' : 'text-gold'}`}>
                 {category.title}
-              </h6>
+              </h3>
             </li>
           ))}
         </ul>
@@ -67,9 +67,9 @@ export default function DishesMenu({ item }: { item: TransformedDishesMenu }) {
                 className="filter-item w-full md:w-[calc(50%-40px)] m-5 text-left border-b border-gold/20 pb-5"
               >
                 <div className="flex justify-between items-baseline gap-4 mb-2">
-                  <h6 className="family-playfair text-gold uppercase font-bold text-xl tracking-wide">
+                  <h4 className="family-playfair text-gold uppercase font-bold text-xl tracking-wide">
                     {dish.title}
-                  </h6>
+                  </h4>
                   {dish.price && (
                     <span className="price text-foreground font-bold">
                       {format.number(dish.price, { style: 'currency', currency: 'EUR' })}

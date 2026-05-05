@@ -7,6 +7,7 @@ import lightGallery from 'lightgallery';
 import lgThumbnail from 'lightgallery/plugins/thumbnail';
 import lgZoom from 'lightgallery/plugins/zoom';
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 
 // import styles
 import 'lightgallery/css/lightgallery.css';
@@ -39,14 +40,16 @@ export default function Gallery({item}: {item: TransformedGallery}) {
           {item.images?.map((image, index) => (
             <div 
               key={index}
-              className="gallery-item cursor-pointer overflow-hidden rounded-lg shadow-lg aspect-square"
+              className="gallery-item cursor-pointer relative overflow-hidden rounded-lg shadow-lg aspect-square group"
               data-src={urlFor(image).width(1600).url()}
               data-sub-html={`<h4>${item.heading || ''}</h4>`}
             >
-              <img 
+              <Image 
                 src={urlFor(image).width(400).height(400).url()} 
-                alt={image.alt || `Gallery Image ${index}`}
-                className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                width={400}
+                height={400}
+                alt={image.alt || `Gallery Image ${index} - ${item.heading}`}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
             </div>
           ))}

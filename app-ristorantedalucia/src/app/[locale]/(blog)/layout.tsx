@@ -19,8 +19,8 @@ import { sanityFetch } from "@/sanity/lib/live"
 import { COPYRIGHT_QUERY, HEADERMENU_QUERY, LOCATIONS_QUERY, SOCIALS_QUERY, SETTINGS_QUERY } from "@/sanity/lib/queries"
 import Footer from "@/components/Footer";
 import { ReCaptchaProvider } from "next-recaptcha-v3";
-import {NextIntlClientProvider} from 'next-intl';
-import {getMessages} from 'next-intl/server';
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
 import PixelLoader from "@/components/PixelLoader";
 import { Montserrat, Playfair_Display } from 'next/font/google'
 
@@ -37,35 +37,49 @@ const playfair = Playfair_Display({
 })
 
 
-export const metadata: Metadata = {
-  title: {
-    default: 'Ristorante Enoteca Da Lucia',
-    template: '%s - Ristorante Enoteca Da Lucia',
-  },
-  description: 'Ristorante Enoteca Da Lucia - Cucina tipica toscana nel cuore di Roma.',
-  metadataBase: new URL('https://ristorantedalucia.it'),
-  openGraph: {
-    title: 'Ristorante Enoteca Da Lucia',
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  const { headers } = await import('next/headers');
+  const host = (await headers()).get('host') || '';
+  const isVercel = host.includes('.vercel');
+
+  return {
+    title: {
+      default: 'Ristorante Enoteca Da Lucia',
+      template: '%s - Ristorante Enoteca Da Lucia',
+    },
     description: 'Ristorante Enoteca Da Lucia - Cucina tipica toscana nel cuore di Roma.',
-    url: 'https://ristorantedalucia.it',
-    siteName: 'Ristorante Enoteca Da Lucia',
-    images: [
-      {
-        url: 'https://ristorantedalucia.it/images/logo.png',
-        width: 800,
-        height: 125,
-        alt: 'Ristorante Enoteca Da Lucia',
-        type: 'image/png',
+    metadataBase: new URL('https://ristorantedalucia.it'),
+    openGraph: {
+      title: 'Ristorante Enoteca Da Lucia',
+      description: 'Ristorante Enoteca Da Lucia - Cucina tipica toscana nel cuore di Roma.',
+      url: 'https://ristorantedalucia.it',
+      siteName: 'Ristorante Enoteca Da Lucia',
+      images: [
+        {
+          url: 'https://ristorantedalucia.it/images/logo.png',
+          width: 800,
+          height: 125,
+          alt: 'Ristorante Enoteca Da Lucia',
+          type: 'image/png',
+        },
+      ],
+      locale: locale === 'it' ? 'it-IT' : 'en-US',
+      type: 'website',
+    },
+    robots: {
+      index: !isVercel,
+      follow: !isVercel,
+    },
+    alternates: {
+      canonical: 'https://ristorantedalucia.it',
+      languages: {
+        'it-IT': 'https://ristorantedalucia.it/it',
+        'en-US': 'https://ristorantedalucia.it/en',
       },
-    ],
-    locale: 'it-IT',
-    type: 'website',
-  },
-  robots: {
-    index: false,
-    follow: true,
-  }
-};
+    },
+  };
+}
 
 export default async function RootLayout({
   children,
@@ -77,23 +91,23 @@ export default async function RootLayout({
   const { locale } = await params;
   const messages = await getMessages();
 
-  const {data: navItems} = await sanityFetch({
+  const { data: navItems } = await sanityFetch({
     query: HEADERMENU_QUERY,
     params: { locale }
   });
-  const {data: socials}  = await sanityFetch({
+  const { data: socials } = await sanityFetch({
     query: SOCIALS_QUERY,
     params: { locale }
   });
-  const {data: locations } = await sanityFetch({
+  const { data: locations } = await sanityFetch({
     query: LOCATIONS_QUERY,
     params: { locale }
   });
-  const {data: copyright } = await sanityFetch({
+  const { data: copyright } = await sanityFetch({
     query: COPYRIGHT_QUERY,
     params: { locale }
   });
-  const {data: settings} = await sanityFetch({
+  const { data: settings } = await sanityFetch({
     query: SETTINGS_QUERY,
     params: { locale }
   });
@@ -102,7 +116,7 @@ export default async function RootLayout({
   const themeClass = theme === 'auto' ? '' : theme;
 
   const iubendaBannerConfig: IubendaCookieSolutionBannerConfigInterface = {
-    siteId: parseInt(process.env.IUBENDA_SITE_ID || '0'), 
+    siteId: parseInt(process.env.IUBENDA_SITE_ID || '0'),
     cookiePolicyId: parseInt(process.env.IUBENDA_COOKIE_POLICY_ID || '0'),
     lang: locale,
   };
@@ -142,22 +156,22 @@ export default async function RootLayout({
       <body cz-shortcut-listen="true" className={`${montserrat.variable} ${playfair.variable} bg-background text-foreground`}>
         <NextIntlClientProvider messages={messages}>
           <ReCaptchaProvider>
-              <div className="min-h-screen">
-                <Navigation navItems={navItems} theme={theme} locations={locations} />
-                <IubendaProvider bannerConfig={iubendaBannerConfig}>
-                  <PixelLoader/>
-                  {children}
-                </IubendaProvider>
-                <Footer locations={locations} socials={socials} copyright={copyright} />
-                <SanityLive />
-                {(await draftMode()).isEnabled && (
-                  <>
-                    <DisableDraftMode />
-                    <VisualEditing />
-                    <SpeedInsights/>
-                  </>
-                )}
-              </div>
+            <div className="min-h-screen">
+              <Navigation navItems={navItems} theme={theme} locations={locations} />
+              <IubendaProvider bannerConfig={iubendaBannerConfig}>
+                <PixelLoader />
+                {children}
+              </IubendaProvider>
+              <Footer locations={locations} socials={socials} copyright={copyright} />
+              <SanityLive />
+              {(await draftMode()).isEnabled && (
+                <>
+                  <DisableDraftMode />
+                  <VisualEditing />
+                  <SpeedInsights />
+                </>
+              )}
+            </div>
           </ReCaptchaProvider>
         </NextIntlClientProvider>
       </body>

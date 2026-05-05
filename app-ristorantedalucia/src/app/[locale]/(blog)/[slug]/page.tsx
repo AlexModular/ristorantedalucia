@@ -36,6 +36,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       locale: locale === 'it' ? 'it-IT' : 'en-US',
       type: 'website',
     },
+    alternates: {
+      canonical: `https://ristorantedalucia.it/${locale}/${slug}`,
+      languages: {
+        'it-IT': `https://ristorantedalucia.it/it/${slug}`,
+        'en-US': `https://ristorantedalucia.it/en/${slug}`,
+      },
+    },
   };
 }
 

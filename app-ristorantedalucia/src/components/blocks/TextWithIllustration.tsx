@@ -3,6 +3,7 @@ import { getProportions, urlFor } from "@/sanity/lib/image";
 import { PortableText } from "@portabletext/react";
 import React from "react";
 import { components } from "../PortableTextComponents";
+import Image from "next/image";
 
 export default function TextWithIllustration({item}: {item: TransformedTextWithIllustration}) {
   const hasBg = !!item.backgroundImage;
@@ -48,23 +49,25 @@ export default function TextWithIllustration({item}: {item: TransformedTextWithI
   // Adjust container width for background mode
   const containerClasses = hasBg ? 'max-w-7xl mx-auto' : 'w-full';
 
-  const sizes = item.image ? getProportions(item.image?.asset?._ref ?? '', w) : null;
-  const img = item.image && sizes?.height ? urlFor(item.image).width(w).height(sizes.height).url() : null;
+  const proportions = item.image ? getProportions(item.image?.asset?._ref ?? '', w) : null;
+  const h = proportions?.height || 600;
   
   let txtAosFx = 'fade-up';
   if (item.imagePosition === 'left') txtAosFx = 'fade-left';
   if (item.imagePosition === 'right') txtAosFx = 'fade-right';
 
-  const imageElement = img && (
-    <div className={imageClasses} data-aos="fade-up">
-      <img width={w} height={sizes?.height || 600} alt={item.image?.alt ?? ''} src={img} className="mx-auto rounded-lg shadow-xl"/>
-    </div>
-  );
-
-  const mobileImageElement = img && (
-    <div className="py-4 md:hidden" data-aos="fade-up">
-      <img width={w} height={sizes?.height || 600} alt={item.image?.alt ?? ''} src={img} className="mx-auto rounded-lg shadow-xl"/>
-    </div>
+  const renderImage = (className: string) => (
+    item.image && (
+      <div className={className} data-aos="fade-up">
+        <Image 
+          src={urlFor(item.image).width(w).height(h).url()} 
+          width={w} 
+          height={h} 
+          alt={item.image?.alt || item.heading || "Illustration"} 
+          className="mx-auto rounded-lg shadow-xl object-cover"
+        />
+      </div>
+    )
   );
 
   // Overlay classes based on theme/setting
@@ -90,35 +93,35 @@ export default function TextWithIllustration({item}: {item: TransformedTextWithI
       <div className={`relative z-10 w-full px-4 ${containerClasses}`}>
         <div className={gridClasses}>
           {/* Top Image */}
-          {item.imagePosition === 'top' && imageElement}
+          {item.imagePosition === 'top' && renderImage(imageClasses)}
           
           {/* Left Image */}
-          {item.imagePosition === 'left' && imageElement}
+          {item.imagePosition === 'left' && renderImage(imageClasses)}
           
           <div className={textClasses} data-aos={txtAosFx}>
-            <h3 className={`family-playfair ${hasBg ? textColorClasses : 'text-white'} ${hasBg ? 'text-4xl md:text-5xl mb-8' : 'mb-6'}`}>
+            <h2 className={`family-playfair ${hasBg ? textColorClasses : 'text-white'} ${hasBg ? 'text-4xl md:text-5xl mb-8' : 'mb-6'}`}>
               {item.heading}
-            </h3>
+            </h2>
             
             {/* Mobile Image (side layouts) */}
-            {(item.imagePosition === 'left' || item.imagePosition === 'right') && mobileImageElement}
+            {(item.imagePosition === 'left' || item.imagePosition === 'right') && renderImage("py-4 md:hidden")}
             
             {/* Mobile Image (Top layout) */}
-            {item.imagePosition === 'top' && mobileImageElement}
+            {item.imagePosition === 'top' && renderImage("py-4 md:hidden")}
  
             <div className={`portable-text-container ${hasBg ? textColorClasses : 'text-white'} ${hasBg ? 'text-lg md:text-xl leading-relaxed' : 'text-lg'}`}>
               <PortableText value={item?.text || []} components={components} />
             </div>
 
             {/* Mobile Image (Bottom layout) */}
-            {item.imagePosition === 'bottom' && mobileImageElement}
+            {item.imagePosition === 'bottom' && renderImage("py-4 md:hidden")}
           </div>
 
           {/* Right Image */}
-          {item.imagePosition === 'right' && imageElement}
+          {item.imagePosition === 'right' && renderImage(imageClasses)}
 
           {/* Bottom Image */}
-          {item.imagePosition === 'bottom' && imageElement}
+          {item.imagePosition === 'bottom' && renderImage(imageClasses)}
         </div>
       </div>
     </section>
