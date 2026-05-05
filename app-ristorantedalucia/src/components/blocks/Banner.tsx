@@ -1,27 +1,15 @@
-import { PortableText } from "@portabletext/react";
-import { Banner as B } from "../../../sanity.types";
-import AOSComponent from "../AOS";
+import { PortableText } from "next-sanity";
 import { components } from "../PortableTextComponents";
+import { TransformedBanner } from "../../../sanity.types.custom";
 
-// Overriding types because GROQ coalesce returns strings, but Sanity types might still say LocalizedString
-type BannerProps = Omit<B, 'heading' | 'subtitle'> & { 
-  heading?: string; 
-  subtitle?: string;
-};
-
-export default function Banner(params: {item: BannerProps}) {
-  const { item } = params;
+export default function Banner({item}: {item: TransformedBanner}) {
   return (
-    <AOSComponent>
-      <div className="banner p-12">
-        <div className="banner-header" data-aos="zoom-in">
-          <h1 className={item?.headingCSSClasses ? `text-center ${item?.headingCSSClasses}` : 'text-center'}>{item?.heading}</h1>
-          <h2 className="banner-text banner-motto text-center">{item?.subtitle}</h2>
+    <div className="banner-container text-center py-10 md:py-20 lg:py-32 box">
+        <h1 className={`family-playfair banner-title py-10 ${item.headingCSSClasses || ''}`}>{item.heading}</h1>
+        {item.subtitle && (<div className="family-oswald banner-subtitle text-xl md:text-2xl lg:text-3xl uppercase tracking-widest text-gold mb-12">{item.subtitle}</div>)}
+        <div className="banner-text max-w-4xl mx-auto px-5 text-lg md:text-xl">
+            <PortableText value={item?.text || []} components={components} />
         </div>
-        <div className="banner-text" data-aos="fade-bottom">
-          <PortableText value={item?.text || []} components={components} />
-        </div>
-      </div>
-    </AOSComponent>
+    </div>
   )
 }

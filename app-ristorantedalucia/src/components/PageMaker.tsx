@@ -1,3 +1,5 @@
+import { HOMEPAGE_QUERYResult, PAGE_QUERYResult } from '../../sanity.types';
+import { PageBlock } from '../../sanity.types.custom';
 import Video from "./blocks/Video";
 import Banner from "./blocks/Banner";
 import Slider from "./blocks/Slider";
@@ -9,8 +11,7 @@ import ContactForm from "./blocks/ContactForm";
 import DishesMenu from "./blocks/DishesMenu";
 import Slideshow from './blocks/Slideshow';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const makeBlock = (item: any, index: number): JSX.Element | null => {
+const makeBlock = (item: PageBlock, index: number): JSX.Element | null => {
   switch(item?._type) {
     case 'video':
       return (
@@ -74,13 +75,11 @@ const makeBlock = (item: any, index: number): JSX.Element | null => {
   }
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function PageMaker({ page }: { page: any }) {
-  const pageBuilder = page?.pageBuilder || [];
+export default function PageMaker({ page }: { page: HOMEPAGE_QUERYResult | PAGE_QUERYResult }) {
+  const pageBuilder = (page?.pageBuilder as PageBlock[]) || [];
   return (
     <div className={page?.slug?.current?.includes('home') ? "homepage" : ("page-content" + (page?.fullWidth ? " full-width" : ""))}>
-      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-      {pageBuilder?.map((item: any, index: number) =>  {
+      {pageBuilder?.map((item, index) =>  {
         return makeBlock(item, index);
       })}
     </div>

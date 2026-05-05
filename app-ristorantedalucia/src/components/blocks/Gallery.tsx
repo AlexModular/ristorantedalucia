@@ -1,74 +1,56 @@
 'use client'
 
-import React, { useEffect } from 'react';
-import LightGallery from 'lightgallery/react';
-import lgZoom from 'lightgallery/plugins/zoom';
-import fjGallery from 'flickr-justified-gallery';
+import { TransformedGallery } from "../../../sanity.types.custom";
 import { urlFor } from "@/sanity/lib/image";
-import Image from 'next/image';
-import { v4 } from "uuid";
+import AOSComponent from "../AOS";
+import lightGallery from 'lightgallery';
+import lgThumbnail from 'lightgallery/plugins/thumbnail';
+import lgZoom from 'lightgallery/plugins/zoom';
+import { useEffect, useRef } from "react";
 
 // import styles
 import 'lightgallery/css/lightgallery.css';
 import 'lightgallery/css/lg-zoom.css';
 import 'lightgallery/css/lg-thumbnail.css';
 
-import { Gallery as G } from '../../../sanity.types';
-import AOSComponent from '../AOS';
-import { useMediaQuery } from 'react-responsive';
+export default function Gallery({item}: {item: TransformedGallery}) {
+  const galleryRef = useRef<HTMLDivElement>(null);
 
-export const licenseKey = process.env.LIGHTGALLERY_LICENSE_KEY;
-
-type GalleryProps = Omit<G, 'heading' | 'subtitle'> & { 
-  heading?: string; 
-  subtitle?: string;
-};
-
-export default function Gallery({item}: {item: GalleryProps}) {
-  const isMobile = useMediaQuery({ query: `(max-width: 768px)` });
-  const isTablet = useMediaQuery({ query: `(max-width: 1024px)` });
   useEffect(() => {
-    fjGallery(document.querySelectorAll('.gallery'), {
-      itemSelector: '.gallery__item',
-      rowHeight: isMobile ? 240 : (isTablet ? 360 : 480),
-      lastRow: 'start',
-      gutter: 2,
-      rowHeightTolerance: 0.1,
-      calculateItemsHeight: true,
-    });
-  }, [isMobile, isTablet]);
+    if (galleryRef.current) {
+        lightGallery(galleryRef.current, {
+            plugins: [lgThumbnail, lgZoom],
+            speed: 500,
+            selector: '.gallery-item',
+        });
+    }
+  }, []);
 
-  const newLocal = 'gallery-' + v4();
   return (
     <AOSComponent>
-      <div className="slider-container" data-aos="fade-up">
-        <h3 className="slider-title text-center family-playfair text-white">{item.heading}</h3>
-        <div className="slider-description text-center px-2 py-4 pb-8">{item.subtitle}</div>
-        <LightGallery
-          plugins={[lgZoom]}
-          licenseKey={licenseKey}
-          mode="lg-fade"
-          pager={false}
-          thumbnail={true}
-          galleryId={newLocal}
-          elementClassNames={'gallery'}
-          mobileSettings={{
-            controls: false,
-            showCloseIcon: false,
-            download: false,
-            rotate: false,
-          }}
-          download={false}
-          zoom={false}
-          counter={false}
-          >
-          {item.images && item.images.map((image, index) => (
-            <a className="gallery__item" key={index} href={urlFor(image).width(1920).url()}>
-              <Image className="img-responsive" width={0} height={0} src={urlFor(image).width(1920).url()} sizes="100vw 100vw" style={{ width: '100%', height: 'auto' }} alt={image.alt || `Image #${index}`} />
-            </a>
+      <div className="gallery-container py-10 md:py-20 box" data-aos="fade-up">
+        {item.heading && (<h2 className="family-playfair text-center mb-4">{item.heading}</h2>)}
+        {item.subtitle && (<div className="family-oswald text-center text-gold uppercase tracking-widest mb-12">{item.subtitle}</div>)}
+        
+        <div 
+          ref={galleryRef}
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-4"
+        >
+          {item.images?.map((image, index) => (
+            <div 
+              key={index}
+              className="gallery-item cursor-pointer overflow-hidden rounded-lg shadow-lg aspect-square"
+              data-src={urlFor(image).width(1600).url()}
+              data-sub-html={`<h4>${item.heading || ''}</h4>`}
+            >
+              <img 
+                src={urlFor(image).width(400).height(400).url()} 
+                alt={image.alt || `Gallery Image ${index}`}
+                className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+              />
+            </div>
           ))}
-        </LightGallery>
-        <div className='clearfix pb-8'></div>
+        </div>
       </div>
     </AOSComponent>
   )

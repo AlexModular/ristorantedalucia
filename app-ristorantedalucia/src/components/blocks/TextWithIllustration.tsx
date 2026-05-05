@@ -1,12 +1,10 @@
-import { TextWithIllustration as SanityT } from '../../../sanity.types';
+import { TransformedTextWithIllustration } from '../../../sanity.types.custom';
 import { getProportions, urlFor } from "@/sanity/lib/image";
 import { PortableText } from "@portabletext/react";
 import React from "react";
 import { components } from "../PortableTextComponents";
 
-export default function TextWithIllustration({item: rawItem}: {item: SanityT}) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const item = rawItem as any; 
+export default function TextWithIllustration({item}: {item: TransformedTextWithIllustration}) {
   const hasBg = !!item.backgroundImage;
   const showOverlay = item.hasOverlay ?? true;
   const overlayColor = item.overlayColor ?? 'dark';

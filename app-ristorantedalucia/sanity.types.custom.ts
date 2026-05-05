@@ -1,55 +1,89 @@
 import { SanityImageCrop, SanityImageHotspot } from '@sanity/asset-utils';
-import { internalGroqTypeReferenceTo } from './sanity.types';
+import { 
+  Banner as SanityBanner,
+  Slider as SanitySlider,
+  Gallery as SanityGallery,
+  Video as SanityVideo,
+  TextWithIllustration as SanityTextWithIllustration,
+  Form as SanityForm,
+  Map as SanityMap,
+  Promotion as SanityPromotion,
+  Separator as SanitySeparator
+} from './sanity.types';
 
-export type DishesMenuForPageMaker = {
-  _ref: string;
+export type TransformedBanner = Omit<SanityBanner, 'heading' | 'subtitle' | 'text'> & {
+  heading?: string;
+  subtitle?: string;
+  text?: any;
+};
+
+export type TransformedVideo = Omit<SanityVideo, 'videoLabel'> & {
+  videoLabel?: string;
+};
+
+export type TransformedSlider = Omit<SanitySlider, 'heading' | 'subtitle'> & {
+  heading?: string;
+  subtitle?: string;
+  backgroundFixed?: boolean;
+};
+
+export type TransformedSlideshow = {
+  _type: "slideshow";
+  images?: Array<{
+    asset?: { _ref: string; _type: "reference" };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    heading?: string;
+    subtitle?: string;
+    ctaText?: string;
+    link?: { slug?: string };
+    externalUrl?: string;
+    logo?: any;
+    _type: "image";
+    _key: string;
+  }>;
+  effect?: 'fade' | 'slide' | 'creative' | 'coverflow';
+};
+
+export type TransformedTextWithIllustration = Omit<SanityTextWithIllustration, 'heading' | 'text'> & {
+  heading?: string;
+  text?: any;
+  backgroundFixed?: boolean;
+  hasOverlay?: boolean;
+  overlayColor?: 'dark' | 'light';
+};
+
+export type TransformedGallery = Omit<SanityGallery, 'heading' | 'subtitle'> & {
+  heading?: string;
+  subtitle?: string;
+};
+
+export type TransformedForm = Omit<SanityForm, 'heading'> & {
+  heading?: string;
+};
+
+export type TransformedPromotion = Omit<SanityPromotion, 'title'> & {
+  title?: string;
+};
+
+export type TransformedMap = Omit<SanityMap, 'heading' | 'locations'> & {
+  heading?: string;
+  locations?: Array<{
+    lat?: number;
+    lng?: number;
+    alt?: number;
+    label?: string;
+  }>;
+};
+
+export type TransformedDishesMenu = {
   _type: 'dishesMenu';
+  _ref: string;
   menu: {
     title?: string;
-    introText?: Array<{
-        children?: Array<{
-          marks?: Array<string>;
-          text?: string;
-          _type: "span";
-          _key: string;
-        }>;
-        style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
-        listItem?: "bullet";
-        markDefs?: Array<{
-          href?: string;
-          _type: "link";
-          _key: string;
-        }>;
-        level?: number;
-        _type: "block";
-        _key: string;
-      } | {
-        asset?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-        };
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-        alt?: string;
-        _type: "image";
-        _key: string;
-      }>;
-      image?: {
-        asset?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-        };
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-        alt?: string;
-        _type: "image";
-      };
+    introText?: any;
     categories?: Array<{
-      _key: string;
       title?: string;
       icon?: any;
       flaticonClass?: string;
@@ -63,28 +97,15 @@ export type DishesMenuForPageMaker = {
   }
 };
 
-
-export type SlideshowForPageMaker = {
-  _type: "slideshow";
-  images?: Array<{
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    heading?: string;
-    subtitle?: string;
-    ctaText?: string;
-    link?: {
-      slug?: string;
-    };
-    externalUrl?: string;
-    alt?: string;
-    _type: "image";
-    _key: string;
-  }>;
-  effect?: 'fade' | 'slide' | 'creative' | 'coverflow';
-};
+export type PageBlock = 
+  | TransformedBanner 
+  | TransformedVideo 
+  | TransformedSlider 
+  | TransformedSlideshow 
+  | TransformedGallery 
+  | TransformedTextWithIllustration 
+  | TransformedForm 
+  | TransformedMap 
+  | TransformedPromotion 
+  | TransformedDishesMenu 
+  | SanitySeparator;

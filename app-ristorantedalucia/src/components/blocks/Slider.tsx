@@ -1,6 +1,6 @@
 'use client'
 
-import { Slider as S } from '../../../sanity.types';
+import { TransformedSlider } from '../../../sanity.types.custom';
 import { useMediaQuery } from 'react-responsive';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { A11y, Pagination, Navigation } from 'swiper/modules';
@@ -11,13 +11,7 @@ import { urlFor } from "@/sanity/lib/image";
 import 'swiper/css/bundle';
 import AOSComponent from '../AOS';
 
-type SliderProps = Omit<S, 'heading' | 'subtitle'> & { 
-  heading?: string; 
-  subtitle?: string;
-  backgroundFixed?: boolean;
-};
-
-export default function Slider(params: {key: number, item: SliderProps}) {
+export default function Slider(params: {key: number, item: TransformedSlider}) {
   const isMobile = useMediaQuery({ query: `(max-width: 768px)` });
   const isTablet = useMediaQuery({ query: `(max-width: 1024px)` });
   const data = params?.item;

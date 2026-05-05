@@ -1,6 +1,6 @@
 'use client'
 
-import { DishesMenuForPageMaker } from "../../../sanity.types.custom";
+import { TransformedDishesMenu } from "../../../sanity.types.custom";
 import { useState, useMemo } from "react";
 import { Icon } from '@iconify/react';
 import { PortableText } from "next-sanity";
@@ -10,7 +10,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import { components } from "../PortableTextComponents";
 
-export default function DishesMenu({ item }: { item: DishesMenuForPageMaker }) {
+export default function DishesMenu({ item }: { item: TransformedDishesMenu }) {
   const format = useFormatter();
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>(0);
 

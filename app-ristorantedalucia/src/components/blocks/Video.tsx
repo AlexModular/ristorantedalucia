@@ -1,7 +1,7 @@
-import { Video as V } from "../../../sanity.types";
+import { TransformedVideo } from "../../../sanity.types.custom";
 import { getFileAsset, buildFileUrl, SanityFileSource } from "@sanity/asset-utils";
 
-export default function Video(params: {key: number, item: Omit<V, 'videoLabel'> & { videoLabel?: string } }) {
+export default function Video(params: {key: number, item: TransformedVideo }) {
   const { item } = params;
   const opts = {projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!, dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!};
   const fileAsset = item?.file ? getFileAsset(item.file as SanityFileSource, opts) : null;

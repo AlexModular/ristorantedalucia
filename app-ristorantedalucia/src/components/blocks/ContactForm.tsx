@@ -1,91 +1,112 @@
 'use client'
 
-import { FormEvent } from 'react'
-import { Form } from '../../../sanity.types';
-import AOSComponent from '../AOS';
-import toast, { Toaster } from 'react-hot-toast';
-import { useState, useCallback } from 'react';
+import { TransformedForm } from "../../../sanity.types.custom";
+import { useForm } from "react-hook-form";
+import toast from 'react-hot-toast';
+import AOSComponent from "../AOS";
+import { useTranslations } from "next-intl";
 import { useReCaptcha } from "next-recaptcha-v3";
-import { useTranslations } from 'next-intl';
 
-export default function ContactForm(params: {item: Omit<Form, 'heading'> & { heading?: string }}) {
-  const { item } = params;
-  const t = useTranslations('ContactForm');
-  const [disabled, setDisabled] = useState(false);
-  const { executeRecaptcha } = useReCaptcha(process.env.NEXT_RECAPTCHA_SITE_KEY || '');
-  
-  const handleSubmit = useCallback(
-    async (event: FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      const formData = new FormData(event.currentTarget);
-      const token = await executeRecaptcha('contact');
-      formData.append("recaptchaToken", token);
+type FormData = {
+  name: string;
+  lastname: string;
+  email: string;
+  tel: string;
+  message: string;
+};
+
+export default function ContactForm({item}: {item: TransformedForm}) {
+  const t = useTranslations('Contact');
+  const { executeRecaptcha } = useReCaptcha();
+  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<FormData>();
+
+  const onSubmit = async (data: FormData) => {
+    try {
+      const token = await executeRecaptcha("form_submit");
       
-      try {
-        setDisabled(true)
-        const response = await fetch('/api/contact', {
-          method: 'post',
-          body: formData,
-        });
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        await response.json();
-        toast.success(t('success'), {
-          position: 'bottom-center'
-        });
-      } catch (err) {
-        console.error(err);
-        toast.error(t('error'), {
-          position: 'bottom-center'
-        });
-        setDisabled(false);
+      const formData = new FormData();
+      Object.entries(data).forEach(([key, value]) => formData.append(key, value));
+      formData.append('recaptchaToken', token);
+
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        toast.success(t('successMessage'));
+        reset();
+      } else {
+        throw new Error('Failed to send');
       }
-    }, [executeRecaptcha, setDisabled, t]
-  );
+    } catch {
+      toast.error(t('errorMessage'));
+    }
+  };
 
   return (
     <AOSComponent>
-      <Toaster/>
-      <section className="contact-form">    
-        <h3 className="subtitle text-center px-5 sm:px-10 2xl:px-0" data-aos="fade-left">{item.heading}</h3>
-        <form onSubmit={handleSubmit} className="contact-form min-[468px]:grid grid-cols-2 gap-12 max-[1024px]:gap-2 pb-12 px-5 sm:px-10 2xl:px-0" data-aos="fade-left">
-          <label className="block">
-            <span className="text-black uppercase">{t('name')} <span className="required text-gold">*</span></span>
-            <input type="text" name='name' required className="mt-0 block w-full px-0.5 text-black bg-background border-0 border-b-2 border-black focus:ring-0 focus:border-gold" />
-          </label>
-          <label className="block">
-            <span className="text-black uppercase">{t('lastname')} <span className="required text-gold">*</span></span>
-            <input type="text" name='lastname' required className="mt-0 block w-full px-0.5 text-black bg-background border-0 border-b-2 border-black focus:ring-0 focus:border-gold" />
-          </label>
-          <label className="block">
-            <span className="text-black uppercase">{t('email')} <span className="required text-gold">*</span></span>
-            <input type="email" name='email' required className="mt-0 block w-full px-0.5 text-black bg-background border-0 border-b-2 border-black focus:ring-0 focus:border-gold" />
-          </label>
-          <label className="block">
-            <span className="text-black uppercase">{t('phone')}</span>
-            <input type="tel" name='tel' className="mt-0 block w-full px-0.5 text-black bg-background border-0 border-b-2 border-black focus:ring-0 focus:border-gold" />
-          </label>
-          <label className="block col-span-2">
-            <span className="text-black uppercase">{t('message')} <span className="required text-gold">*</span></span>
-            <textarea name='message' className="mt-0 block w-full px-0.5 border-0 border-b-2 text-black bg-background border-black focus:ring-0 focus:border-gold" rows={2}></textarea>
-          </label>
-          <label className="block col-span-2">
-            <div className="mt-2">
-              <div>
-                  <label className="inline-flex items-center">
-                  <input type="checkbox" className="border-gold border-2 text-gold focus:border-gold-300 focus:ring-gold bg-transparent" />
-                  <span className="ml-2 checkbox">{t('privacy')} <span className="required text-gold checkbox">*</span></span>
-                  </label>
-              </div>
+      <section className="contact-form-section py-10 md:py-20 box" data-aos="fade-up">
+        <div className="max-w-4xl mx-auto px-4">
+          {item.heading && (<h2 className="family-playfair text-center mb-12">{item.heading}</h2>)}
+          
+          <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="form-group">
+              <label className="block text-sm font-bold uppercase tracking-widest text-gold mb-2">{t('name')}</label>
+              <input 
+                {...register("name", { required: true })}
+                className="w-full bg-background border-b-2 border-gold/30 py-3 px-4 focus:border-gold transition-colors outline-none"
+              />
+              {errors.name && <span className="text-red-500 text-xs mt-1">{t('required')}</span>}
             </div>
-          </label>
-          <div className="col-span-2 flex justify-center">
-            <button type="submit" className="cta-btn" disabled={disabled}>
-                {t('submit')}
-            </button>
-          </div>
-        </form>
+
+            <div className="form-group">
+              <label className="block text-sm font-bold uppercase tracking-widest text-gold mb-2">{t('lastname')}</label>
+              <input 
+                {...register("lastname", { required: true })}
+                className="w-full bg-background border-b-2 border-gold/30 py-3 px-4 focus:border-gold transition-colors outline-none"
+              />
+              {errors.lastname && <span className="text-red-500 text-xs mt-1">{t('required')}</span>}
+            </div>
+
+            <div className="form-group">
+              <label className="block text-sm font-bold uppercase tracking-widest text-gold mb-2">{t('email')}</label>
+              <input 
+                {...register("email", { required: true, pattern: /^\S+@\S+$/i })}
+                className="w-full bg-background border-b-2 border-gold/30 py-3 px-4 focus:border-gold transition-colors outline-none"
+              />
+              {errors.email && <span className="text-red-500 text-xs mt-1">{t('invalidEmail')}</span>}
+            </div>
+
+            <div className="form-group">
+              <label className="block text-sm font-bold uppercase tracking-widest text-gold mb-2">{t('tel')}</label>
+              <input 
+                {...register("tel")}
+                className="w-full bg-background border-b-2 border-gold/30 py-3 px-4 focus:border-gold transition-colors outline-none"
+              />
+            </div>
+
+            <div className="form-group md:col-span-2">
+              <label className="block text-sm font-bold uppercase tracking-widest text-gold mb-2">{t('message')}</label>
+              <textarea 
+                {...register("message", { required: true })}
+                rows={5}
+                className="w-full bg-background border-b-2 border-gold/30 py-3 px-4 focus:border-gold transition-colors outline-none resize-none"
+              />
+              {errors.message && <span className="text-red-500 text-xs mt-1">{t('required')}</span>}
+            </div>
+
+            <div className="md:col-span-2 text-center mt-6">
+              <button 
+                type="submit"
+                disabled={isSubmitting}
+                className={`bg-gold text-white px-12 py-4 uppercase family-oswald tracking-widest transition-all hover:bg-foreground disabled:opacity-50`}
+              >
+                {isSubmitting ? t('sending') : t('send')}
+              </button>
+            </div>
+          </form>
+        </div>
       </section>
     </AOSComponent>
   )

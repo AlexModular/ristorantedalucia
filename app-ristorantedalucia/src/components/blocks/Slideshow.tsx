@@ -1,6 +1,6 @@
 'use client'
 
-import { SlideshowForPageMaker } from '../../../sanity.types.custom';
+import { TransformedSlideshow } from '../../../sanity.types.custom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { A11y, Pagination, Navigation, Autoplay, EffectCreative, EffectFade } from 'swiper/modules';
 import Image from 'next/image'
@@ -13,15 +13,15 @@ import AOSComponent from '../AOS';
 import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 
-export default function Slideshow(params: { key: number, item: SlideshowForPageMaker }) {
+export default function Slideshow(params: { key: number, item: TransformedSlideshow }) {
   const t = useTranslations('Navigation');
-  const data: SlideshowForPageMaker = params?.item;
+  const data: TransformedSlideshow = params?.item;
   const slidesWithContent = data?.images?.filter(img => img.heading || img.subtitle || (img.ctaText && (img.externalUrl || img.link?.slug))) || [];
   const useGlobalContent = slidesWithContent.length === 1;
   const globalContent = useGlobalContent ? slidesWithContent[0] : null;
   const effect = data?.effect || 'fade';
 
-  const renderContent = (item: NonNullable<SlideshowForPageMaker['images']>[number]) => (
+  const renderContent = (item: NonNullable<TransformedSlideshow['images']>[number]) => (
     <div className='slide-contents absolute inset-0 z-10' data-aos='fade' data-aos-duration='1000'>
       {item?.heading && (<div className='family-dancing-script slide-title text-4xl sm:text-5xl md:text-6xl lg:text-8xl text-white'>{item.heading}</div>)}
       <div className='slide-content-items'>
