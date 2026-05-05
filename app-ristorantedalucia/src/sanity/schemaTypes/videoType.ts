@@ -21,4 +21,15 @@ export const videoType = defineType({
       title: 'Video File',
     }),
   ],
+  preview: {
+    select: {
+      title: 'videoLabel.it',
+    },
+    prepare({ title }) {
+      return {
+        title: title || 'Video (No Title)',
+        subtitle: 'Video block',
+      }
+    }
+  }
 })

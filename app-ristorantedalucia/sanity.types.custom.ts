@@ -73,7 +73,12 @@ export type TransformedMap = Omit<SanityMap, 'heading' | 'locations'> & {
     lat?: number;
     lng?: number;
     alt?: number;
-    label?: string;
+    location?: {
+      lat?: number;
+      lng?: number;
+      alt?: number;
+    };
+    _key?: string;
   }>;
 };
 
@@ -97,6 +102,20 @@ export type TransformedDishesMenu = {
   }
 };
 
+export type TransformedQuickActions = {
+  _type: 'quickActions';
+  actions?: Array<{
+    label?: string;
+    icon?: string;
+    isPrimary?: boolean;
+    link?: {
+      slug?: string;
+      externalUrl?: string;
+      phone?: string;
+    };
+  }>;
+};
+
 export type PageBlock = 
   | TransformedBanner 
   | TransformedVideo 
@@ -108,4 +127,5 @@ export type PageBlock =
   | TransformedMap 
   | TransformedPromotion 
   | TransformedDishesMenu 
+  | TransformedQuickActions
   | SanitySeparator;

@@ -14,7 +14,10 @@
     "privacy": "I confirm that I have read the privacy policy and consent to the processing of my personal data.",
     "submit": "Send Message",
     "success": "Message sent successfully!",
-    "error": "There was an error sending your message. Please try again or contact us by phone."
+    "error": "There was an error sending your message. Please try again or contact us by phone.",
+    "required": "Required field",
+    "invalidEmail": "Invalid email",
+    "sending": "Sending..."
   },
   "Footer": {
     "hours": "Opening Hours",

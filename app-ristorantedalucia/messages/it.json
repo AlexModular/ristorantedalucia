@@ -14,7 +14,10 @@
     "privacy": "Confermo la lettura dell'informativa sulla privacy e acconsento al trattamento dei miei dati personali.",
     "submit": "Invia Messaggio",
     "success": "Comunicazione inviata con successo!",
-    "error": "C'è stato un errore durante l'invio del tuo messagio. ti preghiamo di riprovare o di contattarci telefonicamente."
+    "error": "C'è stato un errore durante l'invio del tuo messagio. ti preghiamo di riprovare o di contattarci telefonicamente.",
+    "required": "Campo obbligatorio",
+    "invalidEmail": "Email non valida",
+    "sending": "Invio in corso..."
   },
   "Footer": {
     "hours": "Orari",

@@ -22,5 +22,16 @@ export const dishesMenuType = defineType({
       title: "Dish Categories",
       of: [{ type: "dishesCategory" }]
     })
-  ]
+  ],
+  preview: {
+    select: {
+      title: 'title.it',
+    },
+    prepare({ title }) {
+      return {
+        title: title || 'Menu (No Title)',
+        subtitle: 'Restaurant Menu',
+      }
+    }
+  }
 });

@@ -81,4 +81,17 @@ export const textWithIllustrationType = defineType({
       options: {list: GRID_SIZE},
     }),
   ],
+  preview: {
+    select: {
+      title: 'heading.it',
+      media: 'image',
+    },
+    prepare({ title, media }) {
+      return {
+        title: title || 'Text with Illustration (No Title)',
+        subtitle: 'Content block',
+        media,
+      }
+    }
+  }
 })

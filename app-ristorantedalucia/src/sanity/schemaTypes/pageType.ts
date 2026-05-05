@@ -133,7 +133,25 @@ export const pageType = defineType({
           type: 'reference',
           to: [{ type: 'dishesMenu' }],
         }),
+        defineArrayMember({
+          name: 'quickActions',
+          type: 'quickActions',
+        }),
       ],
     }),
   ],
+  preview: {
+    select: {
+      title: 'title.it',
+      slug: 'slug.current',
+      media: 'introImage'
+    },
+    prepare({ title, slug, media }) {
+      return {
+        title: title || 'Untitled',
+        subtitle: slug ? `/${slug}` : '',
+        media
+      }
+    }
+  }
 });

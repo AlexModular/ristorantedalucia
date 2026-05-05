@@ -22,6 +22,7 @@ export const SOCIALS_QUERY = defineQuery(`*[_type == "socials"][0].socials`)
 
 export const LOCATIONS_QUERY = defineQuery(`*[_type == "locations"]{
   "title": coalesce(title[$locale], title.it, title),
+  location,
   city,
   address,
   postalCode,
@@ -149,6 +150,19 @@ export const HOMEPAGE_QUERY = defineQuery(`*[slug.current match "home*"][0]{
           }
         }
       }
+    },
+    _type == "quickActions" => {
+      _type,
+      actions[] {
+        "label": coalesce(label[$locale], label.it, label),
+        icon,
+        isPrimary,
+        "link": {
+          "slug": *[_type == "page" && _id == ^.link.internalLink._ref][0].slug.current,
+          "externalUrl": link.externalUrl,
+          "phone": link.phone
+        }
+      }
     }
   },
 }`)
@@ -258,6 +272,19 @@ export const PAGE_QUERY = defineQuery(`*[slug.current == $slug][0]{
             price,
             "subcategory": coalesce(subcategory[$locale], subcategory.it, subcategory)
           }
+        }
+      }
+    },
+    _type == "quickActions" => {
+      _type,
+      actions[] {
+        "label": coalesce(label[$locale], label.it, label),
+        icon,
+        isPrimary,
+        "link": {
+          "slug": *[_type == "page" && _id == ^.link.internalLink._ref][0].slug.current,
+          "externalUrl": link.externalUrl,
+          "phone": link.phone
         }
       }
     }

@@ -56,4 +56,17 @@ export const imageSliderType = defineType({
       },
     }),
   ],
+  preview: {
+    select: {
+      title: 'heading.it',
+      media: 'backgroundImage',
+    },
+    prepare({ title, media }) {
+      return {
+        title: title || 'Slider (No Title)',
+        subtitle: 'Image slider',
+        media,
+      }
+    }
+  }
 })

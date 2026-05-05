@@ -10,6 +10,7 @@ import TextWithIllustration from "./blocks/TextWithIllustration";
 import ContactForm from "./blocks/ContactForm";
 import DishesMenu from "./blocks/DishesMenu";
 import Slideshow from './blocks/Slideshow';
+import QuickActions from './blocks/QuickActions';
 
 const makeBlock = (item: PageBlock, index: number): JSX.Element | null => {
   switch(item?._type) {
@@ -69,6 +70,10 @@ const makeBlock = (item: PageBlock, index: number): JSX.Element | null => {
     case 'dishesMenu':
       return (
         <DishesMenu key={index} item={item} />
+      )
+    case 'quickActions':
+      return (
+        <QuickActions key={index} item={item} />
       )
     default:
       return null;

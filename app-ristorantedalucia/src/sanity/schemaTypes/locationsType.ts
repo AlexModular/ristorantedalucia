@@ -13,6 +13,11 @@ export const locationsType = defineType({
   ],
   fields: [
     defineField({
+      name: 'location',
+      type: 'geopoint',
+      title: 'Geographical Location',
+    }),
+    defineField({
       name: "title",
       type: "localizedString",
       title: "Title",

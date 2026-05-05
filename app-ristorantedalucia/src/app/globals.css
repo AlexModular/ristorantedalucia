@@ -192,6 +192,10 @@ div.separator {
   font-family: var(--font-playfair), serif;
 }
 
+.family-montserrat {
+  font-family: var(--font-montserrat), sans-serif;
+}
+
 p {
   font-size: 15px
 }

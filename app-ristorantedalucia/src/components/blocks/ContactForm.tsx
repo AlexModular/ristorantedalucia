@@ -7,7 +7,7 @@ import AOSComponent from "../AOS";
 import { useTranslations } from "next-intl";
 import { useReCaptcha } from "next-recaptcha-v3";
 
-type FormData = {
+type ContactFormData = {
   name: string;
   lastname: string;
   email: string;
@@ -16,31 +16,31 @@ type FormData = {
 };
 
 export default function ContactForm({item}: {item: TransformedForm}) {
-  const t = useTranslations('Contact');
+  const t = useTranslations('ContactForm');
   const { executeRecaptcha } = useReCaptcha();
-  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<FormData>();
+  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<ContactFormData>();
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: ContactFormData) => {
     try {
       const token = await executeRecaptcha("form_submit");
       
-      const formData = new FormData();
-      Object.entries(data).forEach(([key, value]) => formData.append(key, value));
-      formData.append('recaptchaToken', token);
+      const payload = new window.FormData();
+      Object.entries(data).forEach(([key, value]) => payload.append(key, value));
+      payload.append('recaptchaToken', token);
 
       const response = await fetch('/api/contact', {
         method: 'POST',
-        body: formData,
+        body: payload,
       });
 
       if (response.ok) {
-        toast.success(t('successMessage'));
+        toast.success(t('success'));
         reset();
       } else {
         throw new Error('Failed to send');
       }
     } catch {
-      toast.error(t('errorMessage'));
+      toast.error(t('error'));
     }
   };
 
@@ -79,7 +79,7 @@ export default function ContactForm({item}: {item: TransformedForm}) {
             </div>
 
             <div className="form-group">
-              <label className="block text-sm font-bold uppercase tracking-widest text-gold mb-2">{t('tel')}</label>
+              <label className="block text-sm font-bold uppercase tracking-widest text-gold mb-2">{t('phone')}</label>
               <input 
                 {...register("tel")}
                 className="w-full bg-background border-b-2 border-gold/30 py-3 px-4 focus:border-gold transition-colors outline-none"
@@ -102,7 +102,7 @@ export default function ContactForm({item}: {item: TransformedForm}) {
                 disabled={isSubmitting}
                 className={`bg-gold text-white px-12 py-4 uppercase family-oswald tracking-widest transition-all hover:bg-foreground disabled:opacity-50`}
               >
-                {isSubmitting ? t('sending') : t('send')}
+                {isSubmitting ? t('sending') : t('submit')}
               </button>
             </div>
           </form>

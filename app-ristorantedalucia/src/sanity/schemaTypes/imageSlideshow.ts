@@ -64,4 +64,17 @@ export const imageSlideshowType = defineType({
       initialValue: 'fade',
     }),
   ],
+  preview: {
+    select: {
+      images: 'images',
+    },
+    prepare({ images }) {
+      const count = images?.length || 0;
+      return {
+        title: 'Slideshow',
+        subtitle: `${count} slide${count === 1 ? '' : 's'}`,
+        media: images?.[0],
+      }
+    }
+  }
 })

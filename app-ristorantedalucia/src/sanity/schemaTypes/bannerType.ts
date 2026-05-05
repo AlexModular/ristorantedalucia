@@ -22,4 +22,16 @@ export const bannerType = defineType({
       type: 'localizedBlockContent',
     }),
   ],
+  preview: {
+    select: {
+      title: 'heading.it',
+      subtitle: 'subtitle.it',
+    },
+    prepare({ title, subtitle }) {
+      return {
+        title: title || 'Banner (No Title)',
+        subtitle: subtitle || 'Banner block',
+      }
+    }
+  }
 })
