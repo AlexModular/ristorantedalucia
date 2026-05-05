@@ -9,11 +9,11 @@ export const imageGalleryType = defineType({
   fields: [
     defineField({
       name: 'heading',
-      type: 'string',
+      type: 'localizedString',
     }),
     defineField({
       name: 'subtitle',
-      type: 'string',
+      type: 'localizedString',
     }),
     {
       name: 'images',

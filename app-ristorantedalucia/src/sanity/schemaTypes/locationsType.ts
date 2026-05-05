@@ -14,9 +14,8 @@ export const locationsType = defineType({
   fields: [
     defineField({
       name: "title",
-      type: "string",
+      type: "localizedString",
       title: "Title",
-      validation: Rule => Rule.required(),
     }),
     defineField({
       name: "city",

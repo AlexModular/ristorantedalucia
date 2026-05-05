@@ -1,22 +1,25 @@
 'use client'
-import Link from "next/link";
+import { Link, usePathname } from "@/i18n/routing";
 import React, { useState, useEffect } from 'react';
-import { HEADERMENU_QUERY_RESULT } from "../../sanity.types";
-import { usePathname } from 'next/navigation'
+import { HEADERMENU_QUERYResult, LOCATIONS_QUERYResult } from "../../sanity.types";
 import { useMediaQuery } from 'react-responsive';
 import Logo from "./Logo";
+import { Phone, Globe } from 'lucide-react';
+import { useTranslations, useLocale } from 'next-intl';
 
-export default function Navbar({ navItems, theme }: { navItems: HEADERMENU_QUERY_RESULT, theme: string }) {
+export default function Navbar({ navItems, theme, locations }: { navItems: HEADERMENU_QUERYResult, theme: string, locations: LOCATIONS_QUERYResult }) {
   const isMobile = useMediaQuery({ query: `(max-width: 1024px)` });
+  const t = useTranslations('Navigation');
+  const locale = useLocale();
+  const pathname = usePathname();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-  // Navigation items array
+  
   const [isSticky, setIsSticky] = useState(false);
   const [isOverTransparentSection, setIsOverTransparentSection] = useState(true);
-  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,10 +28,9 @@ export default function Navbar({ navItems, theme }: { navItems: HEADERMENU_QUERY
 
     window.addEventListener('scroll', handleScroll);
 
-    // Intersection Observer for transparent sections
     const observerOptions = {
       root: null,
-      rootMargin: '-10% 0px -90% 0px', // Detect when element is under the header
+      rootMargin: '-10% 0px -90% 0px', 
       threshold: 0
     };
 
@@ -53,25 +55,67 @@ export default function Navbar({ navItems, theme }: { navItems: HEADERMENU_QUERY
   }, [pathname]);
 
   const headerIsTransparent = !isSticky || isOverTransparentSection;
+  const headerShouldBeSticky = isSticky && !isOverTransparentSection;
 
-  // Logic to determine logo version
   const useWhiteLogo = headerIsTransparent || theme === 'dark' || (theme === 'auto' && typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches);
 
+  const LanguageSwitcher = () => (
+    <div className="flex items-center gap-2 text-sm font-medium">
+      <Link 
+        href={pathname} 
+        locale="it" 
+        className={`transition-colors ${locale === 'it' ? 'text-gold' : (headerIsTransparent ? 'text-white' : 'text-foreground')} hover:text-gold`}
+      >
+        IT
+      </Link>
+      <span className={headerIsTransparent ? 'text-white/30' : 'text-foreground/30'}>|</span>
+      <Link 
+        href={pathname} 
+        locale="en" 
+        className={`transition-colors ${locale === 'en' ? 'text-gold' : (headerIsTransparent ? 'text-white' : 'text-foreground')} hover:text-gold`}
+      >
+        EN
+      </Link>
+    </div>
+  );
+
   return (
-    <header className={isSticky ? 'sticky z-50 top-0 active' : 'z-50 top-0'}>
-      <nav className={`w-full px-4 py-4 md:px-8 sticky top-0 z-[9999] transition-all duration-500 ${headerIsTransparent ? 'bg-transparent' : 'bg-background border-b-2 border-gold shadow-lg'}`}>
+    <header className={headerShouldBeSticky ? 'sticky z-50 top-0 active' : 'z-50 top-0'}>
+      <nav className={`w-full px-4 py-4 md:px-8 sticky top-0 z-[9999] ${headerIsTransparent ? 'bg-transparent' : 'bg-background border-b-2 border-gold shadow-lg'}`}>
         <div className="flex items-center justify-between mx-auto relative w-full">
-          {/* Desktop Menu Left */}
-          <div className="hidden lg:flex flex-1 justify-start menu-left">
+          {/* Mobile Menu Left (Hamburger) */}
+          <div className="lg:hidden flex-1 flex justify-start items-center z-[10000]">
+            <button
+              className={`hamburger-menu ${isMobileMenuOpen ? 'open' : ''} ${headerIsTransparent ? 'transparent' : 'sticky'}`}
+              onClick={toggleMobileMenu}
+              type="button"
+              aria-label="Toggle menu"
+            >
+              <span></span>
+              <span></span>
+            </button>
+          </div>
+
+          <div className="hidden lg:flex flex-1 justify-start menu-left items-center gap-8">
+            {locations && locations[0]?.phone && (
+              <Link
+                href={`tel:${locations[0].phone}`}
+                className={`flex items-center gap-2 family-oswald text-lg transition-colors duration-300 text-white hover:text-gold`}
+                aria-label={`${t('call')} ${locations[0].phone}`}
+              >
+                <Phone size={20} className="text-white" />
+                <span className="sr-only">{locations[0].phone}</span>
+              </Link>
+            )}
             <ul className="flex flex-row items-center gap-8">
-              {navItems.map((item) => {
+              {navItems?.map((item: any) => {
                 if (item.navId === 'main-menu-left' && item?.items) {
-                  return item.items.map((nav, index) => (
+                  return item.items.map((nav: any, index: number) => (
                     <li
                       key={index}
                       className={`flex items-center p-1 text-lg gap-x-2 uppercase transition-colors duration-300 family-oswald ${headerIsTransparent ? 'text-white' : 'text-foreground'}`}
                     >
-                      <Link href={(nav.link?.slug === 'home' ? '/' : nav.link?.slug) ?? nav.externalUrl ?? '#'} className={`flex items-center${pathname == '/' + nav.link?.slug || (nav.link?.slug === 'home' && pathname == '/') ? ' active' : ''}`}>
+                      <Link href={(nav.link?.slug === 'home' ? '/' : `/${nav.link?.slug}`) ?? nav.externalUrl ?? '#'} className={`flex items-center${pathname == '/' + nav.link?.slug || (nav.link?.slug === 'home' && pathname == '/') ? ' active' : ''}`}>
                         {nav.text}
                       </Link>
                     </li>
@@ -83,11 +127,7 @@ export default function Navbar({ navItems, theme }: { navItems: HEADERMENU_QUERY
           </div>
 
           <div className="logo-container">
-            {/* Logo */}
-            <Link
-              href="/"
-              className="logo"
-            >
+            <Link href="/" className="logo">
               <Logo
                 className={`w-full h-full transition-all duration-500 ${useWhiteLogo ? 'text-white' : 'text-foreground'}`}
                 width={isMobile ? 90 : (headerIsTransparent ? 140 : 110)}
@@ -99,14 +139,14 @@ export default function Navbar({ navItems, theme }: { navItems: HEADERMENU_QUERY
           {/* Desktop Menu Right */}
           <div className="hidden lg:flex flex-1 justify-end menu-right items-center gap-8">
             <ul className="flex flex-row items-center gap-8">
-              {navItems.map((item) => {
+              {navItems?.map((item: any) => {
                 if (item.navId === 'main-menu-right' && item?.items) {
-                  return item.items.map((nav, index) => (
+                  return item.items.map((nav: any, index: number) => (
                     <li
                       key={index}
                       className={`flex items-center p-1 text-lg gap-x-2 uppercase transition-colors duration-300 family-oswald ${headerIsTransparent ? 'text-white' : 'text-foreground'}`}
                     >
-                      <Link href={(nav.link?.slug === 'home' ? '/' : nav.link?.slug) ?? nav.externalUrl ?? '#'} className="flex items-center">
+                      <Link href={(nav.link?.slug === 'home' ? '/' : `/${nav.link?.slug}`) ?? nav.externalUrl ?? '#'} className="flex items-center">
                         {nav.text}
                       </Link>
                     </li>
@@ -119,19 +159,23 @@ export default function Navbar({ navItems, theme }: { navItems: HEADERMENU_QUERY
               href="/contattaci"
               className={`cta-btn-header px-6 py-2 border-2 uppercase family-oswald tracking-widest transition-all duration-300 ${headerIsTransparent ? 'border-white text-white hover:bg-white hover:text-foreground' : 'border-gold bg-gold text-white hover:bg-background hover:text-gold'}`}
             >
-              Prenota Ora
+              {t('bookNow')}
             </Link>
+            <LanguageSwitcher />
           </div>
-          <div className="lg:hidden z-[10000]">
-            <button
-              className={`hamburger-menu ${isMobileMenuOpen ? 'open' : ''} ${headerIsTransparent ? 'transparent' : 'sticky'}`}
-              onClick={toggleMobileMenu}
-              type="button"
-              aria-label="Toggle menu"
-            >
-              <span></span>
-              <span></span>
-            </button>
+
+          {/* Mobile Menu Right (Phone) */}
+          <div className="lg:hidden flex-1 flex justify-end items-center z-[10000] gap-4">
+            <LanguageSwitcher />
+            {locations && locations[0]?.phone && (
+              <Link
+                href={`tel:${locations[0].phone}`}
+                className={`transition-colors duration-300 text-white hover:text-gold`}
+                aria-label={`${t('call')} ${locations[0].phone}`}
+              >
+                <Phone size={24} className="text-white" />
+              </Link>
+            )}
           </div>
 
           {/* Mobile Menu */}
@@ -144,14 +188,14 @@ export default function Navbar({ navItems, theme }: { navItems: HEADERMENU_QUERY
                 <Logo className="w-32 h-32 text-foreground" />
               </div>
               <ul className="flex flex-col gap-8 text-center">
-                {navItems.map((item) => {
+                {navItems?.map((item: any) => {
                   if ((item.navId === 'main-menu-left' || item.navId === 'main-menu-right') && item?.items) {
-                    return item.items.map((nav, index) => (
+                    return item.items.map((nav: any, index: number) => (
                       <li
                         key={`${item.navId}-${index}`}
                         className="border-b border-white/10 pb-4"
                       >
-                        <Link href={(nav.link?.slug === 'home' ? '/' : nav.link?.slug) ?? nav.externalUrl ?? '#'}
+                        <Link href={(nav.link?.slug === 'home' ? '/' : `/${nav.link?.slug}`) ?? nav.externalUrl ?? '#'}
                           className="text-2xl family-oswald uppercase tracking-widest text-foreground hover:text-gold transition-colors"
                           onClick={toggleMobileMenu}>
                           {nav.text}
@@ -167,13 +211,10 @@ export default function Navbar({ navItems, theme }: { navItems: HEADERMENU_QUERY
                     className="inline-block px-8 py-3 border-2 border-gold bg-gold text-white uppercase family-oswald tracking-widest transition-all duration-300 active:bg-foreground active:border-foreground"
                     onClick={toggleMobileMenu}
                   >
-                    Prenota Ora
+                    {t('bookNow')}
                   </Link>
                 </li>
               </ul>
-              <div className="mt-auto pb-16 flex justify-center">
-                {/* Logo removed from bottom */}
-              </div>
             </div>
           </div>
         </div>

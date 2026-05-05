@@ -14,13 +14,14 @@
 .dishes-menu-container .filter-list .filter-item.active {
   opacity: 1;
   filter: grayscale(0);
-  transform: translateY(-5px);
+  transform: scale(1.1);
 }
 
 .dishes-menu-container .filter-list .filter-item h6 {
   transition: color 0.3s ease;
   font-weight: 600;
   letter-spacing: 0.1em;
+  font-family: var(--font-playfair);
 }
 
 .dishes-menu-container .filter-list .filter-item.active h6 {
@@ -50,13 +51,16 @@
   margin-bottom: 10px;
   font-weight: 700;
   letter-spacing: 0.05em;
+  font-family: var(--font-playfair);
 }
 
 .dishes-menu-container .filter-container .filter-item .dish-description {
-  color: #666;
-  font-style: italic;
   font-size: 0.95rem;
   line-height: 1.6;
+}
+
+.dark .dishes-menu-container .filter-container .filter-item .dish-description {
+  color: #ffffff;
 }
 
 @media screen and (max-width: 1024px) {
@@ -69,7 +73,7 @@
   .dishes-menu-container {
     padding: 40px 15px;
   }
-  
+
   .dishes-menu-container .filter-list .filter-item h6 {
     font-size: 0.8rem;
   }

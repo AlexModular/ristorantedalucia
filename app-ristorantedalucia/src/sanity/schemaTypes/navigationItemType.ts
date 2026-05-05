@@ -9,7 +9,7 @@ export const navigationItemType = defineType({
   fields: [
     defineField({
       name: "text",
-      type: "string",
+      type: "localizedString",
       title: "Navigation Text"
     }),
     defineField({

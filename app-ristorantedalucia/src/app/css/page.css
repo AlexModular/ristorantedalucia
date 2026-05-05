@@ -83,13 +83,19 @@ div.page-content {
   padding: 60px 20px;
 }
 
+div.page-content.full-width {
+  max-width: 100% !important;
+  padding: 0;
+}
+
 .text-with-illustration {
   transition: background-color 0.4s ease;
   overflow: hidden;
+  background-color: transparent;
 }
 
 .text-with-illustration:nth-child(even) {
-  background-color: var(--cream);
+  background-color: rgba(0, 0, 0, 0.05); /* Leggera sfumatura per distinguere i blocchi */
 }
 
 .text-with-illustration h3 {
@@ -106,6 +112,12 @@ div.page-content {
   width: 60px;
   height: 3px;
   background-color: var(--gold);
+}
+
+.text-center .text-with-illustration h3::after,
+.text-with-illustration .text-center h3::after {
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .text-with-illustration .image-container img {

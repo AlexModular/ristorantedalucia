@@ -8,7 +8,7 @@ export const videoType = defineType({
   fields: [
     defineField({
       name: 'videoLabel',
-      type: 'string',
+      type: 'localizedString',
       title: 'Video Label'
     }),
     defineField({

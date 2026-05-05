@@ -9,9 +9,8 @@ export const dishesCategoryType = defineType({
   fields: [
     defineField({
       name: "title",
-      type: "string",
+      type: "localizedString",
       title: "Title",
-      validation: Rule => Rule.required(),
     }),
     defineField({
       title: "Icon",

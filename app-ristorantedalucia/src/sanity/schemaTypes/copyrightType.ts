@@ -8,7 +8,7 @@ export const copyrightType = defineType({
   icon: FaCopyright,
   fields: [
     defineField({
-      type: "blockContent",
+      type: "localizedBlockContent",
       name: "content"
     })
   ]

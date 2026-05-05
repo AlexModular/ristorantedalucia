@@ -13,7 +13,7 @@ export const formType = defineType({
     }),
     defineField({
       name: 'heading',
-      type: 'string',
+      type: 'localizedString',
     }),
     defineField({
       name: 'form',

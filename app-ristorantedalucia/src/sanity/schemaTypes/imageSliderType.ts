@@ -9,11 +9,11 @@ export const imageSliderType = defineType({
   fields: [
     defineField({
       name: 'heading',
-      type: 'string',
+      type: 'localizedString',
     }),
     defineField({
       name: 'subtitle',
-      type: 'string',
+      type: 'localizedString',
     }),
     defineField({
       name: 'backgroundImage',
@@ -26,6 +26,13 @@ export const imageSliderType = defineType({
           title: 'Alternative text',
         },
       ],
+    }),
+    defineField({
+      name: 'backgroundFixed',
+      title: 'Fixed Background (Parallax)',
+      type: 'boolean',
+      initialValue: false,
+      hidden: ({ parent }) => !parent?.backgroundImage,
     }),
     defineField({
       name: 'images',

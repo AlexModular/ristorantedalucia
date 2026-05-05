@@ -7,13 +7,12 @@ export const dishType = defineType({
   fields: [
     defineField({
       name: "title",
-      type: "string",
+      type: "localizedString",
       title: "Title",
-      validation: Rule => Rule.required(),
     }),
     defineField({
       name: "description",
-      type: "string",
+      type: "localizedString",
       title: "Description"
     }),
     defineField({
@@ -23,7 +22,7 @@ export const dishType = defineType({
     }),
     defineField({
       name: "subcategory",
-      type: "string",
+      type: "localizedString",
       title: "Subcategory",
       description: "Optional subcategory for the dish, e.g. 'White Wine', 'Red Wine', etc. (in order to group dishes in the category menu)",
     }),

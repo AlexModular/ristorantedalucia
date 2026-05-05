@@ -24,9 +24,9 @@ Creation date: 04/07/2016 14:10
 [class^="flaticon-"]:before, [class*=" flaticon-"]:before,
 [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
   font-family: Flaticon;
-        font-size: 20px;
-font-style: normal;
-margin-left: 20px;
+  font-size: 45px;
+  font-style: normal;
+  margin-left: 0;
 }
 
 .flaticon-apron:before { content: "\f100"; }

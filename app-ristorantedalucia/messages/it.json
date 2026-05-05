@@ -1,5 +1,24 @@
 {
-  "HomePage": {
-    "title": "Hello world!"
+  "Navigation": {
+    "bookNow": "Prenota Ora",
+    "call": "Chiama",
+    "readMore": "Scopri di più"
+  },
+  "ContactForm": {
+    "heading": "Contattaci",
+    "name": "Nome",
+    "lastname": "Cognome",
+    "email": "Email",
+    "phone": "Telefono",
+    "message": "Il tuo messaggio",
+    "privacy": "Confermo la lettura dell'informativa sulla privacy e acconsento al trattamento dei miei dati personali.",
+    "submit": "Invia Messaggio",
+    "success": "Comunicazione inviata con successo!",
+    "error": "C'è stato un errore durante l'invio del tuo messagio. ti preghiamo di riprovare o di contattarci telefonicamente."
+  },
+  "Footer": {
+    "hours": "Orari",
+    "followUs": "Seguici",
+    "whereWeAre": "Dove siamo"
   }
 }

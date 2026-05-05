@@ -8,12 +8,11 @@ export const pageType = defineType({
   fields: [
     defineField({
       name: 'title',
-      type: 'string',
-      validation: (rule) => rule.required()
+      type: 'localizedString',
     }),
     defineField({
       name: 'subtitle',
-      type: 'string'
+      type: 'localizedString'
     }),
     defineField({
       name: 'slug',
@@ -25,13 +24,25 @@ export const pageType = defineType({
       },
       validation: (rule) => rule.required()
     }),
-    defineField({name: 'metaTitle', type: 'string'}),
-    defineField({name: 'metaDescription', type: 'string'}),
+    defineField({name: 'metaTitle', type: 'localizedString'}),
+    defineField({name: 'metaDescription', type: 'localizedString'}),
     defineField({name: 'introImage', type: 'image'}),
     defineField({
       title: 'Full width',
       name: 'fullWidth',
       type: 'boolean',
+    }),
+    defineField({
+      name: 'backgroundImage',
+      title: 'Global Page Background',
+      type: 'image',
+      options: { hotspot: true }
+    }),
+    defineField({
+      name: 'backgroundFixed',
+      title: 'Fixed Background (Parallax)',
+      type: 'boolean',
+      initialValue: false
     }),
     defineField({
       name: "theme",

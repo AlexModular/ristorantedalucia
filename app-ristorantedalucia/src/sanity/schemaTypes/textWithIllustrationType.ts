@@ -4,8 +4,8 @@ import { BsJournalRichtext } from "react-icons/bs";
 const POSITION = [
   {title: 'Left', value: 'left'},
   {title: 'Right', value: 'right'},
-  //{title: 'Before Text', value: 'before'},
-  //{title: 'After Text', value: 'after'},
+  {title: 'Top', value: 'top'},
+  {title: 'Bottom', value: 'bottom'},
 ];
 const GRID_SIZE = [
   {title: '2 columns for text 2 column for image', value: 'grid-cols-2'},
@@ -20,11 +20,43 @@ export const textWithIllustrationType = defineType({
   fields: [
     defineField({
       name: 'heading',
-      type: 'string',
+      type: 'localizedString',
     }),
     defineField({
       name: 'text',
-      type: 'blockContent',
+      type: 'localizedBlockContent',
+    }),
+    defineField({
+      name: 'backgroundImage',
+      type: 'image',
+      title: 'Background Image',
+      options: {hotspot: true},
+    }),
+    defineField({
+      name: 'backgroundFixed',
+      title: 'Fixed Background (Parallax)',
+      type: 'boolean',
+      initialValue: false,
+      hidden: ({ parent }) => !parent?.backgroundImage,
+    }),
+    defineField({
+      name: 'hasOverlay',
+      title: 'Show Overlay',
+      type: 'boolean',
+      initialValue: true,
+    }),
+    defineField({
+      name: 'overlayColor',
+      title: 'Overlay Color',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Dark', value: 'dark' },
+          { title: 'Light', value: 'light' },
+        ],
+      },
+      initialValue: 'dark',
+      hidden: ({ parent }) => !parent?.hasOverlay,
     }),
     defineField({
       name: 'image',

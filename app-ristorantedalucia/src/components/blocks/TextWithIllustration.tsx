@@ -1,59 +1,133 @@
-import { TextWithIllustration as T } from '../../../sanity.types';
-import Image from "next/image";
+import { TextWithIllustration as SanityT } from '../../../sanity.types';
 import { getProportions, urlFor } from "@/sanity/lib/image";
 import { PortableText } from "@portabletext/react";
 import React from "react";
+import { components } from "../PortableTextComponents";
+
+type T = SanityT & { 
+  backgroundImage?: any;
+  backgroundFixed?: boolean;
+  hasOverlay?: boolean;
+  overlayColor?: 'dark' | 'light';
+};
 
 export default function TextWithIllustration(params: {item: T}) {
   const { item } = params;
-  const w = item.gridSize === 'grid-cols-3' ? 400 : 1000;
+  const hasBg = !!item.backgroundImage;
+  const showOverlay = item.hasOverlay ?? true;
+  const overlayColor = item.overlayColor ?? 'dark';
+  const isFixed = item.backgroundFixed ?? false;
+
+  // Use larger width for top/bottom or full-width layouts
+  const w = (item.imagePosition === 'top' || item.imagePosition === 'bottom') ? 1200 : (item.gridSize === 'grid-cols-3' ? 400 : 1000);
+  
   let imageClasses = 'image-container px-5 lg:px-10 2xl:px-0 hidden md:block';
-  let textClasses = 'px-5 md:px-10 pb-5 md:pb-0 ' + (item.imagePosition === 'right' ? 'xs:pl-0' : 'xs:pr-0');
-  let gridClasses = 'grid grid-flow-row-dense grid-cols-1 md:grid-cols-2';
-  switch(item.gridSize) {
-    case 'grid-cols-3':
-      gridClasses = 'grid grid-flow-row-dense grid-cols-1 md:grid-cols-3';
+  let textClasses = 'px-5 md:px-10 pb-5 md:pb-0';
+  let gridClasses = 'grid grid-flow-row-dense items-center';
+
+  // Base layout logic
+  if (item.imagePosition === 'top' || item.imagePosition === 'bottom') {
+    gridClasses = 'flex flex-col gap-10 items-center max-w-6xl mx-auto text-center';
+    textClasses = 'w-full px-5';
+    imageClasses = 'image-container w-full px-5 hidden md:block';
+  } else {
+    // Left/Right layouts
+    gridClasses += ' grid-cols-1 md:grid-cols-2';
+    
+    // Spacing adjustment
+    if (item.imagePosition === 'right') {
+      textClasses += ' md:pl-0';
+    } else {
+      textClasses += ' md:pr-0';
+    }
+
+    if (item.gridSize === 'grid-cols-3') {
+      gridClasses = 'grid grid-flow-row-dense grid-cols-1 md:grid-cols-3 items-center';
       if(item.imagePosition === 'right') {
         imageClasses = 'image-container px-5 pt-5 lg:px-10 sm:pt-0 hidden md:block';
-        textClasses = 'md:col-span-2 px-5 sm:px-10 md:pb-0 xs:pl-0 pb-2';
+        textClasses = 'md:col-span-2 px-5 sm:px-10 md:pb-0 pb-2';
       } else {
         imageClasses = 'image-container px-5 lg:px-10 2xl:px-0 hidden md:block';
-        textClasses = 'md:col-span-2 px-5 sm:px-10 md:pb-0 xs:pr-0 pb-2';
+        textClasses = 'md:col-span-2 px-5 sm:px-10 md:pb-0 pb-2';
       }
-      break;
+    }
   }
+
+  // Adjust container width for background mode
+  const containerClasses = hasBg ? 'max-w-7xl mx-auto' : 'w-full';
+
   const sizes = item.image ? getProportions(item.image?.asset?._ref ?? '', w) : null;
   const img = item.image && sizes?.height ? urlFor(item.image).width(w).height(sizes.height).url() : null;
-  const txtAosFx = item.imagePosition === 'left' ? 'fade-left' : 'fade-right';
+  
+  let txtAosFx = 'fade-up';
+  if (item.imagePosition === 'left') txtAosFx = 'fade-left';
+  if (item.imagePosition === 'right') txtAosFx = 'fade-right';
+
+  const imageElement = img && (
+    <div className={imageClasses} data-aos="fade-up">
+      <img width={w} height={sizes?.height || 600} alt={item.image?.alt ?? ''} src={img} className="mx-auto rounded-lg shadow-xl"/>
+    </div>
+  );
+
+  const mobileImageElement = img && (
+    <div className="py-4 md:hidden" data-aos="fade-up">
+      <img width={w} height={sizes?.height || 600} alt={item.image?.alt ?? ''} src={img} className="mx-auto rounded-lg shadow-xl"/>
+    </div>
+  );
+
+  // Overlay classes based on theme/setting
+  const overlayClasses = overlayColor === 'light' ? 'bg-white/40' : 'bg-black/60';
+  const textColorClasses = overlayColor === 'light' ? 'text-gray-900' : 'text-white';
+
+  const bgStyle = hasBg ? {
+    backgroundImage: `url(${urlFor(item.backgroundImage).width(1920).url()})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundAttachment: isFixed ? 'fixed' : 'scroll',
+  } : {};
+
   return (
-    <section className="text-with-illustration box md:py-20 py-3">
-      <div className={gridClasses}>
-        {item.imagePosition === 'left' && (
-          <div className={imageClasses} data-aos="fade-right">
-            {img && <Image width={w} height={sizes?.height} alt={item.image?.alt ?? ''} src={img}/>}
-          </div>
-        )}
-        <div className={textClasses} data-aos={txtAosFx}>
-          <h3 className="family-oswald text-gold uppercase">{item.heading}</h3>
-          {item.imagePosition === 'left' && (
-            <div className="py-4 md:hidden" data-aos="fade-bottom">
-              {img && <Image width={w} height={sizes?.height} alt={item.image?.alt ?? ''} src={img}/>}
+    <section 
+      className={`text-with-illustration relative overflow-hidden ${hasBg ? 'min-h-[700px] flex items-center transparent-header-trigger' : 'box md:py-20 py-10'}`}
+      style={bgStyle}
+    >
+      {hasBg && showOverlay && (
+        <div className={`absolute inset-0 z-0 ${overlayClasses}`}></div>
+      )}
+      
+      <div className={`relative z-10 w-full px-4 ${containerClasses}`}>
+        <div className={gridClasses}>
+          {/* Top Image */}
+          {item.imagePosition === 'top' && imageElement}
+          
+          {/* Left Image */}
+          {item.imagePosition === 'left' && imageElement}
+          
+          <div className={textClasses} data-aos={txtAosFx}>
+            <h3 className={`family-playfair ${hasBg ? textColorClasses : 'text-white'} ${hasBg ? 'text-4xl md:text-5xl mb-8' : 'mb-6'}`}>
+              {item.heading}
+            </h3>
+            
+            {/* Mobile Image (side layouts) */}
+            {(item.imagePosition === 'left' || item.imagePosition === 'right') && mobileImageElement}
+            
+            {/* Mobile Image (Top layout) */}
+            {item.imagePosition === 'top' && mobileImageElement}
+
+            <div className={`portable-text-container ${hasBg ? textColorClasses : 'text-white'} ${hasBg ? 'text-lg md:text-xl leading-relaxed' : 'text-lg'}`}>
+              <PortableText value={item?.text || []} components={components} />
             </div>
-          )}
-          <div className="text-justify">
-            <PortableText value={item?.text || []} />
+
+            {/* Mobile Image (Bottom layout) */}
+            {item.imagePosition === 'bottom' && mobileImageElement}
           </div>
-          {item.imagePosition === 'right' && (
-            <div className="py-4 md:hidden" data-aos="fade-top">
-              {img && <Image width={w} height={sizes?.height} alt={item.image?.alt ?? ''} src={img}/>}
-            </div>
-          )}
+
+          {/* Right Image */}
+          {item.imagePosition === 'right' && imageElement}
+
+          {/* Bottom Image */}
+          {item.imagePosition === 'bottom' && imageElement}
         </div>
-        {item.imagePosition === 'right' && (
-          <div className={imageClasses} data-aos="fade-right">
-            {img && <Image width={w} height={sizes?.height} alt={item.image?.alt ?? ''} src={img}/>}
-          </div>
-        )}
       </div>
     </section>
   )

@@ -8,6 +8,8 @@ import AOSComponent from "../AOS";
 import { useFormatter } from "next-intl"
 import { motion, AnimatePresence } from "framer-motion";
 
+import { components } from "../PortableTextComponents";
+
 export default function DishesMenu({ item }: { item: DishesMenuForPageMaker }) {
   const format = useFormatter();
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>(0);
@@ -21,10 +23,10 @@ export default function DishesMenu({ item }: { item: DishesMenuForPageMaker }) {
   return (
     <AOSComponent>
       <div className="dishes-menu-container pb-20" data-aos="fade-up" data-aos-delay="200">
-        <h2 className="family-oswald text-gold uppercase text-center py-5">{item.menu?.title}</h2>
+        <h2 className="family-playfair text-white text-center py-5">{item.menu?.title}</h2>
         {item.menu?.introText && (
-          <div className="text-center px-5 pb-10">
-            <PortableText value={item.menu?.introText || []} />
+          <div className="px-5 pb-10">
+            <PortableText value={item.menu?.introText || []} components={components} />
           </div>
         )}
         
@@ -36,10 +38,14 @@ export default function DishesMenu({ item }: { item: DishesMenuForPageMaker }) {
               onClick={() => setSelectedCategoryIndex(index)} 
               className={`filter-item cursor-pointer text-center flex flex-col md:px-5 px-2 pb-5 justify-center items-center transition-all duration-300 ${selectedCategoryIndex === index ? "active scale-110" : "opacity-60 grayscale hover:opacity-100 hover:grayscale-0"}`}
             >
-              <Icon 
-                icon={category.icon?.name || 'mdi:food'} 
-                className={`md:text-5xl text-4xl text-center md:mb-5 mb-2 transition-colors duration-300 ${selectedCategoryIndex === index ? 'text-gold' : 'text-white'}`} 
-              />
+              {category.flaticonClass ? (
+                <i className={`${category.flaticonClass} md:text-5xl text-4xl text-center md:mb-5 mb-2 transition-colors duration-300 ${selectedCategoryIndex === index ? 'text-gold' : 'text-white'}`}></i>
+              ) : (
+                <Icon 
+                  icon={category.icon?.name || 'ph:bowl-food'} 
+                  className={`md:text-5xl text-4xl text-center md:mb-5 mb-2 transition-colors duration-300 ${selectedCategoryIndex === index ? 'text-gold' : 'text-white'}`} 
+                />
+              )}
               <h6 className={`uppercase md:text-2xl text-md font-bold tracking-widest transition-colors duration-300 ${selectedCategoryIndex === index ? 'text-foreground' : 'text-gold'}`}>
                 {category.title}
               </h6>
@@ -61,17 +67,17 @@ export default function DishesMenu({ item }: { item: DishesMenuForPageMaker }) {
                 className="filter-item w-full md:w-[calc(50%-40px)] m-5 text-left border-b border-gold/20 pb-5"
               >
                 <div className="flex justify-between items-baseline gap-4 mb-2">
-                  <h6 className="family-oswald text-gold uppercase font-bold text-xl tracking-wide">
+                  <h6 className="family-playfair text-gold uppercase font-bold text-xl tracking-wide">
                     {dish.title}
                   </h6>
                   {dish.price && (
-                    <span className="price text-foreground font-bold font-mono">
+                    <span className="price text-foreground font-bold">
                       {format.number(dish.price, { style: 'currency', currency: 'EUR' })}
                     </span>
                   )}
                 </div>
                 {dish.description && (
-                  <div className="dish-description text-gray-500 italic text-sm leading-relaxed">
+                  <div className="dish-description text-sm leading-relaxed">
                     {dish.description}
                   </div>
                 )}

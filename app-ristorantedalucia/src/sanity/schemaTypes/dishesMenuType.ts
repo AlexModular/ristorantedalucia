@@ -9,13 +9,12 @@ export const dishesMenuType = defineType({
   fields: [
     defineField({
       name: "title",
-      type: "string",
+      type: "localizedString",
       title: "Title",
-      validation: Rule => Rule.required(),
     }),
     defineField({
       name: 'introText',
-      type: 'blockContent',
+      type: 'localizedBlockContent',
     }),
     defineField({
       name: "categories",

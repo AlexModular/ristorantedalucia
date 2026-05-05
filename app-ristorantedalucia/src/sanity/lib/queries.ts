@@ -14,14 +14,14 @@ export const HEADERMENU_QUERY = defineQuery(`*[navId.current match "main-menu*"]
       'slug': slug.current
     },
     'externalUrl': navigationItemUrl.externalUrl,
-    text
+    "text": coalesce(text[$locale], text.it, text)
   }
 }`)
 
 export const SOCIALS_QUERY = defineQuery(`*[_type == "socials"][0].socials`)
 
 export const LOCATIONS_QUERY = defineQuery(`*[_type == "locations"]{
-  title,
+  "title": coalesce(title[$locale], title.it, title),
   city,
   address,
   postalCode,
@@ -36,15 +36,20 @@ export const LOCATIONS_QUERY = defineQuery(`*[_type == "locations"]{
   sunday
 }`)
 
-export const COPYRIGHT_QUERY = defineQuery(`*[_type == "copyright"][0].content`)
+export const COPYRIGHT_QUERY = defineQuery(`*[_type == "copyright"][0].content{
+  "it": coalesce(it, ^.content),
+  "en": en
+}[$locale]`)
 
 export const HOMEPAGE_QUERY = defineQuery(`*[slug.current match "home*"][0]{
-  title,
-  subtitle,
+  "title": coalesce(title[$locale], title.it, title),
+  "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),
   slug,
-  metaTitle,
-  metaDescription,
+  "metaTitle": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),
+  "metaDescription": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),
   fullWidth,
+  backgroundImage,
+  backgroundFixed,
   theme,
   pageBuilder[]{
     _type == "video" => {
@@ -55,10 +60,10 @@ export const HOMEPAGE_QUERY = defineQuery(`*[slug.current match "home*"][0]{
     },
     _type == "banner" => {
       _type,
-      heading,
-      text,
+      "heading": coalesce(heading[$locale], heading.it, heading),
+      "text": coalesce(text[$locale], text.it, text),
       headingCSSClasses,
-      subtitle
+      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle)
     },
     _type == "separator" => {
       _type,
@@ -66,9 +71,10 @@ export const HOMEPAGE_QUERY = defineQuery(`*[slug.current match "home*"][0]{
     },
     _type == "slider" => {
       _type,
-      heading,
-      subtitle,
+      "heading": coalesce(heading[$locale], heading.it, heading),
+      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),
       backgroundImage,
+      backgroundFixed,
       images
     },
     _type == "slideshow" => {
@@ -78,69 +84,85 @@ export const HOMEPAGE_QUERY = defineQuery(`*[slug.current match "home*"][0]{
         hotspot,
         crop,
         alt,
-        heading,
-        subtitle,
+        "heading": coalesce(heading[$locale], heading.it, heading),
+        "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),
         logo,
         'link': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{
           'slug': slug.current
         },
         'externalUrl': cta.navigationItemUrl.externalUrl,
-        'ctaText': cta.text
+        'ctaText': coalesce(cta.text[$locale], cta.text.it, cta.text)
       }
     },
     _type == "textWithIllustration" => {
       _type,
-      heading,
-      text,
+      "heading": coalesce(heading[$locale], heading.it, heading),
+      "text": coalesce(text[$locale], text.it, text),
       image,
+      backgroundImage,
+      backgroundFixed,
+      hasOverlay,
+      overlayColor,
       imagePosition,
       gridSize
     },
     _type == "gallery" => {
       _type,
-      heading,
-      subtitle,
+      "heading": coalesce(heading[$locale], heading.it, heading),
+      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),
       images
     },
     _type == "form" => {
       _type,
-      heading,
+      "heading": coalesce(heading[$locale], heading.it, heading),
       label,
       form
     },
     _type == "promotion" => {
       _type,
-      title,
+      "title": coalesce(title[$locale], title.it, title),
       link,
       direction,
       speed
     },
     _type == "map" => {
       _type,
-      heading,
+      "heading": coalesce(heading[$locale], heading.it, heading),
       mapCenter,
       locations
     },
     _type == "dishesMenu" => {
       _type,
       _ref,
-      "menu": *[ _type == "dishesMenu" && menu._ref == ^._id ][0] {
-        title,
-        introText,
-        categories
+      "menu": *[ _type == "dishesMenu" && _id == ^._ref ][0] {
+        "title": coalesce(title[$locale], title.it, title),
+        "introText": coalesce(introText[$locale], introText.it, introText),
+        categories[] {
+          "title": coalesce(title[$locale], title.it, title),
+          icon,
+          flaticonClass,
+          dishes[] {
+            "title": coalesce(title[$locale], title.it, title),
+            "description": coalesce(description[$locale], description.it, description),
+            price,
+            "subcategory": coalesce(subcategory[$locale], subcategory.it, subcategory)
+          }
+        }
       }
     }
   },
 }`)
 
 export const PAGE_QUERY = defineQuery(`*[slug.current == $slug][0]{
-  title,
-  subtitle,
+  "title": coalesce(title[$locale], title.it, title),
+  "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),
   slug,
-  metaTitle,
-  metaDescription,
+  "metaTitle": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),
+  "metaDescription": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),
   introImage,
   fullWidth,
+  backgroundImage,
+  backgroundFixed,
   theme,
   pageBuilder[]{
     _type == "video" => {
@@ -151,10 +173,10 @@ export const PAGE_QUERY = defineQuery(`*[slug.current == $slug][0]{
     },
     _type == "banner" => {
       _type,
-      heading,
-      text,
+      "heading": coalesce(heading[$locale], heading.it, heading),
+      "text": coalesce(text[$locale], text.it, text),
       headingCSSClasses,
-      subtitle
+      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle)
     },
     _type == "separator" => {
       _type,
@@ -162,9 +184,10 @@ export const PAGE_QUERY = defineQuery(`*[slug.current == $slug][0]{
     },
     _type == "slider" => {
       _type,
-      title,
-      subtitle,
+      "heading": coalesce(heading[$locale], heading.it, heading),
+      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),
       backgroundImage,
+      backgroundFixed,
       images
     },
     _type == "slideshow" => {
@@ -174,57 +197,68 @@ export const PAGE_QUERY = defineQuery(`*[slug.current == $slug][0]{
         hotspot,
         crop,
         alt,
-        heading,
-        subtitle,
+        "heading": coalesce(heading[$locale], heading.it, heading),
+        "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),
         logo,
         'link': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{
           'slug': slug.current
         },
         'externalUrl': cta.navigationItemUrl.externalUrl,
-        'ctaText': cta.text
+        'ctaText': coalesce(cta.text[$locale], cta.text.it, cta.text)
       }
     },
     _type == "textWithIllustration" => {
       _type,
-      heading,
-      text,
+      "heading": coalesce(heading[$locale], heading.it, heading),
+      "text": coalesce(text[$locale], text.it, text),
       image,
+      backgroundImage,
+      backgroundFixed,
       imagePosition,
       gridSize
     },
     _type == "gallery" => {
       _type,
-      heading,
-      subtitle,
+      "heading": coalesce(heading[$locale], heading.it, heading),
+      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),
       images
     },
     _type == "form" => {
       _type,
-      heading,
+      "heading": coalesce(heading[$locale], heading.it, heading),
       label,
       form
     },
     _type == "promotion" => {
       _type,
-      title,
+      "title": coalesce(title[$locale], title.it, title),
       link,
       direction,
       speed
     },
     _type == "map" => {
       _type,
-      heading,
+      "heading": coalesce(heading[$locale], heading.it, heading),
       mapCenter,
       locations
     },
     _type == "dishesMenu" => {
       _type,
       _ref,
-      "menu": *[_type == "dishesMenu" && ^._ref == _id][0] {
-        _id,
-        title,
-        introText,
-        categories
+      "menu": *[_type == "dishesMenu" && _id == ^._ref][0] {
+        "title": coalesce(title[$locale], title.it, title),
+        "introText": coalesce(introText[$locale], introText.it, introText),
+        categories[] {
+          "title": coalesce(title[$locale], title.it, title),
+          icon,
+          flaticonClass,
+          dishes[] {
+            "title": coalesce(title[$locale], title.it, title),
+            "description": coalesce(description[$locale], description.it, description),
+            price,
+            "subcategory": coalesce(subcategory[$locale], subcategory.it, subcategory)
+          }
+        }
       }
     }
   },

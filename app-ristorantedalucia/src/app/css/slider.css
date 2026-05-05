@@ -46,7 +46,7 @@
 }
 
 .slider-container .slider-description {
-  font-size: 22px;
+  font-size: 18px;
   max-width: 800px;
   margin: 0 auto 40px;
   color: rgba(255, 255, 255, 0.9);
@@ -100,8 +100,16 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  text-align: left;
+  padding-left: 24px;
   z-index: 10;
+}
+
+@media screen and (min-width: 1024px) {
+  .slideshow-container .slide-contents {
+    padding-left: 12rem; /* Consistent with lg:pl-48 */
+  }
 }
 
 .slideshow-container .slide-contents .slide-title {

@@ -20,8 +20,21 @@ import { COPYRIGHT_QUERY, HEADERMENU_QUERY, LOCATIONS_QUERY, SOCIALS_QUERY, SETT
 import Footer from "@/components/Footer";
 import { ReCaptchaProvider } from "next-recaptcha-v3";
 import {NextIntlClientProvider} from 'next-intl';
-import {getLocale} from 'next-intl/server';
+import {getMessages} from 'next-intl/server';
 import PixelLoader from "@/components/PixelLoader";
+import { Montserrat, Playfair_Display } from 'next/font/google'
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-montserrat',
+})
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-playfair',
+})
 
 
 export const metadata: Metadata = {
@@ -29,11 +42,11 @@ export const metadata: Metadata = {
     default: 'Ristorante Enoteca Da Lucia',
     template: '%s - Ristorante Enoteca Da Lucia',
   },
-  description: 'The official Next.js Course Dashboard, built with App Router.',
+  description: 'Ristorante Enoteca Da Lucia - Cucina tipica toscana nel cuore di Roma.',
   metadataBase: new URL('https://ristorantedalucia.it'),
   openGraph: {
     title: 'Ristorante Enoteca Da Lucia',
-    description: 'The official Next.js Course Dashboard, built with App Router.',
+    description: 'Ristorante Enoteca Da Lucia - Cucina tipica toscana nel cuore di Roma.',
     url: 'https://ristorantedalucia.it',
     siteName: 'Ristorante Enoteca Da Lucia',
     images: [
@@ -54,38 +67,45 @@ export const metadata: Metadata = {
   }
 };
 
-const iubendaBannerConfig: IubendaCookieSolutionBannerConfigInterface = {
-  siteId: parseInt(process.env.IUBENDA_SITE_ID || '0'), // Your site ID
-  cookiePolicyId: parseInt(process.env.IUBENDA_COOKIE_POLICY_ID || '0'), // Your cookie policy ID
-  lang: 'it',
-
-  // See https://www.iubenda.com/en/help/1205-how-to-configure-your-cookie-solution-advanced-guide
-};
-
 export default async function RootLayout({
   children,
-}: Readonly<{
+  params
+}: {
   children: React.ReactNode;
-}>) {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const messages = await getMessages();
+
   const {data: navItems} = await sanityFetch({
-    query: HEADERMENU_QUERY
+    query: HEADERMENU_QUERY,
+    params: { locale }
   });
   const {data: socials}  = await sanityFetch({
-    query: SOCIALS_QUERY
+    query: SOCIALS_QUERY,
+    params: { locale }
   });
   const {data: locations } = await sanityFetch({
-    query: LOCATIONS_QUERY
+    query: LOCATIONS_QUERY,
+    params: { locale }
   });
   const {data: copyright } = await sanityFetch({
-    query: COPYRIGHT_QUERY
+    query: COPYRIGHT_QUERY,
+    params: { locale }
   });
   const {data: settings} = await sanityFetch({
-    query: SETTINGS_QUERY
+    query: SETTINGS_QUERY,
+    params: { locale }
   });
 
-  const locale = await getLocale();
   const theme = settings?.theme || 'light';
   const themeClass = theme === 'auto' ? '' : theme;
+
+  const iubendaBannerConfig: IubendaCookieSolutionBannerConfigInterface = {
+    siteId: parseInt(process.env.IUBENDA_SITE_ID || '0'), 
+    cookiePolicyId: parseInt(process.env.IUBENDA_COOKIE_POLICY_ID || '0'),
+    lang: locale,
+  };
 
   return (
     <html lang={locale} data-theme={theme} className={themeClass}>
@@ -119,11 +139,11 @@ export default async function RootLayout({
         {/* End Meta Pixel Code */}
       </head>
       <GoogleAnalytics gaId="UA-119546408-1" />
-      <body cz-shortcut-listen="true" className="bg-background text-foreground">
-        <NextIntlClientProvider>
+      <body cz-shortcut-listen="true" className={`${montserrat.variable} ${playfair.variable} bg-background text-foreground`}>
+        <NextIntlClientProvider messages={messages}>
           <ReCaptchaProvider>
               <div className="min-h-screen">
-                <Navigation navItems={navItems} theme={theme} />
+                <Navigation navItems={navItems} theme={theme} locations={locations} />
                 <IubendaProvider bannerConfig={iubendaBannerConfig}>
                   <PixelLoader/>
                   {children}
@@ -138,7 +158,6 @@ export default async function RootLayout({
                   </>
                 )}
               </div>
-            {/* Layout UI */}
           </ReCaptchaProvider>
         </NextIntlClientProvider>
       </body>

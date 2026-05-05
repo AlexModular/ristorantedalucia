@@ -18,12 +18,12 @@ export const imageSlideshowType = defineType({
           fields: [
             {
               name: 'heading',
-              type: 'string',
+              type: 'localizedString',
               title: 'Slide Heading',
             },
             {
               name: 'subtitle',
-              type: 'string',
+              type: 'localizedString',
               title: 'Slide subtitle',
             },
             {

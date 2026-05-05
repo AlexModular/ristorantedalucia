@@ -14,14 +14,6 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'RobotoFlex';
-  src: url('/fonts/RobotoFlex-VariableFont.ttf') format('truetype');
-  font-weight: 100 1000;
-  font-stretch: 25% 150%;
-  font-display: swap;
-}
-
-@font-face {
   font-family: 'Matura-SC';
   src: url('/fonts/matura-mt-script-capitals.ttf') format('truetype');
   font-weight: normal;
@@ -31,13 +23,6 @@
 @font-face {
   font-family: 'Oswald';
   src: url('/fonts/Oswald/Oswald-VariableFont_wght.ttf') format('truetype');
-  font-weight: 100 900;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'DancingScript';
-  src: url('/fonts/Dancing_Script/DancingScript-VariableFont_wght.ttf');
   font-weight: 100 900;
   font-display: swap;
 }
@@ -57,7 +42,7 @@
 /* Dark Theme (Deep Green) - Activated via Sanity */
 .dark {
   --background: #213a33;
-  --foreground: #FAF3E0;
+  --foreground: #ffffff;
   --gold: #B99B5B;
   --gold-hover: #D4AF37;
   --gray: #a8b2af;
@@ -68,7 +53,7 @@
 @media (prefers-color-scheme: dark) {
   :root:not(.light) {
     --background: #213a33;
-    --foreground: #FAF3E0;
+    --foreground: #ffffff;
     --gold: #B99B5B;
     --gold-hover: #D4AF37;
     --gray: #a8b2af;
@@ -88,7 +73,7 @@
 
 .dark {
   --background: #213a33;
-  --foreground: #FAF3E0;
+  --foreground: #ffffff;
   --gold: #B99B5B;
   --gold-hover: #D4AF37;
   --gray: #a8b2af;
@@ -111,7 +96,7 @@ html {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: 'RobotoFlex', sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
   font-size: 13px;
   font-weight: 350;
   line-height: 1.6;
@@ -127,7 +112,7 @@ h6 {
 }
 
 h2 {
-  font-family: 'DancingScript', 'Oswald';
+  font-family: var(--font-playfair), 'Oswald', serif;
 }
 
 h1 {
@@ -200,7 +185,11 @@ div.separator {
 }
 
 .family-dancing-script {
-  font-family: 'DancingScript';
+  font-family: var(--font-playfair), serif;
+}
+
+.family-playfair {
+  font-family: var(--font-playfair), serif;
 }
 
 p {

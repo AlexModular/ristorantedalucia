@@ -7,7 +7,7 @@ export const bannerType = defineType({
   fields: [
     defineField({
       name: 'heading',
-      type: 'string',
+      type: 'localizedString',
     }),
     defineField({
       name: 'headingCSSClasses',
@@ -15,11 +15,11 @@ export const bannerType = defineType({
     }),
     defineField({
       name: 'subtitle',
-      type: 'string',
+      type: 'localizedString',
     }),
     defineField({
       name: 'text',
-      type: 'blockContent',
+      type: 'localizedBlockContent',
     }),
   ],
 })

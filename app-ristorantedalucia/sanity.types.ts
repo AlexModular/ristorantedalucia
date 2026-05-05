@@ -12,21 +12,542 @@
  * ---------------------------------------------------------------------------------
  */
 
-export declare const internalGroqTypeReferenceTo: unique symbol;
-
 // Source: schema.json
-export type SanityImageAssetReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+export type Settings = {
+  _id: string;
+  _type: "settings";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  theme?: "light" | "dark" | "cream" | "auto";
 };
 
-export type Logo = {
-  asset?: SanityImageAssetReference;
+export type Copyright = {
+  _id: string;
+  _type: "copyright";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  content?: LocalizedBlockContent;
+};
+
+export type Socials = {
+  _id: string;
+  _type: "socials";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  socials?: Array<{
+    _key: string;
+  } & Social>;
+};
+
+export type Social = {
+  _type: "social";
+  title?: string;
+  link?: string;
+  icon?: Icon;
+};
+
+export type Locations = {
+  _id: string;
+  _type: "locations";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: LocalizedString;
+  city?: string;
+  address?: string;
+  postalCode?: string;
+  email?: string;
+  phone?: string;
+  menu?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "dishesMenu";
+  };
+  monday?: Duration;
+  tuesday?: Duration;
+  wednesday?: Duration;
+  thursday?: Duration;
+  friday?: Duration;
+  saturday?: Duration;
+  sunday?: Duration;
+};
+
+export type Duration = {
+  _type: "duration";
+  morningStart?: "00:00" | "00:15" | "00:30" | "00:45" | "01:00" | "01:15" | "01:30" | "01:45" | "02:00" | "02:15" | "02:30" | "02:45" | "03:00" | "03:15" | "03:30" | "03:45" | "04:00" | "04:15" | "04:30" | "04:45" | "05:00" | "05:15" | "05:30" | "05:45" | "06:00" | "06:15" | "06:30" | "06:45" | "07:00" | "07:15" | "07:30" | "07:45" | "08:00" | "08:15" | "08:30" | "08:45" | "09:00" | "09:15" | "09:30" | "09:45" | "10:00" | "10:15" | "10:30" | "10:45" | "11:00" | "11:15" | "11:30" | "11:45" | "12:00" | "12:15" | "12:30" | "12:45" | "13:00" | "13:15" | "13:30" | "13:45" | "14:00" | "14:15" | "14:30" | "14:45" | "15:00" | "15:15" | "15:30" | "15:45" | "16:00" | "16:15" | "16:30" | "16:45" | "17:00" | "17:15" | "17:30" | "17:45" | "18:00" | "18:15" | "18:30" | "18:45" | "19:00" | "19:15" | "19:30" | "19:45" | "20:00" | "20:15" | "20:30" | "20:45" | "21:00" | "21:15" | "21:30" | "21:45" | "22:00" | "22:15" | "22:30" | "22:45" | "23:00" | "23:15" | "23:30" | "23:45";
+  morningEnd?: "00:00" | "00:15" | "00:30" | "00:45" | "01:00" | "01:15" | "01:30" | "01:45" | "02:00" | "02:15" | "02:30" | "02:45" | "03:00" | "03:15" | "03:30" | "03:45" | "04:00" | "04:15" | "04:30" | "04:45" | "05:00" | "05:15" | "05:30" | "05:45" | "06:00" | "06:15" | "06:30" | "06:45" | "07:00" | "07:15" | "07:30" | "07:45" | "08:00" | "08:15" | "08:30" | "08:45" | "09:00" | "09:15" | "09:30" | "09:45" | "10:00" | "10:15" | "10:30" | "10:45" | "11:00" | "11:15" | "11:30" | "11:45" | "12:00" | "12:15" | "12:30" | "12:45" | "13:00" | "13:15" | "13:30" | "13:45" | "14:00" | "14:15" | "14:30" | "14:45" | "15:00" | "15:15" | "15:30" | "15:45" | "16:00" | "16:15" | "16:30" | "16:45" | "17:00" | "17:15" | "17:30" | "17:45" | "18:00" | "18:15" | "18:30" | "18:45" | "19:00" | "19:15" | "19:30" | "19:45" | "20:00" | "20:15" | "20:30" | "20:45" | "21:00" | "21:15" | "21:30" | "21:45" | "22:00" | "22:15" | "22:30" | "22:45" | "23:00" | "23:15" | "23:30" | "23:45";
+  eveningStart?: "00:00" | "00:15" | "00:30" | "00:45" | "01:00" | "01:15" | "01:30" | "01:45" | "02:00" | "02:15" | "02:30" | "02:45" | "03:00" | "03:15" | "03:30" | "03:45" | "04:00" | "04:15" | "04:30" | "04:45" | "05:00" | "05:15" | "05:30" | "05:45" | "06:00" | "06:15" | "06:30" | "06:45" | "07:00" | "07:15" | "07:30" | "07:45" | "08:00" | "08:15" | "08:30" | "08:45" | "09:00" | "09:15" | "09:30" | "09:45" | "10:00" | "10:15" | "10:30" | "10:45" | "11:00" | "11:15" | "11:30" | "11:45" | "12:00" | "12:15" | "12:30" | "12:45" | "13:00" | "13:15" | "13:30" | "13:45" | "14:00" | "14:15" | "14:30" | "14:45" | "15:00" | "15:15" | "15:30" | "15:45" | "16:00" | "16:15" | "16:30" | "16:45" | "17:00" | "17:15" | "17:30" | "17:45" | "18:00" | "18:15" | "18:30" | "18:45" | "19:00" | "19:15" | "19:30" | "19:45" | "20:00" | "20:15" | "20:30" | "20:45" | "21:00" | "21:15" | "21:30" | "21:45" | "22:00" | "22:15" | "22:30" | "22:45" | "23:00" | "23:15" | "23:30" | "23:45";
+  eveningEnd?: "00:00" | "00:15" | "00:30" | "00:45" | "01:00" | "01:15" | "01:30" | "01:45" | "02:00" | "02:15" | "02:30" | "02:45" | "03:00" | "03:15" | "03:30" | "03:45" | "04:00" | "04:15" | "04:30" | "04:45" | "05:00" | "05:15" | "05:30" | "05:45" | "06:00" | "06:15" | "06:30" | "06:45" | "07:00" | "07:15" | "07:30" | "07:45" | "08:00" | "08:15" | "08:30" | "08:45" | "09:00" | "09:15" | "09:30" | "09:45" | "10:00" | "10:15" | "10:30" | "10:45" | "11:00" | "11:15" | "11:30" | "11:45" | "12:00" | "12:15" | "12:30" | "12:45" | "13:00" | "13:15" | "13:30" | "13:45" | "14:00" | "14:15" | "14:30" | "14:45" | "15:00" | "15:15" | "15:30" | "15:45" | "16:00" | "16:15" | "16:30" | "16:45" | "17:00" | "17:15" | "17:30" | "17:45" | "18:00" | "18:15" | "18:30" | "18:45" | "19:00" | "19:15" | "19:30" | "19:45" | "20:00" | "20:15" | "20:30" | "20:45" | "21:00" | "21:15" | "21:30" | "21:45" | "22:00" | "22:15" | "22:30" | "22:45" | "23:00" | "23:15" | "23:30" | "23:45";
+  morningClosed?: boolean;
+  eveningClosed?: boolean;
+  closed?: boolean;
+};
+
+export type TimeValue = "00:00" | "00:15" | "00:30" | "00:45" | "01:00" | "01:15" | "01:30" | "01:45" | "02:00" | "02:15" | "02:30" | "02:45" | "03:00" | "03:15" | "03:30" | "03:45" | "04:00" | "04:15" | "04:30" | "04:45" | "05:00" | "05:15" | "05:30" | "05:45" | "06:00" | "06:15" | "06:30" | "06:45" | "07:00" | "07:15" | "07:30" | "07:45" | "08:00" | "08:15" | "08:30" | "08:45" | "09:00" | "09:15" | "09:30" | "09:45" | "10:00" | "10:15" | "10:30" | "10:45" | "11:00" | "11:15" | "11:30" | "11:45" | "12:00" | "12:15" | "12:30" | "12:45" | "13:00" | "13:15" | "13:30" | "13:45" | "14:00" | "14:15" | "14:30" | "14:45" | "15:00" | "15:15" | "15:30" | "15:45" | "16:00" | "16:15" | "16:30" | "16:45" | "17:00" | "17:15" | "17:30" | "17:45" | "18:00" | "18:15" | "18:30" | "18:45" | "19:00" | "19:15" | "19:30" | "19:45" | "20:00" | "20:15" | "20:30" | "20:45" | "21:00" | "21:15" | "21:30" | "21:45" | "22:00" | "22:15" | "22:30" | "22:45" | "23:00" | "23:15" | "23:30" | "23:45";
+
+export type Dish = {
+  _type: "dish";
+  title?: LocalizedString;
+  description?: LocalizedString;
+  price?: number;
+  subcategory?: LocalizedString;
+};
+
+export type DishesCategory = {
+  _type: "dishesCategory";
+  title?: LocalizedString;
+  icon?: Icon;
+  flaticonClass?: string;
+  dishes?: Array<{
+    _key: string;
+  } & Dish>;
+};
+
+export type DishesMenu = {
+  _id: string;
+  _type: "dishesMenu";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: LocalizedString;
+  introText?: LocalizedBlockContent;
+  categories?: Array<{
+    _key: string;
+  } & DishesCategory>;
+};
+
+export type Map = {
+  _type: "map";
+  heading?: LocalizedString;
+  mapCenter?: Geopoint;
+  locations?: Array<{
+    _key: string;
+  } & Geopoint>;
+};
+
+export type Link = {
+  _type: "link";
+  internalLink?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "page";
+  };
+  externalUrl?: string;
+};
+
+export type Navigation = {
+  _id: string;
+  _type: "navigation";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  navId?: Slug;
+  items?: Array<{
+    _key: string;
+  } & NavigationItem>;
+};
+
+export type Separator = {
+  _type: "separator";
+  separatorColor?: Color;
+};
+
+export type Slideshow = {
+  _type: "slideshow";
+  images?: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    heading?: LocalizedString;
+    subtitle?: LocalizedString;
+    cta?: NavigationItem;
+    alt?: string;
+    logo?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    _type: "image";
+    _key: string;
+  }>;
+  effect?: "fade" | "slide" | "creative" | "coverflow";
+};
+
+export type Slider = {
+  _type: "slider";
+  heading?: LocalizedString;
+  subtitle?: LocalizedString;
+  backgroundImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  backgroundFixed?: boolean;
+  images?: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }>;
+};
+
+export type Video = {
+  _type: "video";
+  videoLabel?: LocalizedString;
+  cssClasses?: string;
+  file?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+    };
+    media?: unknown;
+    _type: "file";
+  };
+};
+
+export type Form = {
+  _type: "form";
+  label?: string;
+  heading?: LocalizedString;
+  form?: "newsletter" | "register" | "contact";
+};
+
+export type Gallery = {
+  _type: "gallery";
+  heading?: LocalizedString;
+  subtitle?: LocalizedString;
+  images?: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }>;
+};
+
+export type TextWithIllustration = {
+  _type: "textWithIllustration";
+  heading?: LocalizedString;
+  text?: LocalizedBlockContent;
+  backgroundImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  backgroundFixed?: boolean;
+  hasOverlay?: boolean;
+  overlayColor?: "dark" | "light";
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  imagePosition?: "left" | "right" | "top" | "bottom";
+  gridSize?: "grid-cols-2" | "grid-cols-3";
+};
+
+export type Banner = {
+  _type: "banner";
+  heading?: LocalizedString;
+  headingCSSClasses?: string;
+  subtitle?: LocalizedString;
+  text?: LocalizedBlockContent;
+};
+
+export type LocalizedBlockContent = {
+  _type: "localizedBlockContent";
+  it?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      _key: string;
+    } & Color | {
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }>;
+  en?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      _key: string;
+    } & Color | {
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }>;
+};
+
+export type Promotion = {
+  _type: "promotion";
+  title?: LocalizedString;
+  link?: string;
+  direction?: "left" | "right";
+  speed?: number;
+};
+
+export type BlockContent = Array<{
+  children?: Array<{
+    marks?: Array<string>;
+    text?: string;
+    _type: "span";
+    _key: string;
+  }>;
+  style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+  listItem?: "bullet";
+  markDefs?: Array<{
+    _key: string;
+  } & Color | {
+    href?: string;
+    _type: "link";
+    _key: string;
+  }>;
+  level?: number;
+  _type: "block";
+  _key: string;
+} | {
+  asset?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+  };
+  media?: unknown;
   hotspot?: SanityImageHotspot;
   crop?: SanityImageCrop;
+  alt?: string;
   _type: "image";
+  _key: string;
+}>;
+
+export type Page = {
+  _id: string;
+  _type: "page";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: LocalizedString;
+  subtitle?: LocalizedString;
+  slug?: Slug;
+  metaTitle?: LocalizedString;
+  metaDescription?: LocalizedString;
+  introImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  fullWidth?: boolean;
+  backgroundImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  backgroundFixed?: boolean;
+  theme?: "light" | "dark" | "cream" | "auto";
+  pageBuilder?: Array<{
+    _key: string;
+  } & Banner | {
+    _key: string;
+  } & TextWithIllustration | {
+    _key: string;
+  } & Gallery | {
+    _key: string;
+  } & Slider | {
+    _key: string;
+  } & Slideshow | {
+    _key: string;
+  } & Form | {
+    _key: string;
+  } & Video | {
+    _key: string;
+  } & Promotion | {
+    _key: string;
+  } & Separator | {
+    _key: string;
+  } & Map | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "dishesMenu";
+  }>;
+};
+
+export type NavigationItem = {
+  _type: "navigationItem";
+  text?: LocalizedString;
+  navigationItemUrl?: Link;
+};
+
+export type LocalizedString = {
+  _type: "localizedString";
+  it?: string;
+  en?: string;
+};
+
+export type Color = {
+  _type: "color";
+  hex?: string;
+  alpha?: number;
+  hsl?: HslaColor;
+  hsv?: HsvaColor;
+  rgb?: RgbaColor;
+};
+
+export type RgbaColor = {
+  _type: "rgbaColor";
+  r?: number;
+  g?: number;
+  b?: number;
+  a?: number;
+};
+
+export type HsvaColor = {
+  _type: "hsvaColor";
+  h?: number;
+  s?: number;
+  v?: number;
+  a?: number;
+};
+
+export type HslaColor = {
+  _type: "hslaColor";
+  h?: number;
+  s?: number;
+  l?: number;
+  a?: number;
+};
+
+export type GeopointRadius = {
+  _type: "geopointRadius";
+  lat?: number;
+  lng?: number;
+  alt?: number;
+  radius?: number;
+};
+
+export type Icon = {
+  _type: "icon";
+  name?: string;
 };
 
 export type SanityImagePaletteSwatch = {
@@ -55,17 +576,6 @@ export type SanityImageDimensions = {
   aspectRatio?: number;
 };
 
-export type SanityImageMetadata = {
-  _type: "sanity.imageMetadata";
-  location?: Geopoint;
-  dimensions?: SanityImageDimensions;
-  palette?: SanityImagePalette;
-  lqip?: string;
-  blurHash?: string;
-  hasAlpha?: boolean;
-  isOpaque?: boolean;
-};
-
 export type SanityImageHotspot = {
   _type: "sanity.imageHotspot";
   x?: number;
@@ -80,498 +590,6 @@ export type SanityImageCrop = {
   bottom?: number;
   left?: number;
   right?: number;
-};
-
-export type Geopoint = {
-  _type: "geopoint";
-  lat?: number;
-  lng?: number;
-  alt?: number;
-};
-
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
-};
-
-export type SanityAssetSourceData = {
-  _type: "sanity.assetSourceData";
-  name?: string;
-  id?: string;
-  url?: string;
-};
-
-export type Settings = {
-  _id: string;
-  _type: "settings";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  theme?: "light" | "dark" | "cream" | "auto";
-};
-
-export type Copyright = {
-  _id: string;
-  _type: "copyright";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  content?: BlockContent;
-};
-
-export type BlockContent = Array<
-  | {
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
-      listItem?: "bullet";
-      markDefs?: Array<
-        | ({
-            _key: string;
-          } & Color)
-        | {
-            href?: string;
-            _type: "link";
-            _key: string;
-          }
-      >;
-      level?: number;
-      _type: "block";
-      _key: string;
-    }
-  | {
-      asset?: SanityImageAssetReference;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      _type: "image";
-      _key: string;
-    }
->;
-
-export type Socials = {
-  _id: string;
-  _type: "socials";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  socials?: Array<
-    {
-      _key: string;
-    } & Social
-  >;
-};
-
-export type Social = {
-  _type: "social";
-  title?: string;
-  link?: string;
-  icon?: Icon;
-};
-
-export type Icon = {
-  _type: "icon";
-  name?: string;
-};
-
-export type DishesMenuReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "dishesMenu";
-};
-
-export type Locations = {
-  _id: string;
-  _type: "locations";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  city?: string;
-  address?: string;
-  postalCode?: string;
-  email?: string;
-  phone?: string;
-  menu?: DishesMenuReference;
-  monday?: Duration;
-  tuesday?: Duration;
-  wednesday?: Duration;
-  thursday?: Duration;
-  friday?: Duration;
-  saturday?: Duration;
-  sunday?: Duration;
-};
-
-export type Duration = {
-  _type: "duration";
-  morningStart?: TimeValue;
-  morningEnd?: TimeValue;
-  eveningStart?: TimeValue;
-  eveningEnd?: TimeValue;
-  morningClosed?: boolean;
-  eveningClosed?: boolean;
-  closed?: boolean;
-};
-
-export type TimeValue =
-  | "00:00"
-  | "00:15"
-  | "00:30"
-  | "00:45"
-  | "01:00"
-  | "01:15"
-  | "01:30"
-  | "01:45"
-  | "02:00"
-  | "02:15"
-  | "02:30"
-  | "02:45"
-  | "03:00"
-  | "03:15"
-  | "03:30"
-  | "03:45"
-  | "04:00"
-  | "04:15"
-  | "04:30"
-  | "04:45"
-  | "05:00"
-  | "05:15"
-  | "05:30"
-  | "05:45"
-  | "06:00"
-  | "06:15"
-  | "06:30"
-  | "06:45"
-  | "07:00"
-  | "07:15"
-  | "07:30"
-  | "07:45"
-  | "08:00"
-  | "08:15"
-  | "08:30"
-  | "08:45"
-  | "09:00"
-  | "09:15"
-  | "09:30"
-  | "09:45"
-  | "10:00"
-  | "10:15"
-  | "10:30"
-  | "10:45"
-  | "11:00"
-  | "11:15"
-  | "11:30"
-  | "11:45"
-  | "12:00"
-  | "12:15"
-  | "12:30"
-  | "12:45"
-  | "13:00"
-  | "13:15"
-  | "13:30"
-  | "13:45"
-  | "14:00"
-  | "14:15"
-  | "14:30"
-  | "14:45"
-  | "15:00"
-  | "15:15"
-  | "15:30"
-  | "15:45"
-  | "16:00"
-  | "16:15"
-  | "16:30"
-  | "16:45"
-  | "17:00"
-  | "17:15"
-  | "17:30"
-  | "17:45"
-  | "18:00"
-  | "18:15"
-  | "18:30"
-  | "18:45"
-  | "19:00"
-  | "19:15"
-  | "19:30"
-  | "19:45"
-  | "20:00"
-  | "20:15"
-  | "20:30"
-  | "20:45"
-  | "21:00"
-  | "21:15"
-  | "21:30"
-  | "21:45"
-  | "22:00"
-  | "22:15"
-  | "22:30"
-  | "22:45"
-  | "23:00"
-  | "23:15"
-  | "23:30"
-  | "23:45";
-
-export type Dish = {
-  _type: "dish";
-  title?: string;
-  description?: string;
-  price?: number;
-  subcategory?: string;
-};
-
-export type DishesCategory = {
-  _type: "dishesCategory";
-  title?: string;
-  icon?: Icon;
-  flaticonClass?: string;
-  dishes?: Array<
-    {
-      _key: string;
-    } & Dish
-  >;
-};
-
-export type DishesMenu = {
-  _id: string;
-  _type: "dishesMenu";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  introText?: BlockContent;
-  categories?: Array<
-    {
-      _key: string;
-    } & DishesCategory
-  >;
-};
-
-export type Map = {
-  _type: "map";
-  heading?: string;
-  mapCenter?: Geopoint;
-  locations?: Array<
-    {
-      _key: string;
-    } & Geopoint
-  >;
-};
-
-export type PageReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "page";
-};
-
-export type Link = {
-  _type: "link";
-  internalLink?: PageReference;
-  externalUrl?: string;
-};
-
-export type NavigationItem = {
-  _type: "navigationItem";
-  text?: string;
-  navigationItemUrl?: Link;
-};
-
-export type Navigation = {
-  _id: string;
-  _type: "navigation";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  navId?: Slug;
-  items?: Array<
-    {
-      _key: string;
-    } & NavigationItem
-  >;
-};
-
-export type Separator = {
-  _type: "separator";
-  separatorColor?: Color;
-};
-
-export type Slideshow = {
-  _type: "slideshow";
-  images?: Array<{
-    asset?: SanityImageAssetReference;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    heading?: string;
-    subtitle?: string;
-    cta?: NavigationItem;
-    alt?: string;
-    logo?: Logo;
-    _type: "image";
-    _key: string;
-  }>;
-  effect?: "fade" | "slide" | "creative" | "coverflow";
-};
-
-export type Slider = {
-  _type: "slider";
-  heading?: string;
-  subtitle?: string;
-  backgroundImage?: {
-    asset?: SanityImageAssetReference;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-  };
-  images?: Array<{
-    asset?: SanityImageAssetReference;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-    _key: string;
-  }>;
-};
-
-export type SanityFileAssetReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
-};
-
-export type Video = {
-  _type: "video";
-  videoLabel?: string;
-  cssClasses?: string;
-  file?: {
-    asset?: SanityFileAssetReference;
-    _type: "file";
-  };
-};
-
-export type Form = {
-  _type: "form";
-  label?: string;
-  heading?: string;
-  form?: "newsletter" | "register" | "contact";
-};
-
-export type Gallery = {
-  _type: "gallery";
-  heading?: string;
-  subtitle?: string;
-  images?: Array<{
-    asset?: SanityImageAssetReference;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-    _key: string;
-  }>;
-};
-
-export type TextWithIllustration = {
-  _type: "textWithIllustration";
-  heading?: string;
-  text?: BlockContent;
-  image?: {
-    asset?: SanityImageAssetReference;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-  };
-  imagePosition?: "left" | "right";
-  gridSize?: "grid-cols-2" | "grid-cols-3";
-};
-
-export type Banner = {
-  _type: "banner";
-  heading?: string;
-  headingCSSClasses?: string;
-  subtitle?: string;
-  text?: BlockContent;
-};
-
-export type Promotion = {
-  _type: "promotion";
-  title?: string;
-  link?: string;
-  direction?: "left" | "right";
-  speed?: number;
-};
-
-export type Page = {
-  _id: string;
-  _type: "page";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  subtitle?: string;
-  slug?: Slug;
-  metaTitle?: string;
-  metaDescription?: string;
-  introImage?: {
-    asset?: SanityImageAssetReference;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  fullWidth?: boolean;
-  theme?: "light" | "dark" | "cream" | "auto";
-  pageBuilder?: Array<
-    | ({
-        _key: string;
-      } & Banner)
-    | ({
-        _key: string;
-      } & TextWithIllustration)
-    | ({
-        _key: string;
-      } & Gallery)
-    | ({
-        _key: string;
-      } & Slider)
-    | ({
-        _key: string;
-      } & Slideshow)
-    | ({
-        _key: string;
-      } & Form)
-    | ({
-        _key: string;
-      } & Video)
-    | ({
-        _key: string;
-      } & Promotion)
-    | ({
-        _key: string;
-      } & Separator)
-    | ({
-        _key: string;
-      } & Map)
-    | ({
-        _key: string;
-      } & DishesMenuReference)
-  >;
-};
-
-export type Color = {
-  _type: "color";
-  hex?: string;
-  alpha?: number;
-  hsl?: HslaColor;
-  hsv?: HsvaColor;
-  rgb?: RgbaColor;
 };
 
 export type SanityFileAsset = {
@@ -619,113 +637,74 @@ export type SanityImageAsset = {
   source?: SanityAssetSourceData;
 };
 
-export type RgbaColor = {
-  _type: "rgbaColor";
-  r?: number;
-  g?: number;
-  b?: number;
-  a?: number;
+export type SanityImageMetadata = {
+  _type: "sanity.imageMetadata";
+  location?: Geopoint;
+  dimensions?: SanityImageDimensions;
+  palette?: SanityImagePalette;
+  lqip?: string;
+  blurHash?: string;
+  hasAlpha?: boolean;
+  isOpaque?: boolean;
 };
 
-export type HsvaColor = {
-  _type: "hsvaColor";
-  h?: number;
-  s?: number;
-  v?: number;
-  a?: number;
+export type Geopoint = {
+  _type: "geopoint";
+  lat?: number;
+  lng?: number;
+  alt?: number;
 };
 
-export type HslaColor = {
-  _type: "hslaColor";
-  h?: number;
-  s?: number;
-  l?: number;
-  a?: number;
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
 };
 
-export type AllSanitySchemaTypes =
-  | SanityImageAssetReference
-  | Logo
-  | SanityImagePaletteSwatch
-  | SanityImagePalette
-  | SanityImageDimensions
-  | SanityImageMetadata
-  | SanityImageHotspot
-  | SanityImageCrop
-  | Geopoint
-  | Slug
-  | SanityAssetSourceData
-  | Settings
-  | Copyright
-  | BlockContent
-  | Socials
-  | Social
-  | Icon
-  | DishesMenuReference
-  | Locations
-  | Duration
-  | TimeValue
-  | Dish
-  | DishesCategory
-  | DishesMenu
-  | Map
-  | PageReference
-  | Link
-  | NavigationItem
-  | Navigation
-  | Separator
-  | Slideshow
-  | Slider
-  | SanityFileAssetReference
-  | Video
-  | Form
-  | Gallery
-  | TextWithIllustration
-  | Banner
-  | Promotion
-  | Page
-  | Color
-  | SanityFileAsset
-  | SanityImageAsset
-  | RgbaColor
-  | HsvaColor
-  | HslaColor;
+export type SanityAssetSourceData = {
+  _type: "sanity.assetSourceData";
+  name?: string;
+  id?: string;
+  url?: string;
+};
 
-// Source: src/sanity/lib/queries.ts
+export type AllSanitySchemaTypes = Settings | Copyright | Socials | Social | Locations | Duration | TimeValue | Dish | DishesCategory | DishesMenu | Map | Link | Navigation | Separator | Slideshow | Slider | Video | Form | Gallery | TextWithIllustration | Banner | LocalizedBlockContent | Promotion | BlockContent | Page | NavigationItem | LocalizedString | Color | RgbaColor | HsvaColor | HslaColor | GeopointRadius | Icon | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: ./src/sanity/lib/queries.ts
 // Variable: SETTINGS_QUERY
 // Query: *[_type == "settings"][0]{  theme}
-export type SETTINGS_QUERY_RESULT = {
+export type SETTINGS_QUERYResult = {
   theme: "auto" | "cream" | "dark" | "light" | null;
 } | null;
-
-// Source: src/sanity/lib/queries.ts
 // Variable: HEADERMENU_QUERY
-// Query: *[navId.current match "main-menu*"]{  'navId': navId.current,  'items':  items[] {    'link': *[      _type == "page" &&      _id == ^.navigationItemUrl.internalLink._ref    ][0]{      'slug': slug.current    },    'externalUrl': navigationItemUrl.externalUrl,    text  }}
-export type HEADERMENU_QUERY_RESULT = Array<{
+// Query: *[navId.current match "main-menu*"]{  'navId': navId.current,  'items':  items[] {    'link': *[      _type == "page" &&      _id == ^.navigationItemUrl.internalLink._ref    ][0]{      'slug': slug.current    },    'externalUrl': navigationItemUrl.externalUrl,    "text": coalesce(text[$locale], text.it, text)  }}
+export type HEADERMENU_QUERYResult = Array<{
   navId: string | null;
   items: Array<{
     link: {
       slug: string | null;
     } | null;
     externalUrl: string | null;
-    text: string | null;
+    text: Array<{
+      _type: "localizedString";
+      it?: string;
+      en?: string;
+    }> | LocalizedString | string | null;
   }> | null;
 }>;
-
-// Source: src/sanity/lib/queries.ts
 // Variable: SOCIALS_QUERY
 // Query: *[_type == "socials"][0].socials
-export type SOCIALS_QUERY_RESULT = Array<
-  {
-    _key: string;
-  } & Social
-> | null;
-
-// Source: src/sanity/lib/queries.ts
+export type SOCIALS_QUERYResult = Array<{
+  _key: string;
+} & Social> | null;
 // Variable: LOCATIONS_QUERY
-// Query: *[_type == "locations"]{  title,  city,  address,  postalCode,  phone,  email,  monday,  tuesday,  wednesday,  thursday,  friday,  saturday,  sunday}
-export type LOCATIONS_QUERY_RESULT = Array<{
-  title: string | null;
+// Query: *[_type == "locations"]{  "title": coalesce(title[$locale], title.it, title),  city,  address,  postalCode,  phone,  email,  monday,  tuesday,  wednesday,  thursday,  friday,  saturday,  sunday}
+export type LOCATIONS_QUERYResult = Array<{
+  title: Array<{
+    _type: "localizedString";
+    it?: string;
+    en?: string;
+  }> | LocalizedString | string | null;
   city: string | null;
   address: string | null;
   postalCode: string | null;
@@ -739,309 +718,982 @@ export type LOCATIONS_QUERY_RESULT = Array<{
   saturday: Duration | null;
   sunday: Duration | null;
 }>;
-
-// Source: src/sanity/lib/queries.ts
 // Variable: COPYRIGHT_QUERY
-// Query: *[_type == "copyright"][0].content
-export type COPYRIGHT_QUERY_RESULT = BlockContent | null;
-
-// Source: src/sanity/lib/queries.ts
+// Query: *[_type == "copyright"][0].content{  "it": coalesce(it, ^.content),  "en": en}[$locale]
+export type COPYRIGHT_QUERYResult = null;
 // Variable: HOMEPAGE_QUERY
-// Query: *[slug.current match "home*"][0]{  title,  subtitle,  slug,  metaTitle,  metaDescription,  fullWidth,  theme,  pageBuilder[]{    _type == "video" => {      _type,      videoLabel,      cssClasses,      file    },    _type == "banner" => {      _type,      heading,      text,      headingCSSClasses,      subtitle    },    _type == "separator" => {      _type,      separatorColor    },    _type == "slider" => {      _type,      heading,      subtitle,      backgroundImage,      images    },    _type == "slideshow" => {      _type,      'images':  images[] {        asset,        hotspot,        crop,        alt,        heading,        subtitle,        logo,        'link': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{          'slug': slug.current        },        'externalUrl': cta.navigationItemUrl.externalUrl,        'ctaText': cta.text      }    },    _type == "textWithIllustration" => {      _type,      heading,      text,      image,      imagePosition,      gridSize    },    _type == "gallery" => {      _type,      heading,      subtitle,      images    },    _type == "form" => {      _type,      heading,      label,      form    },    _type == "promotion" => {      _type,      title,      link,      direction,      speed    },    _type == "map" => {      _type,      heading,      mapCenter,      locations    },    _type == "dishesMenu" => {      _type,      _ref,      "menu": *[ _type == "dishesMenu" && menu._ref == ^._id ][0] {        title,        introText,        categories      }    }  },}
-export type HOMEPAGE_QUERY_RESULT = {
-  title: string | null;
-  subtitle: string | null;
+// Query: *[slug.current match "home*"][0]{  "title": coalesce(title[$locale], title.it, title),  "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),  slug,  "metaTitle": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),  "metaDescription": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),  fullWidth,  backgroundImage,  backgroundFixed,  theme,  pageBuilder[]{    _type == "video" => {      _type,      videoLabel,      cssClasses,      file    },    _type == "banner" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "text": coalesce(text[$locale], text.it, text),      headingCSSClasses,      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle)    },    _type == "separator" => {      _type,      separatorColor    },    _type == "slider" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),      backgroundImage,      backgroundFixed,      images    },    _type == "slideshow" => {      _type,      'images':  images[] {        asset,        hotspot,        crop,        alt,        "heading": coalesce(heading[$locale], heading.it, heading),        "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),        logo,        'link': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{          'slug': slug.current        },        'externalUrl': cta.navigationItemUrl.externalUrl,        'ctaText': coalesce(cta.text[$locale], cta.text.it, cta.text)      }    },    _type == "textWithIllustration" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "text": coalesce(text[$locale], text.it, text),      image,      backgroundImage,      backgroundFixed,      hasOverlay,      overlayColor,      imagePosition,      gridSize    },    _type == "gallery" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),      images    },    _type == "form" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      label,      form    },    _type == "promotion" => {      _type,      "title": coalesce(title[$locale], title.it, title),      link,      direction,      speed    },    _type == "map" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      mapCenter,      locations    },    _type == "dishesMenu" => {      _type,      _ref,      "menu": *[ _type == "dishesMenu" && _id == ^._ref ][0] {        "title": coalesce(title[$locale], title.it, title),        "introText": coalesce(introText[$locale], introText.it, introText),        categories[] {          "title": coalesce(title[$locale], title.it, title),          icon,          flaticonClass,          dishes[] {            "title": coalesce(title[$locale], title.it, title),            "description": coalesce(description[$locale], description.it, description),            price,            "subcategory": coalesce(subcategory[$locale], subcategory.it, subcategory)          }        }      }    }  },}
+export type HOMEPAGE_QUERYResult = {
+  title: Array<{
+    _type: "localizedString";
+    it?: string;
+    en?: string;
+  }> | LocalizedString | string | null;
+  subtitle: Array<{
+    _type: "localizedString";
+    it?: string;
+    en?: string;
+  }> | LocalizedString | string | null;
   slug: Slug | null;
-  metaTitle: string | null;
-  metaDescription: string | null;
+  metaTitle: Array<{
+    _type: "localizedString";
+    it?: string;
+    en?: string;
+  }> | LocalizedString | string | null;
+  metaDescription: Array<{
+    _type: "localizedString";
+    it?: string;
+    en?: string;
+  }> | LocalizedString | string | null;
   fullWidth: boolean | null;
+  backgroundImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+  backgroundFixed: boolean | null;
   theme: "auto" | "cream" | "dark" | "light" | null;
-  pageBuilder: Array<
-    | {
-        _type: "banner";
-        heading: string | null;
-        text: BlockContent | null;
-        headingCSSClasses: string | null;
-        subtitle: string | null;
-      }
-    | {
-        _type: "form";
-        heading: string | null;
-        label: string | null;
-        form: "contact" | "newsletter" | "register" | null;
-      }
-    | {
-        _type: "gallery";
-        heading: string | null;
-        subtitle: string | null;
-        images: Array<{
-          asset?: SanityImageAssetReference;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          alt?: string;
-          _type: "image";
+  pageBuilder: Array<{
+    _type: "banner";
+    heading: Array<{
+      _type: "localizedString";
+      it?: string;
+      en?: string;
+    }> | LocalizedString | string | null;
+    text: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+      listItem?: "bullet";
+      markDefs?: Array<{
+        _key: string;
+      } & Color | {
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    } | {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+      _key: string;
+    }> | Array<{
+      _type: "localizedBlockContent";
+      it?: Array<{
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
           _key: string;
-        }> | null;
-      }
-    | {
-        _type: "map";
-        heading: string | null;
-        mapCenter: Geopoint | null;
-        locations: Array<
-          {
-            _key: string;
-          } & Geopoint
-        > | null;
-      }
-    | {
-        _type: "promotion";
-        title: string | null;
-        link: string | null;
-        direction: "left" | "right" | null;
-        speed: number | null;
-      }
-    | {
-        _type: "separator";
-        separatorColor: Color | null;
-      }
-    | {
-        _type: "slider";
-        heading: string | null;
-        subtitle: string | null;
-        backgroundImage: {
-          asset?: SanityImageAssetReference;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          alt?: string;
-          _type: "image";
-        } | null;
-        images: Array<{
-          asset?: SanityImageAssetReference;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          alt?: string;
-          _type: "image";
+        }>;
+        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+        listItem?: "bullet";
+        markDefs?: Array<{
           _key: string;
-        }> | null;
-      }
-    | {
-        _type: "slideshow";
-        images: Array<{
-          asset: SanityImageAssetReference | null;
-          hotspot: SanityImageHotspot | null;
-          crop: SanityImageCrop | null;
-          alt: string | null;
-          heading: string | null;
-          subtitle: string | null;
-          logo: Logo | null;
-          link: {
-            slug: string | null;
-          } | null;
-          externalUrl: string | null;
-          ctaText: string | null;
-        }> | null;
-      }
-    | {
-        _type: "textWithIllustration";
-        heading: string | null;
-        text: BlockContent | null;
-        image: {
-          asset?: SanityImageAssetReference;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          alt?: string;
-          _type: "image";
-        } | null;
-        imagePosition: "left" | "right" | null;
-        gridSize: "grid-cols-2" | "grid-cols-3" | null;
-      }
-    | {
-        _type: "video";
-        videoLabel: string | null;
-        cssClasses: string | null;
-        file: {
-          asset?: SanityFileAssetReference;
-          _type: "file";
-        } | null;
-      }
-    | {}
-  > | null;
-} | null;
-
-// Source: src/sanity/lib/queries.ts
-// Variable: PAGE_QUERY
-// Query: *[slug.current == $slug][0]{  title,  subtitle,  slug,  metaTitle,  metaDescription,  introImage,  fullWidth,  theme,  pageBuilder[]{    _type == "video" => {      _type,      videoLabel,      cssClasses,      file    },    _type == "banner" => {      _type,      heading,      text,      headingCSSClasses,      subtitle    },    _type == "separator" => {      _type,      separatorColor    },    _type == "slider" => {      _type,      title,      subtitle,      backgroundImage,      images    },    _type == "slideshow" => {      _type,      'images':  images[] {        asset,        hotspot,        crop,        alt,        heading,        subtitle,        logo,        'link': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{          'slug': slug.current        },        'externalUrl': cta.navigationItemUrl.externalUrl,        'ctaText': cta.text      }    },    _type == "textWithIllustration" => {      _type,      heading,      text,      image,      imagePosition,      gridSize    },    _type == "gallery" => {      _type,      heading,      subtitle,      images    },    _type == "form" => {      _type,      heading,      label,      form    },    _type == "promotion" => {      _type,      title,      link,      direction,      speed    },    _type == "map" => {      _type,      heading,      mapCenter,      locations    },    _type == "dishesMenu" => {      _type,      _ref,      "menu": *[_type == "dishesMenu" && ^._ref == _id][0] {        _id,        title,        introText,        categories      }    }  },}
-export type PAGE_QUERY_RESULT =
-  | {
-      title: null;
-      subtitle: null;
-      slug: null;
-      metaTitle: null;
-      metaDescription: null;
-      introImage: null;
-      fullWidth: null;
-      theme: null;
-      pageBuilder: null;
-    }
-  | {
-      title: string | null;
-      subtitle: null;
-      slug: null;
-      metaTitle: null;
-      metaDescription: null;
-      introImage: null;
-      fullWidth: null;
-      theme: null;
-      pageBuilder: null;
-    }
-  | {
-      title: null;
-      subtitle: null;
-      slug: null;
-      metaTitle: null;
-      metaDescription: null;
-      introImage: null;
-      fullWidth: null;
-      theme: "auto" | "cream" | "dark" | "light" | null;
-      pageBuilder: null;
-    }
-  | {
-      title: string | null;
-      subtitle: string | null;
-      slug: Slug | null;
-      metaTitle: string | null;
-      metaDescription: string | null;
-      introImage: {
-        asset?: SanityImageAssetReference;
+        } & Color | {
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      } | {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+        _key: string;
+      }>;
+      en?: Array<{
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+        listItem?: "bullet";
+        markDefs?: Array<{
+          _key: string;
+        } & Color | {
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      } | {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+        _key: string;
+      }>;
+    }> | LocalizedBlockContent | null;
+    headingCSSClasses: string | null;
+    subtitle: Array<{
+      _type: "localizedString";
+      it?: string;
+      en?: string;
+    }> | LocalizedString | string | null;
+  } | {
+    _type: "form";
+    heading: Array<{
+      _type: "localizedString";
+      it?: string;
+      en?: string;
+    }> | LocalizedString | string | null;
+    label: string | null;
+    form: "contact" | "newsletter" | "register" | null;
+  } | {
+    _type: "gallery";
+    heading: Array<{
+      _type: "localizedString";
+      it?: string;
+      en?: string;
+    }> | LocalizedString | string | null;
+    subtitle: Array<{
+      _type: "localizedString";
+      it?: string;
+      en?: string;
+    }> | LocalizedString | string | null;
+    images: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+      _key: string;
+    }> | null;
+  } | {
+    _type: "map";
+    heading: Array<{
+      _type: "localizedString";
+      it?: string;
+      en?: string;
+    }> | LocalizedString | string | null;
+    mapCenter: Geopoint | null;
+    locations: Array<{
+      _key: string;
+    } & Geopoint> | null;
+  } | {
+    _type: "promotion";
+    title: Array<{
+      _type: "localizedString";
+      it?: string;
+      en?: string;
+    }> | LocalizedString | string | null;
+    link: string | null;
+    direction: "left" | "right" | null;
+    speed: number | null;
+  } | {
+    _type: "separator";
+    separatorColor: Color | null;
+  } | {
+    _type: "slider";
+    heading: Array<{
+      _type: "localizedString";
+      it?: string;
+      en?: string;
+    }> | LocalizedString | string | null;
+    subtitle: Array<{
+      _type: "localizedString";
+      it?: string;
+      en?: string;
+    }> | LocalizedString | string | null;
+    backgroundImage: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    } | null;
+    backgroundFixed: boolean | null;
+    images: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+      _key: string;
+    }> | null;
+  } | {
+    _type: "slideshow";
+    images: Array<{
+      asset: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      } | null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+      alt: string | null;
+      heading: Array<{
+        _type: "localizedString";
+        it?: string;
+        en?: string;
+      }> | LocalizedString | string | null;
+      subtitle: Array<{
+        _type: "localizedString";
+        it?: string;
+        en?: string;
+      }> | LocalizedString | string | null;
+      logo: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: "image";
       } | null;
-      fullWidth: boolean | null;
-      theme: "auto" | "cream" | "dark" | "light" | null;
-      pageBuilder: Array<
-        | {
-            _type: "banner";
-            heading: string | null;
-            text: BlockContent | null;
-            headingCSSClasses: string | null;
-            subtitle: string | null;
-          }
-        | {
-            _type: "form";
-            heading: string | null;
-            label: string | null;
-            form: "contact" | "newsletter" | "register" | null;
-          }
-        | {
-            _type: "gallery";
-            heading: string | null;
-            subtitle: string | null;
-            images: Array<{
-              asset?: SanityImageAssetReference;
-              hotspot?: SanityImageHotspot;
-              crop?: SanityImageCrop;
-              alt?: string;
-              _type: "image";
-              _key: string;
-            }> | null;
-          }
-        | {
-            _type: "map";
-            heading: string | null;
-            mapCenter: Geopoint | null;
-            locations: Array<
-              {
-                _key: string;
-              } & Geopoint
-            > | null;
-          }
-        | {
-            _type: "promotion";
-            title: string | null;
-            link: string | null;
-            direction: "left" | "right" | null;
-            speed: number | null;
-          }
-        | {
-            _type: "separator";
-            separatorColor: Color | null;
-          }
-        | {
-            _type: "slider";
-            title: null;
-            subtitle: string | null;
-            backgroundImage: {
-              asset?: SanityImageAssetReference;
-              hotspot?: SanityImageHotspot;
-              crop?: SanityImageCrop;
-              alt?: string;
-              _type: "image";
-            } | null;
-            images: Array<{
-              asset?: SanityImageAssetReference;
-              hotspot?: SanityImageHotspot;
-              crop?: SanityImageCrop;
-              alt?: string;
-              _type: "image";
-              _key: string;
-            }> | null;
-          }
-        | {
-            _type: "slideshow";
-            images: Array<{
-              asset: SanityImageAssetReference | null;
-              hotspot: SanityImageHotspot | null;
-              crop: SanityImageCrop | null;
-              alt: string | null;
-              heading: string | null;
-              subtitle: string | null;
-              logo: Logo | null;
-              link: {
-                slug: string | null;
-              } | null;
-              externalUrl: string | null;
-              ctaText: string | null;
-            }> | null;
-          }
-        | {
-            _type: "textWithIllustration";
-            heading: string | null;
-            text: BlockContent | null;
-            image: {
-              asset?: SanityImageAssetReference;
-              hotspot?: SanityImageHotspot;
-              crop?: SanityImageCrop;
-              alt?: string;
-              _type: "image";
-            } | null;
-            imagePosition: "left" | "right" | null;
-            gridSize: "grid-cols-2" | "grid-cols-3" | null;
-          }
-        | {
-            _type: "video";
-            videoLabel: string | null;
-            cssClasses: string | null;
-            file: {
-              asset?: SanityFileAssetReference;
-              _type: "file";
-            } | null;
-          }
-        | {}
-      > | null;
-    }
-  | null;
+      link: {
+        slug: string | null;
+      } | null;
+      externalUrl: string | null;
+      ctaText: Array<{
+        _type: "localizedString";
+        it?: string;
+        en?: string;
+      }> | LocalizedString | string | null;
+    }> | null;
+  } | {
+    _type: "textWithIllustration";
+    heading: Array<{
+      _type: "localizedString";
+      it?: string;
+      en?: string;
+    }> | LocalizedString | string | null;
+    text: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+      listItem?: "bullet";
+      markDefs?: Array<{
+        _key: string;
+      } & Color | {
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    } | {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+      _key: string;
+    }> | Array<{
+      _type: "localizedBlockContent";
+      it?: Array<{
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+        listItem?: "bullet";
+        markDefs?: Array<{
+          _key: string;
+        } & Color | {
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      } | {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+        _key: string;
+      }>;
+      en?: Array<{
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+        listItem?: "bullet";
+        markDefs?: Array<{
+          _key: string;
+        } & Color | {
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      } | {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+        _key: string;
+      }>;
+    }> | LocalizedBlockContent | null;
+    image: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    } | null;
+    backgroundImage: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    } | null;
+    backgroundFixed: boolean | null;
+    hasOverlay: boolean | null;
+    overlayColor: "dark" | "light" | null;
+    imagePosition: "bottom" | "left" | "right" | "top" | null;
+    gridSize: "grid-cols-2" | "grid-cols-3" | null;
+  } | {
+    _type: "video";
+    videoLabel: LocalizedString | null;
+    cssClasses: string | null;
+    file: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+      };
+      media?: unknown;
+      _type: "file";
+    } | null;
+  } | {}> | null;
+} | null;
+// Variable: PAGE_QUERY
+// Query: *[slug.current == $slug][0]{  "title": coalesce(title[$locale], title.it, title),  "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),  slug,  "metaTitle": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),  "metaDescription": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),  introImage,  fullWidth,  backgroundImage,  backgroundFixed,  theme,  pageBuilder[]{    _type == "video" => {      _type,      videoLabel,      cssClasses,      file    },    _type == "banner" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "text": coalesce(text[$locale], text.it, text),      headingCSSClasses,      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle)    },    _type == "separator" => {      _type,      separatorColor    },    _type == "slider" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),      backgroundImage,      backgroundFixed,      images    },    _type == "slideshow" => {      _type,      'images':  images[] {        asset,        hotspot,        crop,        alt,        "heading": coalesce(heading[$locale], heading.it, heading),        "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),        logo,        'link': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{          'slug': slug.current        },        'externalUrl': cta.navigationItemUrl.externalUrl,        'ctaText': coalesce(cta.text[$locale], cta.text.it, cta.text)      }    },    _type == "textWithIllustration" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "text": coalesce(text[$locale], text.it, text),      image,      backgroundImage,      backgroundFixed,      imagePosition,      gridSize    },    _type == "gallery" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),      images    },    _type == "form" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      label,      form    },    _type == "promotion" => {      _type,      "title": coalesce(title[$locale], title.it, title),      link,      direction,      speed    },    _type == "map" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      mapCenter,      locations    },    _type == "dishesMenu" => {      _type,      _ref,      "menu": *[_type == "dishesMenu" && _id == ^._ref][0] {        "title": coalesce(title[$locale], title.it, title),        "introText": coalesce(introText[$locale], introText.it, introText),        categories[] {          "title": coalesce(title[$locale], title.it, title),          icon,          flaticonClass,          dishes[] {            "title": coalesce(title[$locale], title.it, title),            "description": coalesce(description[$locale], description.it, description),            price,            "subcategory": coalesce(subcategory[$locale], subcategory.it, subcategory)          }        }      }    }  },}
+export type PAGE_QUERYResult = {
+  title: null;
+  subtitle: null;
+  slug: null;
+  metaTitle: null;
+  metaDescription: null;
+  introImage: null;
+  fullWidth: null;
+  backgroundImage: null;
+  backgroundFixed: null;
+  theme: null;
+  pageBuilder: null;
+} | {
+  title: Array<{
+    _type: "localizedString";
+    it?: string;
+    en?: string;
+  }> | LocalizedString | string | null;
+  subtitle: null;
+  slug: null;
+  metaTitle: null;
+  metaDescription: null;
+  introImage: null;
+  fullWidth: null;
+  backgroundImage: null;
+  backgroundFixed: null;
+  theme: null;
+  pageBuilder: null;
+} | {
+  title: Array<string> | string | null;
+  subtitle: null;
+  slug: null;
+  metaTitle: null;
+  metaDescription: null;
+  introImage: null;
+  fullWidth: null;
+  backgroundImage: null;
+  backgroundFixed: null;
+  theme: null;
+  pageBuilder: null;
+} | {
+  title: null;
+  subtitle: null;
+  slug: null;
+  metaTitle: null;
+  metaDescription: null;
+  introImage: null;
+  fullWidth: null;
+  backgroundImage: null;
+  backgroundFixed: null;
+  theme: "auto" | "cream" | "dark" | "light" | null;
+  pageBuilder: null;
+} | {
+  title: Array<{
+    _type: "localizedString";
+    it?: string;
+    en?: string;
+  }> | LocalizedString | string | null;
+  subtitle: Array<{
+    _type: "localizedString";
+    it?: string;
+    en?: string;
+  }> | LocalizedString | string | null;
+  slug: Slug | null;
+  metaTitle: Array<{
+    _type: "localizedString";
+    it?: string;
+    en?: string;
+  }> | LocalizedString | string | null;
+  metaDescription: Array<{
+    _type: "localizedString";
+    it?: string;
+    en?: string;
+  }> | LocalizedString | string | null;
+  introImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+  fullWidth: boolean | null;
+  backgroundImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+  backgroundFixed: boolean | null;
+  theme: "auto" | "cream" | "dark" | "light" | null;
+  pageBuilder: Array<{
+    _type: "banner";
+    heading: Array<{
+      _type: "localizedString";
+      it?: string;
+      en?: string;
+    }> | LocalizedString | string | null;
+    text: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+      listItem?: "bullet";
+      markDefs?: Array<{
+        _key: string;
+      } & Color | {
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    } | {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+      _key: string;
+    }> | Array<{
+      _type: "localizedBlockContent";
+      it?: Array<{
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+        listItem?: "bullet";
+        markDefs?: Array<{
+          _key: string;
+        } & Color | {
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      } | {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+        _key: string;
+      }>;
+      en?: Array<{
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+        listItem?: "bullet";
+        markDefs?: Array<{
+          _key: string;
+        } & Color | {
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      } | {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+        _key: string;
+      }>;
+    }> | LocalizedBlockContent | null;
+    headingCSSClasses: string | null;
+    subtitle: Array<{
+      _type: "localizedString";
+      it?: string;
+      en?: string;
+    }> | LocalizedString | string | null;
+  } | {
+    _type: "form";
+    heading: Array<{
+      _type: "localizedString";
+      it?: string;
+      en?: string;
+    }> | LocalizedString | string | null;
+    label: string | null;
+    form: "contact" | "newsletter" | "register" | null;
+  } | {
+    _type: "gallery";
+    heading: Array<{
+      _type: "localizedString";
+      it?: string;
+      en?: string;
+    }> | LocalizedString | string | null;
+    subtitle: Array<{
+      _type: "localizedString";
+      it?: string;
+      en?: string;
+    }> | LocalizedString | string | null;
+    images: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+      _key: string;
+    }> | null;
+  } | {
+    _type: "map";
+    heading: Array<{
+      _type: "localizedString";
+      it?: string;
+      en?: string;
+    }> | LocalizedString | string | null;
+    mapCenter: Geopoint | null;
+    locations: Array<{
+      _key: string;
+    } & Geopoint> | null;
+  } | {
+    _type: "promotion";
+    title: Array<{
+      _type: "localizedString";
+      it?: string;
+      en?: string;
+    }> | LocalizedString | string | null;
+    link: string | null;
+    direction: "left" | "right" | null;
+    speed: number | null;
+  } | {
+    _type: "separator";
+    separatorColor: Color | null;
+  } | {
+    _type: "slider";
+    heading: Array<{
+      _type: "localizedString";
+      it?: string;
+      en?: string;
+    }> | LocalizedString | string | null;
+    subtitle: Array<{
+      _type: "localizedString";
+      it?: string;
+      en?: string;
+    }> | LocalizedString | string | null;
+    backgroundImage: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    } | null;
+    backgroundFixed: boolean | null;
+    images: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+      _key: string;
+    }> | null;
+  } | {
+    _type: "slideshow";
+    images: Array<{
+      asset: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      } | null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+      alt: string | null;
+      heading: Array<{
+        _type: "localizedString";
+        it?: string;
+        en?: string;
+      }> | LocalizedString | string | null;
+      subtitle: Array<{
+        _type: "localizedString";
+        it?: string;
+        en?: string;
+      }> | LocalizedString | string | null;
+      logo: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+      } | null;
+      link: {
+        slug: string | null;
+      } | null;
+      externalUrl: string | null;
+      ctaText: Array<{
+        _type: "localizedString";
+        it?: string;
+        en?: string;
+      }> | LocalizedString | string | null;
+    }> | null;
+  } | {
+    _type: "textWithIllustration";
+    heading: Array<{
+      _type: "localizedString";
+      it?: string;
+      en?: string;
+    }> | LocalizedString | string | null;
+    text: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+      listItem?: "bullet";
+      markDefs?: Array<{
+        _key: string;
+      } & Color | {
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    } | {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+      _key: string;
+    }> | Array<{
+      _type: "localizedBlockContent";
+      it?: Array<{
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+        listItem?: "bullet";
+        markDefs?: Array<{
+          _key: string;
+        } & Color | {
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      } | {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+        _key: string;
+      }>;
+      en?: Array<{
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+        listItem?: "bullet";
+        markDefs?: Array<{
+          _key: string;
+        } & Color | {
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      } | {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+        _key: string;
+      }>;
+    }> | LocalizedBlockContent | null;
+    image: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    } | null;
+    backgroundImage: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    } | null;
+    backgroundFixed: boolean | null;
+    imagePosition: "bottom" | "left" | "right" | "top" | null;
+    gridSize: "grid-cols-2" | "grid-cols-3" | null;
+  } | {
+    _type: "video";
+    videoLabel: LocalizedString | null;
+    cssClasses: string | null;
+    file: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+      };
+      media?: unknown;
+      _type: "file";
+    } | null;
+  } | {}> | null;
+} | null;
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '*[_type == "settings"][0]{\n  theme\n}': SETTINGS_QUERY_RESULT;
-    "*[navId.current match \"main-menu*\"]{\n  'navId': navId.current,\n  'items':  items[] {\n    'link': *[\n      _type == \"page\" &&\n      _id == ^.navigationItemUrl.internalLink._ref\n    ][0]{\n      'slug': slug.current\n    },\n    'externalUrl': navigationItemUrl.externalUrl,\n    text\n  }\n}": HEADERMENU_QUERY_RESULT;
-    '*[_type == "socials"][0].socials': SOCIALS_QUERY_RESULT;
-    '*[_type == "locations"]{\n  title,\n  city,\n  address,\n  postalCode,\n  phone,\n  email,\n  monday,\n  tuesday,\n  wednesday,\n  thursday,\n  friday,\n  saturday,\n  sunday\n}': LOCATIONS_QUERY_RESULT;
-    '*[_type == "copyright"][0].content': COPYRIGHT_QUERY_RESULT;
-    '*[slug.current match "home*"][0]{\n  title,\n  subtitle,\n  slug,\n  metaTitle,\n  metaDescription,\n  fullWidth,\n  theme,\n  pageBuilder[]{\n    _type == "video" => {\n      _type,\n      videoLabel,\n      cssClasses,\n      file\n    },\n    _type == "banner" => {\n      _type,\n      heading,\n      text,\n      headingCSSClasses,\n      subtitle\n    },\n    _type == "separator" => {\n      _type,\n      separatorColor\n    },\n    _type == "slider" => {\n      _type,\n      heading,\n      subtitle,\n      backgroundImage,\n      images\n    },\n    _type == "slideshow" => {\n      _type,\n      \'images\':  images[] {\n        asset,\n        hotspot,\n        crop,\n        alt,\n        heading,\n        subtitle,\n        logo,\n        \'link\': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{\n          \'slug\': slug.current\n        },\n        \'externalUrl\': cta.navigationItemUrl.externalUrl,\n        \'ctaText\': cta.text\n      }\n    },\n    _type == "textWithIllustration" => {\n      _type,\n      heading,\n      text,\n      image,\n      imagePosition,\n      gridSize\n    },\n    _type == "gallery" => {\n      _type,\n      heading,\n      subtitle,\n      images\n    },\n    _type == "form" => {\n      _type,\n      heading,\n      label,\n      form\n    },\n    _type == "promotion" => {\n      _type,\n      title,\n      link,\n      direction,\n      speed\n    },\n    _type == "map" => {\n      _type,\n      heading,\n      mapCenter,\n      locations\n    },\n    _type == "dishesMenu" => {\n      _type,\n      _ref,\n      "menu": *[ _type == "dishesMenu" && menu._ref == ^._id ][0] {\n        title,\n        introText,\n        categories\n      }\n    }\n  },\n}': HOMEPAGE_QUERY_RESULT;
-    '*[slug.current == $slug][0]{\n  title,\n  subtitle,\n  slug,\n  metaTitle,\n  metaDescription,\n  introImage,\n  fullWidth,\n  theme,\n  pageBuilder[]{\n    _type == "video" => {\n      _type,\n      videoLabel,\n      cssClasses,\n      file\n    },\n    _type == "banner" => {\n      _type,\n      heading,\n      text,\n      headingCSSClasses,\n      subtitle\n    },\n    _type == "separator" => {\n      _type,\n      separatorColor\n    },\n    _type == "slider" => {\n      _type,\n      title,\n      subtitle,\n      backgroundImage,\n      images\n    },\n    _type == "slideshow" => {\n      _type,\n      \'images\':  images[] {\n        asset,\n        hotspot,\n        crop,\n        alt,\n        heading,\n        subtitle,\n        logo,\n        \'link\': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{\n          \'slug\': slug.current\n        },\n        \'externalUrl\': cta.navigationItemUrl.externalUrl,\n        \'ctaText\': cta.text\n      }\n    },\n    _type == "textWithIllustration" => {\n      _type,\n      heading,\n      text,\n      image,\n      imagePosition,\n      gridSize\n    },\n    _type == "gallery" => {\n      _type,\n      heading,\n      subtitle,\n      images\n    },\n    _type == "form" => {\n      _type,\n      heading,\n      label,\n      form\n    },\n    _type == "promotion" => {\n      _type,\n      title,\n      link,\n      direction,\n      speed\n    },\n    _type == "map" => {\n      _type,\n      heading,\n      mapCenter,\n      locations\n    },\n    _type == "dishesMenu" => {\n      _type,\n      _ref,\n      "menu": *[_type == "dishesMenu" && ^._ref == _id][0] {\n        _id,\n        title,\n        introText,\n        categories\n      }\n    }\n  },\n}': PAGE_QUERY_RESULT;
+    "*[_type == \"settings\"][0]{\n  theme\n}": SETTINGS_QUERYResult;
+    "*[navId.current match \"main-menu*\"]{\n  'navId': navId.current,\n  'items':  items[] {\n    'link': *[\n      _type == \"page\" &&\n      _id == ^.navigationItemUrl.internalLink._ref\n    ][0]{\n      'slug': slug.current\n    },\n    'externalUrl': navigationItemUrl.externalUrl,\n    \"text\": coalesce(text[$locale], text.it, text)\n  }\n}": HEADERMENU_QUERYResult;
+    "*[_type == \"socials\"][0].socials": SOCIALS_QUERYResult;
+    "*[_type == \"locations\"]{\n  \"title\": coalesce(title[$locale], title.it, title),\n  city,\n  address,\n  postalCode,\n  phone,\n  email,\n  monday,\n  tuesday,\n  wednesday,\n  thursday,\n  friday,\n  saturday,\n  sunday\n}": LOCATIONS_QUERYResult;
+    "*[_type == \"copyright\"][0].content{\n  \"it\": coalesce(it, ^.content),\n  \"en\": en\n}[$locale]": COPYRIGHT_QUERYResult;
+    "*[slug.current match \"home*\"][0]{\n  \"title\": coalesce(title[$locale], title.it, title),\n  \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n  slug,\n  \"metaTitle\": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),\n  \"metaDescription\": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),\n  fullWidth,\n  backgroundImage,\n  backgroundFixed,\n  theme,\n  pageBuilder[]{\n    _type == \"video\" => {\n      _type,\n      videoLabel,\n      cssClasses,\n      file\n    },\n    _type == \"banner\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"text\": coalesce(text[$locale], text.it, text),\n      headingCSSClasses,\n      \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle)\n    },\n    _type == \"separator\" => {\n      _type,\n      separatorColor\n    },\n    _type == \"slider\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n      backgroundImage,\n      backgroundFixed,\n      images\n    },\n    _type == \"slideshow\" => {\n      _type,\n      'images':  images[] {\n        asset,\n        hotspot,\n        crop,\n        alt,\n        \"heading\": coalesce(heading[$locale], heading.it, heading),\n        \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n        logo,\n        'link': *[_type == \"page\" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{\n          'slug': slug.current\n        },\n        'externalUrl': cta.navigationItemUrl.externalUrl,\n        'ctaText': coalesce(cta.text[$locale], cta.text.it, cta.text)\n      }\n    },\n    _type == \"textWithIllustration\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"text\": coalesce(text[$locale], text.it, text),\n      image,\n      backgroundImage,\n      backgroundFixed,\n      hasOverlay,\n      overlayColor,\n      imagePosition,\n      gridSize\n    },\n    _type == \"gallery\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n      images\n    },\n    _type == \"form\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      label,\n      form\n    },\n    _type == \"promotion\" => {\n      _type,\n      \"title\": coalesce(title[$locale], title.it, title),\n      link,\n      direction,\n      speed\n    },\n    _type == \"map\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      mapCenter,\n      locations\n    },\n    _type == \"dishesMenu\" => {\n      _type,\n      _ref,\n      \"menu\": *[ _type == \"dishesMenu\" && _id == ^._ref ][0] {\n        \"title\": coalesce(title[$locale], title.it, title),\n        \"introText\": coalesce(introText[$locale], introText.it, introText),\n        categories[] {\n          \"title\": coalesce(title[$locale], title.it, title),\n          icon,\n          flaticonClass,\n          dishes[] {\n            \"title\": coalesce(title[$locale], title.it, title),\n            \"description\": coalesce(description[$locale], description.it, description),\n            price,\n            \"subcategory\": coalesce(subcategory[$locale], subcategory.it, subcategory)\n          }\n        }\n      }\n    }\n  },\n}": HOMEPAGE_QUERYResult;
+    "*[slug.current == $slug][0]{\n  \"title\": coalesce(title[$locale], title.it, title),\n  \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n  slug,\n  \"metaTitle\": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),\n  \"metaDescription\": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),\n  introImage,\n  fullWidth,\n  backgroundImage,\n  backgroundFixed,\n  theme,\n  pageBuilder[]{\n    _type == \"video\" => {\n      _type,\n      videoLabel,\n      cssClasses,\n      file\n    },\n    _type == \"banner\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"text\": coalesce(text[$locale], text.it, text),\n      headingCSSClasses,\n      \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle)\n    },\n    _type == \"separator\" => {\n      _type,\n      separatorColor\n    },\n    _type == \"slider\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n      backgroundImage,\n      backgroundFixed,\n      images\n    },\n    _type == \"slideshow\" => {\n      _type,\n      'images':  images[] {\n        asset,\n        hotspot,\n        crop,\n        alt,\n        \"heading\": coalesce(heading[$locale], heading.it, heading),\n        \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n        logo,\n        'link': *[_type == \"page\" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{\n          'slug': slug.current\n        },\n        'externalUrl': cta.navigationItemUrl.externalUrl,\n        'ctaText': coalesce(cta.text[$locale], cta.text.it, cta.text)\n      }\n    },\n    _type == \"textWithIllustration\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"text\": coalesce(text[$locale], text.it, text),\n      image,\n      backgroundImage,\n      backgroundFixed,\n      imagePosition,\n      gridSize\n    },\n    _type == \"gallery\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n      images\n    },\n    _type == \"form\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      label,\n      form\n    },\n    _type == \"promotion\" => {\n      _type,\n      \"title\": coalesce(title[$locale], title.it, title),\n      link,\n      direction,\n      speed\n    },\n    _type == \"map\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      mapCenter,\n      locations\n    },\n    _type == \"dishesMenu\" => {\n      _type,\n      _ref,\n      \"menu\": *[_type == \"dishesMenu\" && _id == ^._ref][0] {\n        \"title\": coalesce(title[$locale], title.it, title),\n        \"introText\": coalesce(introText[$locale], introText.it, introText),\n        categories[] {\n          \"title\": coalesce(title[$locale], title.it, title),\n          icon,\n          flaticonClass,\n          dishes[] {\n            \"title\": coalesce(title[$locale], title.it, title),\n            \"description\": coalesce(description[$locale], description.it, description),\n            price,\n            \"subcategory\": coalesce(subcategory[$locale], subcategory.it, subcategory)\n          }\n        }\n      }\n    }\n  },\n}": PAGE_QUERYResult;
   }
 }

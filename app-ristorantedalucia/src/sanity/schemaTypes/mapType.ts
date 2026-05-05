@@ -9,8 +9,7 @@ export const mapType = defineType({
   fields: [
     defineField({
       name: 'heading',
-      type: 'string',
-      validation: Rule => Rule.required(),
+      type: 'localizedString',
     }),
     defineField({
       title: 'Map Center',
