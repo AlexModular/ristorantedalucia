@@ -28,7 +28,7 @@
 }
 
 :root {
-  /* Light Theme (Default) */
+  /* Default (Light) */
   --background: #ffffff;
   --foreground: #1A1A1A;
   --gold: #B99B5B;
@@ -37,31 +37,23 @@
   --cream: #ffffff;
   --swiper-navigation-color: var(--gold) !important;
   --swiper-theme-color: var(--gold) !important;
+  color-scheme: light;
 }
 
-/* Dark Theme (Deep Green) - Activated via Sanity */
-.dark {
-  --background: #213a33;
-  --foreground: #ffffff;
-  --gold: #B99B5B;
-  --gold-hover: #D4AF37;
-  --gray: #a8b2af;
-  --cream: #2a4940;
-}
-
-/* Dark Theme - Activated via System Preference */
+/* System Preference Fallback - Only if no theme class is present */
 @media (prefers-color-scheme: dark) {
-  :root:not(.light) {
+  :root:not(.light):not(.dark):not(.cream) {
     --background: #213a33;
     --foreground: #ffffff;
     --gold: #B99B5B;
     --gold-hover: #D4AF37;
     --gray: #a8b2af;
     --cream: #2a4940;
+    color-scheme: dark;
   }
 }
 
-/* Specific class overrides from Sanity */
+/* Explicit Theme Overrides */
 .light {
   --background: #ffffff;
   --foreground: #1A1A1A;
@@ -69,6 +61,7 @@
   --gold-hover: #9A7E46;
   --gray: #333333;
   --cream: #ffffff;
+  color-scheme: light !important;
 }
 
 .dark {
@@ -78,6 +71,7 @@
   --gold-hover: #D4AF37;
   --gray: #a8b2af;
   --cream: #2a4940;
+  color-scheme: dark !important;
 }
 
 .cream {
@@ -87,6 +81,7 @@
   --gold-hover: #9A7E46;
   --gray: #333333;
   --cream: #FAF3E0;
+  color-scheme: light !important;
 }
 
 html {
