@@ -141,10 +141,10 @@ export default function Navbar({
     const isActive = activeDesktopItem === nav;
 
     const cls = `flex items-center gap-1 px-1 py-2 text-[15px] uppercase tracking-widest transition-colors duration-200 family-oswald whitespace-nowrap ${isActive
-        ? 'text-gold'
-        : headerIsTransparent
-          ? 'text-white hover:text-gold'
-          : 'text-foreground hover:text-gold'
+      ? 'text-gold'
+      : headerIsTransparent
+        ? 'text-white hover:text-gold'
+        : 'text-foreground hover:text-gold'
       }`;
 
     if (hasSub) {
@@ -193,8 +193,8 @@ export default function Navbar({
       >
         <nav
           className={`w-full px-4 py-4 md:px-8 sticky top-0 z-[900] transition-all duration-300 ${headerIsTransparent
-              ? ''
-              : 'bg-background border-b border-gold/40 shadow-xl'
+            ? ''
+            : 'bg-background border-b border-gold/40 shadow-xl'
             }`}
         >
           <div className="flex items-center justify-between mx-auto relative w-full">
@@ -262,8 +262,8 @@ export default function Navbar({
               <Link
                 href="/contattaci"
                 className={`cta-btn-header px-5 py-2 border-2 uppercase family-oswald tracking-widest text-sm transition-all duration-300 shrink-0 ${headerIsTransparent
-                    ? 'border-white text-white hover:bg-white hover:text-foreground'
-                    : 'border-gold bg-gold text-white hover:bg-background hover:text-gold'
+                  ? 'border-white text-white hover:bg-white hover:text-gold'
+                  : 'border-gold bg-gold text-white hover:bg-background hover:text-gold'
                   }`}
               >
                 {t('bookNow')}
@@ -290,8 +290,8 @@ export default function Navbar({
         {/* ── Desktop Megamenu Panel ─────────────────────────────────────── */}
         <div
           className={`hidden lg:block absolute left-0 right-0 z-[800] transition-all duration-300 ${activeDesktopItem
-              ? 'opacity-100 translate-y-0 pointer-events-auto'
-              : 'opacity-0 -translate-y-2 pointer-events-none'
+            ? 'opacity-100 translate-y-0 pointer-events-auto'
+            : 'opacity-0 -translate-y-2 pointer-events-none'
             }`}
           onMouseEnter={keepMega}
           onMouseLeave={closeMega}
@@ -369,8 +369,8 @@ export default function Navbar({
       {/* Drawer shell — invisible+pointer-events-none when closed */}
       <div
         className={`lg:hidden fixed top-0 left-0 h-full w-full sm:w-80 z-[9500] overflow-hidden transform transition-transform duration-500 ease-in-out ${isMobileMenuOpen
-            ? 'translate-x-0 visible pointer-events-auto'
-            : '-translate-x-full invisible pointer-events-none'
+          ? 'translate-x-0 visible pointer-events-auto'
+          : '-translate-x-full invisible pointer-events-none'
           }`}
       >
         {/* ── Main menu panel ── */}
@@ -446,8 +446,8 @@ export default function Navbar({
         {/* ── Submenu panel (slides in from right) ── */}
         <div
           className={`absolute inset-0 bg-background flex flex-col transform transition-transform duration-400 ease-in-out ${mobileSubItem
-              ? 'translate-x-0 pointer-events-auto'
-              : 'translate-x-full pointer-events-none'
+            ? 'translate-x-0 pointer-events-auto'
+            : 'translate-x-full pointer-events-none'
             }`}
           aria-hidden={!mobileSubItem}
         >
