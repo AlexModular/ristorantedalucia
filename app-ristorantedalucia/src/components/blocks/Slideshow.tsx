@@ -41,7 +41,7 @@ export default function Slideshow(params: { key: number, item: TransformedSlides
 
   return (
     <AOSComponent>
-      <div className="slideshow-container transparent-header-trigger relative">
+      <div className="slideshow-container transparent-header-trigger relative" data-header-theme="dark">
         <div className="swiper-container backdrop-blur-sm clearfix">
           <Swiper
             modules={[A11y, Pagination, Navigation, EffectCreative, Autoplay, EffectFade]}

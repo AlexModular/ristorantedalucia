@@ -13,52 +13,52 @@ import { useTranslations } from 'next-intl';
 const isBrowser = () => typeof window !== 'undefined'; //The approach recommended by Next.js
 
 function scrollToTop() {
-    if (!isBrowser()) return;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (!isBrowser()) return;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-export default function Footer ({locations, socials, copyright}: {locations: LOCATIONS_QUERYResult, socials: SOCIALS_QUERYResult, copyright: COPYRIGHT_QUERYResult}) {
+export default function Footer({ locations, socials, copyright }: { locations: LOCATIONS_QUERYResult, socials: SOCIALS_QUERYResult, copyright: COPYRIGHT_QUERYResult }) {
   const t = useTranslations('Footer');
 
   return (
     <footer className="text-center pt-12 pb-6 px-4" aria-labelledby="footer-heading">
-      <h2 id="footer-heading" className="sr-only">Footer Information</h2>
+      <h2 id="footer-heading" className="sr-only">{t('srHeading')}</h2>
       <div className="footer-links grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 py-7 max-w-7xl mx-auto gap-8">
         <div className="footer-logo md:col-span-2 lg:col-span-2 flex justify-center items-center">
-          <Image 
-            priority={false} 
-            src="/images/logo-white.png" 
-            alt="Ristorante Enoteca Da Lucia Logo" 
-            className="logo object-contain" 
-            width={300} 
-            height={150} 
-            style={{ width: 'auto', height: 'auto', maxWidth: '100%', maxHeight: '200px' }} 
+          <Image
+            priority={false}
+            src="/images/logo-white.png"
+            alt="Ristorante Enoteca Da Lucia Logo"
+            className="logo object-contain"
+            width={300}
+            height={150}
+            style={{ width: 'auto', height: 'auto', maxWidth: '100%', maxHeight: '200px' }}
           />
         </div>
         <div className="locations md:col-span-2 lg:col-span-2 px-5">
-          <h5 className="text-center md:text-left">{t('whereWeAre')}</h5>
+          <h5 className="text-center family-playfair md:text-left">{t('whereWeAre')}</h5>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {locations && locations.map((location, index) => (
-            <div className={`md:text-left text-center pb-6 footer-location-${index}`} key={index}>
-              <h6 className="mb-2">{location.city}</h6>
-              <div className="flex items-start justify-center md:justify-start gap-2 mb-1">
-                <MapPin color="#D4AF37" size={18} aria-hidden="true" className="mt-1 flex-shrink-0" />
-                <span>{location.address}, {location.postalCode}</span>
+            {locations && locations.map((location, index) => (
+              <div className={`md:text-left text-center pb-6 footer-location-${index}`} key={index}>
+                <h6 className="mb-2 family-playfair">{location.city}</h6>
+                <div className="flex items-start justify-center md:justify-start gap-2 mb-1">
+                  <MapPin color="#D4AF37" size={18} aria-hidden="true" className="mt-1 flex-shrink-0" />
+                  <span>{location.address}, {location.postalCode}</span>
+                </div>
+                <div className="flex items-start justify-center md:justify-start gap-2 mb-1">
+                  <Phone color="#D4AF37" size={18} aria-hidden="true" className="mt-1 flex-shrink-0" />
+                  <Link href={`tel:${location.phone}`} aria-label={`Chiama ${location.phone}`}>{location.phone}</Link>
+                </div>
+                <div className="flex items-start justify-center md:justify-start gap-2">
+                  <Mail color="#D4AF37" size={18} aria-hidden="true" className="mt-1 flex-shrink-0" />
+                  <Link href={`mailto:${location.email}`} aria-label={`Invia email a ${location.email}`}>{location.email}</Link>
+                </div>
               </div>
-              <div className="flex items-start justify-center md:justify-start gap-2 mb-1">
-                <Phone color="#D4AF37" size={18} aria-hidden="true" className="mt-1 flex-shrink-0" />
-                <Link href={`tel:${location.phone}`} aria-label={`Chiama ${location.phone}`}>{location.phone}</Link>
-              </div>
-              <div className="flex items-start justify-center md:justify-start gap-2">
-                <Mail color="#D4AF37" size={18} aria-hidden="true" className="mt-1 flex-shrink-0" />
-                <Link href={`mailto:${location.email}`} aria-label={`Invia email a ${location.email}`}>{location.email}</Link>
-              </div>
-            </div>
-          ))}
+            ))}
           </div>
         </div>
         <div className="md:text-left text-center px-5 pb-8">
-          <h5>{t('followUs')}</h5>
+          <h5 className="family-playfair">{t('followUs')}</h5>
           <div className="footer-socials flex justify-center md:justify-start gap-4">
             {socials && socials.map((social, index) => (
               <Link href={social.link || '#'} target="__blank" title={social.title} className="social-icon-wrapper" key={index} aria-label={`Seguici su ${social.title}`}>
@@ -72,7 +72,7 @@ export default function Footer ({locations, socials, copyright}: {locations: LOC
       <div className="footer-company-info">
         <button className="scrollTopButton" onClick={scrollToTop} aria-label="Torna in cima alla pagina">
           <span className="button-square">
-              <FaAngleDoubleUp aria-hidden="true" />
+            <FaAngleDoubleUp aria-hidden="true" />
           </span>
         </button>
         <div className="px-2 pt-[25px] opacity-70">

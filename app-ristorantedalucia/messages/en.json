@@ -22,6 +22,7 @@
   "Footer": {
     "hours": "Opening Hours",
     "followUs": "Follow Us",
-    "whereWeAre": "Where we are"
+    "whereWeAre": "Where we are",
+    "srHeading": "Footer Information"
   }
 }

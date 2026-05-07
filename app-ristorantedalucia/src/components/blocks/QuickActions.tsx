@@ -15,7 +15,7 @@ export default function QuickActions({ item }: { item: TransformedQuickActions }
   if (!item.actions || item.actions.length === 0) return null
 
   return (
-    <section className="quick-actions-bar box py-0">
+    <section className="quick-actions-bar box py-0" data-header-theme="light">
       <div className="flex flex-row items-center w-full overflow-hidden bg-white border-y border-black/10">
         {item.actions.map((action, index) => {
           const isLast = index === (item.actions?.length ?? 0) - 1

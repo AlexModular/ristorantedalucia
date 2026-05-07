@@ -85,6 +85,7 @@ export default function TextWithIllustration({item}: {item: TransformedTextWithI
     <section 
       className={`text-with-illustration relative overflow-hidden ${hasBg ? 'min-h-[700px] flex items-center transparent-header-trigger' : 'box md:py-20 py-10'}`}
       style={bgStyle}
+      data-header-theme={hasBg ? 'dark' : 'light'}
     >
       {hasBg && showOverlay && (
         <div className={`absolute inset-0 z-0 ${overlayClasses}`}></div>

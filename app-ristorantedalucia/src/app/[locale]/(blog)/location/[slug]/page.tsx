@@ -69,20 +69,23 @@ export default async function LocationPage({
 
   const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"] as const;
   const dayLabels: Record<string, { it: string; en: string }> = {
-    monday:    { it: "Lunedì",    en: "Monday" },
-    tuesday:   { it: "Martedì",   en: "Tuesday" },
+    monday: { it: "Lunedì", en: "Monday" },
+    tuesday: { it: "Martedì", en: "Tuesday" },
     wednesday: { it: "Mercoledì", en: "Wednesday" },
-    thursday:  { it: "Giovedì",   en: "Thursday" },
-    friday:    { it: "Venerdì",   en: "Friday" },
-    saturday:  { it: "Sabato",    en: "Saturday" },
-    sunday:    { it: "Domenica",  en: "Sunday" },
+    thursday: { it: "Giovedì", en: "Thursday" },
+    friday: { it: "Venerdì", en: "Friday" },
+    saturday: { it: "Sabato", en: "Saturday" },
+    sunday: { it: "Domenica", en: "Sunday" },
   };
 
   return (
     <main className="relative text-foreground min-h-screen bg-background">
       {/* Hero */}
       {location.heroImage && (
-        <div className="relative w-full h-[50vh] md:h-[60vh] overflow-hidden">
+        <div
+          className="page-location-head transparent-header-trigger relative w-full h-[50vh] md:h-[60vh] overflow-hidden"
+          data-header-theme="dark"
+        >
           <Image
             src={urlFor(location.heroImage).width(1920).height(1080).url()}
             alt={(location.heroImage as { alt?: string }).alt ?? location.title ?? ""}

@@ -47,25 +47,81 @@ export default function Navbar({
   const locale = useLocale();
   const pathname = usePathname();
 
-  // ── Scroll state ──────────────────────────────────────────────────────────
+  // ── Header transparency: true while any .transparent-header-trigger is covering the nav ──
+  const [overTrigger, setOverTrigger] = useState(false);
+  const [navTextDark, setNavTextDark] = useState(false); // true = use dark text when transparent
   const [isScrolled, setIsScrolled] = useState(false);
+
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 50);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    const NAV_HEIGHT = 80; // approx nav bar height in px
+
+    const check = () => {
+      setIsScrolled(window.scrollY > 50);
+
+      // Find the topmost section that covers the nav area
+      // We check ALL sections with data-header-theme, not just trigger ones
+      const allSections = document.querySelectorAll<HTMLElement>('[data-header-theme]');
+      let topSection: HTMLElement | null = null;
+      let topSectionBottom = 0;
+
+      allSections.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        // Section is covering the nav if its bottom is below nav height
+        // and its top is above the middle of the nav
+        if (rect.bottom > NAV_HEIGHT && rect.top < NAV_HEIGHT) {
+          topSection = el;
+          topSectionBottom = rect.bottom;
+        }
+      });
+
+      // Also check transparent-header-trigger elements for overTrigger
+      const triggers = document.querySelectorAll<HTMLElement>('.transparent-header-trigger');
+      const anyTriggerVisible = Array.from(triggers).some(
+        (el) => el.getBoundingClientRect().bottom > NAV_HEIGHT
+      );
+      setOverTrigger(anyTriggerVisible);
+
+      // Determine text color from the covering section's theme
+      if (topSection) {
+        const theme = (topSection as HTMLElement).dataset.headerTheme;
+        setNavTextDark(theme === 'light');
+      } else if (!anyTriggerVisible) {
+        setNavTextDark(false); // header is solid, doesn't matter
+      }
+    };
+
+    check();
+    const raf = requestAnimationFrame(check);
+    window.addEventListener('scroll', check, { passive: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('scroll', check);
+    };
   }, [pathname]);
 
   // ── Desktop megamenu state ────────────────────────────────────────────────
   const [activeDesktopItem, setActiveDesktopItem] = useState<NavItem | null>(null);
   const megaOpen = activeDesktopItem !== null;
-  const headerIsTransparent = !isScrolled && !megaOpen;
+
+  // Transparent while still scrolling OVER a trigger section (slideshow/page-intro)
+  const headerIsTransparent = overTrigger && !megaOpen;
+
+  // Is the current theme light? Used to adapt transparent nav tint + megamenu bg
+  const isLightTheme = theme === 'light' || theme === 'cream' || theme === 'white';
+
+  // Text color when transparent: white over dark sections, foreground over light sections
+  const navTextColor = headerIsTransparent && navTextDark ? 'text-foreground' : 'text-white';
+  const navTextHover = 'hover:text-gold';
+
   const useWhiteLogo =
-    headerIsTransparent ||
+    (headerIsTransparent && !navTextDark) ||
     theme === 'dark' ||
     (theme === 'auto' &&
       typeof window !== 'undefined' &&
       window.matchMedia('(prefers-color-scheme: dark)').matches);
+  (theme === 'auto' &&
+    typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-color-scheme: dark)').matches);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const openMega = useCallback((item: NavItem) => {
@@ -86,6 +142,18 @@ export default function Navbar({
   // ── Mobile drawer state ───────────────────────────────────────────────────
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mobileSubItem, setMobileSubItem] = useState<NavItem | null>(null);
+
+  // ── Scroll Lock when mobile menu is open ──
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((v) => {
@@ -118,15 +186,15 @@ export default function Navbar({
       <Link
         href={pathname}
         locale="it"
-        className={`transition-colors ${locale === 'it' ? 'text-gold' : inverse ? 'text-foreground' : (headerIsTransparent ? 'text-white' : 'text-foreground')} hover:text-gold`}
+        className={`transition-colors ${locale === 'it' ? 'text-gold' : inverse ? 'text-foreground' : (headerIsTransparent ? navTextColor : 'text-foreground')} hover:text-gold`}
       >
         IT
       </Link>
-      <span className={inverse ? 'text-foreground/30' : (headerIsTransparent ? 'text-white/30' : 'text-foreground/30')}>|</span>
+      <span className={inverse ? 'text-foreground/30' : (headerIsTransparent ? (navTextDark ? 'text-foreground/30' : 'text-white/30') : 'text-foreground/30')}>|</span>
       <Link
         href={pathname}
         locale="en"
-        className={`transition-colors ${locale === 'en' ? 'text-gold' : inverse ? 'text-foreground' : (headerIsTransparent ? 'text-white' : 'text-foreground')} hover:text-gold`}
+        className={`transition-colors ${locale === 'en' ? 'text-gold' : inverse ? 'text-foreground' : (headerIsTransparent ? navTextColor : 'text-foreground')} hover:text-gold`}
       >
         EN
       </Link>
@@ -143,7 +211,7 @@ export default function Navbar({
     const cls = `flex items-center gap-1 px-1 py-2 text-[15px] uppercase tracking-widest transition-colors duration-200 family-oswald whitespace-nowrap ${isActive
       ? 'text-gold'
       : headerIsTransparent
-        ? 'text-white hover:text-gold'
+        ? `${navTextColor} ${navTextHover}`
         : 'text-foreground hover:text-gold'
       }`;
 
@@ -193,8 +261,8 @@ export default function Navbar({
       >
         <nav
           className={`w-full px-4 py-4 md:px-8 sticky top-0 z-[900] transition-all duration-300 ${headerIsTransparent
-            ? ''
-            : 'bg-background border-b border-gold/40 shadow-xl'
+            ? ('')
+            : 'bg-background shadow-xl backdrop-blur-md'
             }`}
         >
           <div className="flex items-center justify-between mx-auto relative w-full">
@@ -217,7 +285,7 @@ export default function Navbar({
               {locations?.[0]?.phone && (
                 <Link
                   href={`tel:${locations[0].phone}`}
-                  className={`flex items-center gap-2 family-oswald text-base transition-colors duration-200 ${headerIsTransparent ? 'text-white hover:text-gold' : 'text-foreground hover:text-gold'}`}
+                  className={`flex items-center gap-2 family-oswald text-base transition-colors duration-200 ${headerIsTransparent ? `${navTextColor} hover:text-gold` : 'text-foreground hover:text-gold'}`}
                   aria-label={`${t('call')} ${locations[0].phone}`}
                 >
                   <Phone size={18} />
@@ -262,7 +330,9 @@ export default function Navbar({
               <Link
                 href="/contattaci"
                 className={`cta-btn-header px-5 py-2 border-2 uppercase family-oswald tracking-widest text-sm transition-all duration-300 shrink-0 ${headerIsTransparent
-                  ? 'border-white text-white hover:bg-white hover:text-gold'
+                  ? (navTextDark
+                    ? 'border-foreground text-foreground hover:bg-foreground hover:text-background'
+                    : 'border-white text-white hover:bg-white hover:text-gold')
                   : 'border-gold bg-gold text-white hover:bg-background hover:text-gold'
                   }`}
               >
@@ -277,7 +347,7 @@ export default function Navbar({
               {locations?.[0]?.phone && (
                 <Link
                   href={`tel:${locations[0].phone}`}
-                  className={`transition-colors duration-200 ${headerIsTransparent ? 'text-white hover:text-gold' : 'text-foreground hover:text-gold'}`}
+                  className={`transition-colors duration-200 ${headerIsTransparent ? `${navTextColor} hover:text-gold` : 'text-foreground hover:text-gold'}`}
                   aria-label={`${t('call')} ${locations[0].phone}`}
                 >
                   <Phone size={22} />
@@ -299,15 +369,16 @@ export default function Navbar({
         >
           {activeDesktopItem && (
             // Full-width panel: text column left (max-width constrained), image bleeds to right edge
-            <div className="bg-background/97 backdrop-blur-md border-b-2 border-gold/50 shadow-2xl flex overflow-hidden">
-              {/* Links column — centered with auto left margin */}
-              <div className="flex-1 py-10 pl-16 pr-8 max-w-2xl ml-auto">
+            <div className={`border-b-2 border-gold/50 shadow-2xl flex overflow-hidden backdrop-blur-md max-h-[85vh] overflow-y-auto ${isLightTheme ? 'bg-white' : 'bg-background'
+              }`}>
+              {/* Links column — aligned to left with max-width constrained */}
+              <div className="flex-1 py-10 pl-8 md:pl-16 pr-8 max-w-3xl">
                 {activeDesktopItem.megamenuLabel && (
-                  <p className="text-gold text-xs uppercase tracking-[0.3em] mb-6 pb-4 border-b border-gold/20">
+                  <p className="text-gold text-xs family-playfair uppercase text-[20px] mb-6 pb-4 border-b border-gold/20">
                     {resolveText(activeDesktopItem.megamenuLabel, locale)}
                   </p>
                 )}
-                <ul className="grid grid-cols-1 gap-1">
+                <ul className="grid grid-cols-1 gap-1 !list-none p-0">
                   {(activeDesktopItem.children ?? []).map((sub: SubItem, i: number) => {
                     const subHref = resolveHref(sub.link?.slug, sub.externalUrl);
                     const subLabel = resolveText(sub.text, locale);
@@ -317,15 +388,14 @@ export default function Navbar({
                         <Link
                           href={subHref}
                           onClick={() => setActiveDesktopItem(null)}
-                          className="group flex items-start gap-4 py-4 px-3 rounded transition-colors hover:bg-gold/5"
+                          className="group flex items-start gap-4 py-4 px-0 rounded transition-colors hover:bg-gold/5"
                         >
-                          <span className="mt-1 w-1.5 h-1.5 rounded-full bg-gold shrink-0 group-hover:scale-125 transition-transform" />
                           <span className="flex flex-col">
                             <span className="family-oswald uppercase text-base tracking-widest text-foreground group-hover:text-gold transition-colors">
                               {subLabel}
                             </span>
                             {subDesc && (
-                              <span className="text-sm text-foreground/50 mt-0.5 normal-case font-normal tracking-normal" style={{ fontFamily: 'var(--font-montserrat)' }}>
+                              <span className="text-sm family-montserrat text-foreground/50 mt-0.5 normal-case font-normal tracking-normal">
                                 {subDesc}
                               </span>
                             )}
@@ -339,13 +409,13 @@ export default function Navbar({
 
               {/* Image — bleeds to right viewport edge, no padding, full height */}
               {activeDesktopItem.megamenuImage ? (
-                <div className="relative w-80 xl:w-[420px] shrink-0 self-stretch min-h-[200px]">
+                <div className="relative w-80 xl:w-[840px] shrink-0 self-stretch min-h-[500px] ml-auto">
                   <Image
-                    src={urlFor(activeDesktopItem.megamenuImage).width(840).height(400).url()}
+                    src={urlFor(activeDesktopItem.megamenuImage).width(840).height(800).url()}
                     alt={(activeDesktopItem.megamenuImage as { alt?: string }).alt ?? resolveText(activeDesktopItem.text, locale)}
                     fill
                     className="object-cover object-center"
-                    sizes="(min-width: 1280px) 420px, 320px"
+                    sizes="(min-width: 1280px) 840px, 320px"
                   />
                 </div>
               ) : (
@@ -392,7 +462,7 @@ export default function Navbar({
 
           {/* Nav list */}
           <nav className="flex-1 overflow-y-auto px-6 py-6">
-            <ul className="flex flex-col gap-1">
+            <ul className="flex flex-col gap-2 !list-none p-0">
               {allItems.map((nav, i) => {
                 const hasSub = (nav.children?.length ?? 0) > 0;
                 const href = resolveHref(nav.link?.slug, nav.externalUrl);
@@ -514,14 +584,15 @@ export default function Navbar({
 
               {/* Bottom image */}
               {mobileSubItem.megamenuImage && (
-                <div className="relative h-44 shrink-0">
-                  <Image
-                    src={urlFor(mobileSubItem.megamenuImage).width(480).height(176).url()}
-                    alt={(mobileSubItem.megamenuImage as { alt?: string }).alt ?? resolveText(mobileSubItem.text, locale)}
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent" />
+                <div className="px-6 pb-6 mt-auto">
+                  <div className="relative h-64 w-full shrink-0">
+                    <Image
+                      src={urlFor(mobileSubItem.megamenuImage).width(600).height(400).url()}
+                      alt={(mobileSubItem.megamenuImage as { alt?: string }).alt ?? resolveText(mobileSubItem.text, locale)}
+                      fill
+                      className="object-cover rounded-lg shadow-md"
+                    />
+                  </div>
                 </div>
               )}
             </>
