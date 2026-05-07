@@ -26,6 +26,7 @@ import { imageSlideshowType } from './imageSlideshow';
 import { settingsType } from './settingsType';
 import { quickActionsType } from './quickActionsType';
 import { localizedString, localizedBlockContent } from './localizedTypes';
+import { postType } from './postType';
 
 // schemas
 export const schema: { types: SchemaTypeDefinition[] } = {
@@ -57,7 +58,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     settingsType,
     quickActionsType,
     localizedString,
-    localizedBlockContent
+    localizedBlockContent,
+    postType,
   ],
 }
 

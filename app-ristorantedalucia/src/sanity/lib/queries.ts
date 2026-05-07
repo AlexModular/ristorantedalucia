@@ -1,22 +1,45 @@
 import {defineQuery} from 'next-sanity'
 
 export const SETTINGS_QUERY = defineQuery(`*[_type == "settings"] | order(_updatedAt desc)[0]{
-  theme
+  theme,
+  ogImage
 }`)
 
 export const HEADERMENU_QUERY = defineQuery(`*[navId.current match "main-menu*"]{
   'navId': navId.current,
-  'items':  items[] {
+  'items': items[] {
     'link': *[
-      _type == "page" &&
+      (_type == "page" || _type == "locations") &&
       _id == ^.navigationItemUrl.internalLink._ref
     ][0]{
-      'slug': slug.current
+      _type,
+      'slug': select(
+        _type == "locations" => "location/" + slug.current,
+        slug.current
+      )
     },
     'externalUrl': navigationItemUrl.externalUrl,
-    "text": coalesce(text[$locale], text.it, text)
+    "text": coalesce(select(text[$locale] != "" => text[$locale]), select(text.it != "" => text.it), select(text.en != "" => text.en), text),
+    "megamenuLabel": coalesce(select(megamenuLabel[$locale] != "" => megamenuLabel[$locale]), select(megamenuLabel.it != "" => megamenuLabel.it), select(megamenuLabel.en != "" => megamenuLabel.en)),
+    megamenuImage,
+    'children': children[] {
+      "text": coalesce(select(text[$locale] != "" => text[$locale]), select(text.it != "" => text.it), select(text.en != "" => text.en), text),
+      "description": coalesce(select(description[$locale] != "" => description[$locale]), select(description.it != "" => description.it), select(description.en != "" => description.en)),
+      'link': *[
+        (_type == "page" || _type == "locations") &&
+        _id == ^.url.internalLink._ref
+      ][0]{
+        _type,
+        'slug': select(
+          _type == "locations" => "location/" + slug.current,
+          slug.current
+        )
+      },
+      'externalUrl': url.externalUrl,
+    }
   }
 }`)
+
 
 export const SOCIALS_QUERY = defineQuery(`*[_type == "socials"][0].socials`)
 
@@ -289,4 +312,99 @@ export const PAGE_QUERY = defineQuery(`*[slug.current == $slug][0]{
       }
     }
   },
+}`)
+
+// ─── Location page ────────────────────────────────────────────────────────────
+
+export const LOCATION_QUERY = defineQuery(`*[_type == "locations" && slug.current == $slug][0]{
+  "title": coalesce(title[$locale], title.it, title),
+  "metaTitle": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),
+  "metaDescription": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),
+  slug,
+  heroImage,
+  "description": coalesce(description[$locale], description.it, description),
+  city,
+  address,
+  postalCode,
+  phone,
+  email,
+  location,
+  monday, tuesday, wednesday, thursday, friday, saturday, sunday,
+  pageBuilder[]{
+    _type == "banner" => {
+      _type,
+      "heading": coalesce(heading[$locale], heading.it, heading),
+      "text": coalesce(text[$locale], text.it, text),
+      headingCSSClasses,
+      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle)
+    },
+    _type == "gallery" => {
+      _type,
+      "heading": coalesce(heading[$locale], heading.it, heading),
+      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),
+      images
+    },
+    _type == "textWithIllustration" => {
+      _type,
+      "heading": coalesce(heading[$locale], heading.it, heading),
+      "text": coalesce(text[$locale], text.it, text),
+      image,
+      backgroundImage,
+      backgroundFixed,
+      imagePosition,
+      gridSize
+    },
+    _type == "separator" => { _type, separatorColor },
+    _type == "video" => { _type, videoLabel, cssClasses, file },
+    _type == "promotion" => {
+      _type,
+      "title": coalesce(title[$locale], title.it, title),
+      link, direction, speed
+    },
+    _type == "quickActions" => {
+      _type,
+      actions[] {
+        "label": coalesce(label[$locale], label.it, label),
+        icon, isPrimary,
+        "link": {
+          "slug": *[_type == "page" && _id == ^.link.internalLink._ref][0].slug.current,
+          "externalUrl": link.externalUrl,
+          "phone": link.phone
+        }
+      }
+    }
+  }
+}`)
+
+export const LOCATIONS_PATHS_QUERY = defineQuery(
+  `*[_type == "locations" && defined(slug.current)]{ "slug": slug.current }`
+)
+
+// ─── News & Events ────────────────────────────────────────────────────────────
+
+export const POSTS_QUERY = defineQuery(`
+  *[_type == "post"] | order(publishedAt desc) [$offset...$limit] {
+    "title": coalesce(title[$locale], title.it, title),
+    "excerpt": coalesce(excerpt[$locale], excerpt.it, excerpt),
+    slug,
+    publishedAt,
+    category,
+    coverImage
+  }
+`)
+
+export const POSTS_COUNT_QUERY = defineQuery(
+  `count(*[_type == "post"])`
+)
+
+export const POST_QUERY = defineQuery(`*[_type == "post" && slug.current == $slug][0]{
+  "title": coalesce(title[$locale], title.it, title),
+  "excerpt": coalesce(excerpt[$locale], excerpt.it, excerpt),
+  "metaTitle": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),
+  "metaDescription": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),
+  "body": coalesce(body[$locale], body.it, body),
+  slug,
+  publishedAt,
+  category,
+  coverImage
 }`)

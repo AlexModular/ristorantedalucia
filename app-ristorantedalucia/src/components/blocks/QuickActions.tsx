@@ -2,11 +2,11 @@
 
 import React from 'react'
 import * as LucideIcons from 'lucide-react'
-import { TransformedQuickActions } from '../../../sanity.types.custom'
+import { TransformedQuickActions, QuickActionIconName } from '../../../sanity.types.custom'
 import { Link } from '@/i18n/routing'
 
-const DynamicLucideIcon = ({ name, className }: { name: string, className?: string }) => {
-  const IconComponent = LucideIcons[name as keyof typeof LucideIcons] as React.ElementType
+const DynamicLucideIcon = ({ name, className }: { name: QuickActionIconName; className?: string }) => {
+  const IconComponent = LucideIcons[name as keyof typeof LucideIcons] as React.ElementType | undefined
   if (!IconComponent) return <LucideIcons.HelpCircle className={className} strokeWidth={1.5} />
   return <IconComponent className={className} strokeWidth={1.5} />
 }
@@ -28,7 +28,7 @@ export default function QuickActions({ item }: { item: TransformedQuickActions }
           const content = (
             <>
               <div className="mb-2 md:mb-0 md:mr-4 transition-transform duration-300 group-hover:scale-110">
-                <DynamicLucideIcon name={action.icon || 'HelpCircle'} className="w-5 h-5 md:w-6 md:h-6 text-black" />
+                <DynamicLucideIcon name={action.icon ?? 'Utensils'} className="w-5 h-5 md:w-6 md:h-6 text-black" />
               </div>
               <span className="family-montserrat text-sm md:text-lg uppercase tracking-widest text-black">
                 {action.label}

@@ -8,11 +8,11 @@ export const linkType = defineType({
   icon: FiLink,
   fields: [
     defineField({
-    title: 'Internal Link',
-    name: 'internalLink',
-    description: 'Select pages for navigation',
-    type: 'reference',
-    to: [{ type: 'page' }],
+      title: 'Internal Link',
+      name: 'internalLink',
+      description: 'Select pages or locations for navigation',
+      type: 'reference',
+      to: [{ type: 'page' }, { type: 'locations' }],
     }),
     defineField({
       name: 'externalUrl',

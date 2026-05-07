@@ -80,11 +80,24 @@ const makeBlock = (item: PageBlock, index: number): JSX.Element | null => {
   }
 };
 
-export default function PageMaker({ page }: { page: HOMEPAGE_QUERYResult | PAGE_QUERYResult }) {
-  const pageBuilder = (page?.pageBuilder as PageBlock[]) || [];
+/** Accept full page results or any object that at minimum has pageBuilder */
+type PageMakerInput =
+  | HOMEPAGE_QUERYResult
+  | PAGE_QUERYResult
+  | {
+      pageBuilder?: PageBlock[] | null;
+      slug?: { current?: string | null } | null;
+      fullWidth?: boolean | null;
+    };
+
+export default function PageMaker({ page }: { page: PageMakerInput }) {
+  if (!page) return null;
+  const pageBuilder = (page.pageBuilder as PageBlock[]) || [];
+  const slug = 'slug' in page && page.slug ? page.slug : undefined;
+  const fullWidth = 'fullWidth' in page && page.fullWidth ? true : false;
   return (
-    <div className={page?.slug?.current?.includes('home') ? "homepage" : ("page-content" + (page?.fullWidth ? " full-width" : ""))}>
-      {pageBuilder?.map((item, index) =>  {
+    <div className={slug?.current?.includes('home') ? "homepage" : ("page-content" + (fullWidth ? " full-width" : ""))}>
+      {pageBuilder?.map((item, index) => {
         return makeBlock(item, index);
       })}
     </div>

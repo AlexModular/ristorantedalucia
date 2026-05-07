@@ -11,25 +11,37 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     query: HOMEPAGE_QUERY,
     params: { locale },
   });
+
+  const siteName = 'Ristorante Da Lucia';
+  const defaultTitle = locale === 'it'
+    ? 'Ristorante Da Lucia | Cucina Tradizionale e Pesce a Bologna'
+    : 'Ristorante Da Lucia | Traditional & Seafood Cuisine in Bologna';
+  const defaultDescription = locale === 'it'
+    ? 'Cucina tradizionale e di pesce nel cuore di Bologna. Piatti genuini, pesce fresco e un\'atmosfera autentica a pochi passi dal centro.'
+    : 'Traditional Italian and seafood cuisine in the heart of Bologna. Honest, flavourful dishes in a warm atmosphere, just a short walk from the city centre.';
+
+  const title = page?.metaTitle || defaultTitle;
+  const description = page?.metaDescription || page?.subtitle || defaultDescription;
+
   return {
     title: {
-      default: page?.metaTitle,
-      template: `%s - ${page?.metaTitle || page?.title}`,
+      default: title,
+      template: `%s | ${siteName}`,
     },
-    description: page?.metaDescription || page?.subtitle,
+    description,
     metadataBase: new URL('https://ristorantedalucia.it'),
     openGraph: {
-      title: page?.title,
-      description: page?.subtitle,
+      title: page?.title || siteName,
+      description: page?.subtitle || defaultDescription,
       url: `https://ristorantedalucia.it/${locale}`,
-      siteName: 'Ristorante Enoteca Da Lucia',
+      siteName,
       images: [
         {
-          url: 'https://ristorantedalucia.it/images/logo.png',
-          width: 800,
-          height: 600,
-          alt: page?.title,
-          type: 'image/png',
+          url: 'https://ristorantedalucia.it/images/og-home.jpg',
+          width: 1200,
+          height: 630,
+          alt: siteName,
+          type: 'image/jpeg',
         },
       ],
       locale: locale === 'it' ? 'it-IT' : 'en-US',

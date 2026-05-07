@@ -1,5 +1,198 @@
 [
   {
+    "name": "post",
+    "type": "document",
+    "attributes": {
+      "_id": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_type": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string",
+          "value": "post"
+        }
+      },
+      "_createdAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_updatedAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_rev": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "title": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "localizedString"
+        },
+        "optional": true
+      },
+      "slug": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "slug"
+        },
+        "optional": true
+      },
+      "publishedAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "category": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "news"
+            },
+            {
+              "type": "string",
+              "value": "eventi"
+            },
+            {
+              "type": "string",
+              "value": "premi"
+            },
+            {
+              "type": "string",
+              "value": "stagioni"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "coverImage": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "asset": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "object",
+                "attributes": {
+                  "_ref": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "_type": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string",
+                      "value": "reference"
+                    }
+                  },
+                  "_weak": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "boolean"
+                    },
+                    "optional": true
+                  }
+                },
+                "dereferencesTo": "sanity.imageAsset"
+              },
+              "optional": true
+            },
+            "media": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "unknown"
+              },
+              "optional": true
+            },
+            "hotspot": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "sanity.imageHotspot"
+              },
+              "optional": true
+            },
+            "crop": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "sanity.imageCrop"
+              },
+              "optional": true
+            },
+            "alt": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              },
+              "optional": true
+            },
+            "_type": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string",
+                "value": "image"
+              }
+            }
+          }
+        },
+        "optional": true
+      },
+      "excerpt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "localizedString"
+        },
+        "optional": true
+      },
+      "body": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "localizedBlockContent"
+        },
+        "optional": true
+      },
+      "metaTitle": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "localizedString"
+        },
+        "optional": true
+      },
+      "metaDescription": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "localizedString"
+        },
+        "optional": true
+      }
+    }
+  },
+  {
     "name": "quickActions",
     "type": "type",
     "value": {
@@ -169,6 +362,75 @@
           ]
         },
         "optional": true
+      },
+      "ogImage": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "asset": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "object",
+                "attributes": {
+                  "_ref": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "_type": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string",
+                      "value": "reference"
+                    }
+                  },
+                  "_weak": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "boolean"
+                    },
+                    "optional": true
+                  }
+                },
+                "dereferencesTo": "sanity.imageAsset"
+              },
+              "optional": true
+            },
+            "media": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "unknown"
+              },
+              "optional": true
+            },
+            "hotspot": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "sanity.imageHotspot"
+              },
+              "optional": true
+            },
+            "crop": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "sanity.imageCrop"
+              },
+              "optional": true
+            },
+            "_type": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string",
+                "value": "image"
+              }
+            }
+          }
+        },
+        "optional": true
       }
     }
   },
@@ -308,1789 +570,6 @@
           "value": {
             "type": "inline",
             "name": "icon"
-          },
-          "optional": true
-        }
-      }
-    }
-  },
-  {
-    "name": "locations",
-    "type": "document",
-    "attributes": {
-      "_id": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_type": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string",
-          "value": "locations"
-        }
-      },
-      "_createdAt": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_updatedAt": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_rev": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "location": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "geopoint"
-        },
-        "optional": true
-      },
-      "title": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "localizedString"
-        },
-        "optional": true
-      },
-      "city": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "address": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "postalCode": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "email": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "phone": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "menu": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "object",
-          "attributes": {
-            "_ref": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "string"
-              }
-            },
-            "_type": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "string",
-                "value": "reference"
-              }
-            },
-            "_weak": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "boolean"
-              },
-              "optional": true
-            }
-          },
-          "dereferencesTo": "dishesMenu"
-        },
-        "optional": true
-      },
-      "monday": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "duration"
-        },
-        "optional": true
-      },
-      "tuesday": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "duration"
-        },
-        "optional": true
-      },
-      "wednesday": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "duration"
-        },
-        "optional": true
-      },
-      "thursday": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "duration"
-        },
-        "optional": true
-      },
-      "friday": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "duration"
-        },
-        "optional": true
-      },
-      "saturday": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "duration"
-        },
-        "optional": true
-      },
-      "sunday": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "duration"
-        },
-        "optional": true
-      }
-    }
-  },
-  {
-    "name": "duration",
-    "type": "type",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "duration"
-          }
-        },
-        "morningStart": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "union",
-            "of": [
-              {
-                "type": "string",
-                "value": "00:00"
-              },
-              {
-                "type": "string",
-                "value": "00:15"
-              },
-              {
-                "type": "string",
-                "value": "00:30"
-              },
-              {
-                "type": "string",
-                "value": "00:45"
-              },
-              {
-                "type": "string",
-                "value": "01:00"
-              },
-              {
-                "type": "string",
-                "value": "01:15"
-              },
-              {
-                "type": "string",
-                "value": "01:30"
-              },
-              {
-                "type": "string",
-                "value": "01:45"
-              },
-              {
-                "type": "string",
-                "value": "02:00"
-              },
-              {
-                "type": "string",
-                "value": "02:15"
-              },
-              {
-                "type": "string",
-                "value": "02:30"
-              },
-              {
-                "type": "string",
-                "value": "02:45"
-              },
-              {
-                "type": "string",
-                "value": "03:00"
-              },
-              {
-                "type": "string",
-                "value": "03:15"
-              },
-              {
-                "type": "string",
-                "value": "03:30"
-              },
-              {
-                "type": "string",
-                "value": "03:45"
-              },
-              {
-                "type": "string",
-                "value": "04:00"
-              },
-              {
-                "type": "string",
-                "value": "04:15"
-              },
-              {
-                "type": "string",
-                "value": "04:30"
-              },
-              {
-                "type": "string",
-                "value": "04:45"
-              },
-              {
-                "type": "string",
-                "value": "05:00"
-              },
-              {
-                "type": "string",
-                "value": "05:15"
-              },
-              {
-                "type": "string",
-                "value": "05:30"
-              },
-              {
-                "type": "string",
-                "value": "05:45"
-              },
-              {
-                "type": "string",
-                "value": "06:00"
-              },
-              {
-                "type": "string",
-                "value": "06:15"
-              },
-              {
-                "type": "string",
-                "value": "06:30"
-              },
-              {
-                "type": "string",
-                "value": "06:45"
-              },
-              {
-                "type": "string",
-                "value": "07:00"
-              },
-              {
-                "type": "string",
-                "value": "07:15"
-              },
-              {
-                "type": "string",
-                "value": "07:30"
-              },
-              {
-                "type": "string",
-                "value": "07:45"
-              },
-              {
-                "type": "string",
-                "value": "08:00"
-              },
-              {
-                "type": "string",
-                "value": "08:15"
-              },
-              {
-                "type": "string",
-                "value": "08:30"
-              },
-              {
-                "type": "string",
-                "value": "08:45"
-              },
-              {
-                "type": "string",
-                "value": "09:00"
-              },
-              {
-                "type": "string",
-                "value": "09:15"
-              },
-              {
-                "type": "string",
-                "value": "09:30"
-              },
-              {
-                "type": "string",
-                "value": "09:45"
-              },
-              {
-                "type": "string",
-                "value": "10:00"
-              },
-              {
-                "type": "string",
-                "value": "10:15"
-              },
-              {
-                "type": "string",
-                "value": "10:30"
-              },
-              {
-                "type": "string",
-                "value": "10:45"
-              },
-              {
-                "type": "string",
-                "value": "11:00"
-              },
-              {
-                "type": "string",
-                "value": "11:15"
-              },
-              {
-                "type": "string",
-                "value": "11:30"
-              },
-              {
-                "type": "string",
-                "value": "11:45"
-              },
-              {
-                "type": "string",
-                "value": "12:00"
-              },
-              {
-                "type": "string",
-                "value": "12:15"
-              },
-              {
-                "type": "string",
-                "value": "12:30"
-              },
-              {
-                "type": "string",
-                "value": "12:45"
-              },
-              {
-                "type": "string",
-                "value": "13:00"
-              },
-              {
-                "type": "string",
-                "value": "13:15"
-              },
-              {
-                "type": "string",
-                "value": "13:30"
-              },
-              {
-                "type": "string",
-                "value": "13:45"
-              },
-              {
-                "type": "string",
-                "value": "14:00"
-              },
-              {
-                "type": "string",
-                "value": "14:15"
-              },
-              {
-                "type": "string",
-                "value": "14:30"
-              },
-              {
-                "type": "string",
-                "value": "14:45"
-              },
-              {
-                "type": "string",
-                "value": "15:00"
-              },
-              {
-                "type": "string",
-                "value": "15:15"
-              },
-              {
-                "type": "string",
-                "value": "15:30"
-              },
-              {
-                "type": "string",
-                "value": "15:45"
-              },
-              {
-                "type": "string",
-                "value": "16:00"
-              },
-              {
-                "type": "string",
-                "value": "16:15"
-              },
-              {
-                "type": "string",
-                "value": "16:30"
-              },
-              {
-                "type": "string",
-                "value": "16:45"
-              },
-              {
-                "type": "string",
-                "value": "17:00"
-              },
-              {
-                "type": "string",
-                "value": "17:15"
-              },
-              {
-                "type": "string",
-                "value": "17:30"
-              },
-              {
-                "type": "string",
-                "value": "17:45"
-              },
-              {
-                "type": "string",
-                "value": "18:00"
-              },
-              {
-                "type": "string",
-                "value": "18:15"
-              },
-              {
-                "type": "string",
-                "value": "18:30"
-              },
-              {
-                "type": "string",
-                "value": "18:45"
-              },
-              {
-                "type": "string",
-                "value": "19:00"
-              },
-              {
-                "type": "string",
-                "value": "19:15"
-              },
-              {
-                "type": "string",
-                "value": "19:30"
-              },
-              {
-                "type": "string",
-                "value": "19:45"
-              },
-              {
-                "type": "string",
-                "value": "20:00"
-              },
-              {
-                "type": "string",
-                "value": "20:15"
-              },
-              {
-                "type": "string",
-                "value": "20:30"
-              },
-              {
-                "type": "string",
-                "value": "20:45"
-              },
-              {
-                "type": "string",
-                "value": "21:00"
-              },
-              {
-                "type": "string",
-                "value": "21:15"
-              },
-              {
-                "type": "string",
-                "value": "21:30"
-              },
-              {
-                "type": "string",
-                "value": "21:45"
-              },
-              {
-                "type": "string",
-                "value": "22:00"
-              },
-              {
-                "type": "string",
-                "value": "22:15"
-              },
-              {
-                "type": "string",
-                "value": "22:30"
-              },
-              {
-                "type": "string",
-                "value": "22:45"
-              },
-              {
-                "type": "string",
-                "value": "23:00"
-              },
-              {
-                "type": "string",
-                "value": "23:15"
-              },
-              {
-                "type": "string",
-                "value": "23:30"
-              },
-              {
-                "type": "string",
-                "value": "23:45"
-              }
-            ]
-          },
-          "optional": true
-        },
-        "morningEnd": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "union",
-            "of": [
-              {
-                "type": "string",
-                "value": "00:00"
-              },
-              {
-                "type": "string",
-                "value": "00:15"
-              },
-              {
-                "type": "string",
-                "value": "00:30"
-              },
-              {
-                "type": "string",
-                "value": "00:45"
-              },
-              {
-                "type": "string",
-                "value": "01:00"
-              },
-              {
-                "type": "string",
-                "value": "01:15"
-              },
-              {
-                "type": "string",
-                "value": "01:30"
-              },
-              {
-                "type": "string",
-                "value": "01:45"
-              },
-              {
-                "type": "string",
-                "value": "02:00"
-              },
-              {
-                "type": "string",
-                "value": "02:15"
-              },
-              {
-                "type": "string",
-                "value": "02:30"
-              },
-              {
-                "type": "string",
-                "value": "02:45"
-              },
-              {
-                "type": "string",
-                "value": "03:00"
-              },
-              {
-                "type": "string",
-                "value": "03:15"
-              },
-              {
-                "type": "string",
-                "value": "03:30"
-              },
-              {
-                "type": "string",
-                "value": "03:45"
-              },
-              {
-                "type": "string",
-                "value": "04:00"
-              },
-              {
-                "type": "string",
-                "value": "04:15"
-              },
-              {
-                "type": "string",
-                "value": "04:30"
-              },
-              {
-                "type": "string",
-                "value": "04:45"
-              },
-              {
-                "type": "string",
-                "value": "05:00"
-              },
-              {
-                "type": "string",
-                "value": "05:15"
-              },
-              {
-                "type": "string",
-                "value": "05:30"
-              },
-              {
-                "type": "string",
-                "value": "05:45"
-              },
-              {
-                "type": "string",
-                "value": "06:00"
-              },
-              {
-                "type": "string",
-                "value": "06:15"
-              },
-              {
-                "type": "string",
-                "value": "06:30"
-              },
-              {
-                "type": "string",
-                "value": "06:45"
-              },
-              {
-                "type": "string",
-                "value": "07:00"
-              },
-              {
-                "type": "string",
-                "value": "07:15"
-              },
-              {
-                "type": "string",
-                "value": "07:30"
-              },
-              {
-                "type": "string",
-                "value": "07:45"
-              },
-              {
-                "type": "string",
-                "value": "08:00"
-              },
-              {
-                "type": "string",
-                "value": "08:15"
-              },
-              {
-                "type": "string",
-                "value": "08:30"
-              },
-              {
-                "type": "string",
-                "value": "08:45"
-              },
-              {
-                "type": "string",
-                "value": "09:00"
-              },
-              {
-                "type": "string",
-                "value": "09:15"
-              },
-              {
-                "type": "string",
-                "value": "09:30"
-              },
-              {
-                "type": "string",
-                "value": "09:45"
-              },
-              {
-                "type": "string",
-                "value": "10:00"
-              },
-              {
-                "type": "string",
-                "value": "10:15"
-              },
-              {
-                "type": "string",
-                "value": "10:30"
-              },
-              {
-                "type": "string",
-                "value": "10:45"
-              },
-              {
-                "type": "string",
-                "value": "11:00"
-              },
-              {
-                "type": "string",
-                "value": "11:15"
-              },
-              {
-                "type": "string",
-                "value": "11:30"
-              },
-              {
-                "type": "string",
-                "value": "11:45"
-              },
-              {
-                "type": "string",
-                "value": "12:00"
-              },
-              {
-                "type": "string",
-                "value": "12:15"
-              },
-              {
-                "type": "string",
-                "value": "12:30"
-              },
-              {
-                "type": "string",
-                "value": "12:45"
-              },
-              {
-                "type": "string",
-                "value": "13:00"
-              },
-              {
-                "type": "string",
-                "value": "13:15"
-              },
-              {
-                "type": "string",
-                "value": "13:30"
-              },
-              {
-                "type": "string",
-                "value": "13:45"
-              },
-              {
-                "type": "string",
-                "value": "14:00"
-              },
-              {
-                "type": "string",
-                "value": "14:15"
-              },
-              {
-                "type": "string",
-                "value": "14:30"
-              },
-              {
-                "type": "string",
-                "value": "14:45"
-              },
-              {
-                "type": "string",
-                "value": "15:00"
-              },
-              {
-                "type": "string",
-                "value": "15:15"
-              },
-              {
-                "type": "string",
-                "value": "15:30"
-              },
-              {
-                "type": "string",
-                "value": "15:45"
-              },
-              {
-                "type": "string",
-                "value": "16:00"
-              },
-              {
-                "type": "string",
-                "value": "16:15"
-              },
-              {
-                "type": "string",
-                "value": "16:30"
-              },
-              {
-                "type": "string",
-                "value": "16:45"
-              },
-              {
-                "type": "string",
-                "value": "17:00"
-              },
-              {
-                "type": "string",
-                "value": "17:15"
-              },
-              {
-                "type": "string",
-                "value": "17:30"
-              },
-              {
-                "type": "string",
-                "value": "17:45"
-              },
-              {
-                "type": "string",
-                "value": "18:00"
-              },
-              {
-                "type": "string",
-                "value": "18:15"
-              },
-              {
-                "type": "string",
-                "value": "18:30"
-              },
-              {
-                "type": "string",
-                "value": "18:45"
-              },
-              {
-                "type": "string",
-                "value": "19:00"
-              },
-              {
-                "type": "string",
-                "value": "19:15"
-              },
-              {
-                "type": "string",
-                "value": "19:30"
-              },
-              {
-                "type": "string",
-                "value": "19:45"
-              },
-              {
-                "type": "string",
-                "value": "20:00"
-              },
-              {
-                "type": "string",
-                "value": "20:15"
-              },
-              {
-                "type": "string",
-                "value": "20:30"
-              },
-              {
-                "type": "string",
-                "value": "20:45"
-              },
-              {
-                "type": "string",
-                "value": "21:00"
-              },
-              {
-                "type": "string",
-                "value": "21:15"
-              },
-              {
-                "type": "string",
-                "value": "21:30"
-              },
-              {
-                "type": "string",
-                "value": "21:45"
-              },
-              {
-                "type": "string",
-                "value": "22:00"
-              },
-              {
-                "type": "string",
-                "value": "22:15"
-              },
-              {
-                "type": "string",
-                "value": "22:30"
-              },
-              {
-                "type": "string",
-                "value": "22:45"
-              },
-              {
-                "type": "string",
-                "value": "23:00"
-              },
-              {
-                "type": "string",
-                "value": "23:15"
-              },
-              {
-                "type": "string",
-                "value": "23:30"
-              },
-              {
-                "type": "string",
-                "value": "23:45"
-              }
-            ]
-          },
-          "optional": true
-        },
-        "eveningStart": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "union",
-            "of": [
-              {
-                "type": "string",
-                "value": "00:00"
-              },
-              {
-                "type": "string",
-                "value": "00:15"
-              },
-              {
-                "type": "string",
-                "value": "00:30"
-              },
-              {
-                "type": "string",
-                "value": "00:45"
-              },
-              {
-                "type": "string",
-                "value": "01:00"
-              },
-              {
-                "type": "string",
-                "value": "01:15"
-              },
-              {
-                "type": "string",
-                "value": "01:30"
-              },
-              {
-                "type": "string",
-                "value": "01:45"
-              },
-              {
-                "type": "string",
-                "value": "02:00"
-              },
-              {
-                "type": "string",
-                "value": "02:15"
-              },
-              {
-                "type": "string",
-                "value": "02:30"
-              },
-              {
-                "type": "string",
-                "value": "02:45"
-              },
-              {
-                "type": "string",
-                "value": "03:00"
-              },
-              {
-                "type": "string",
-                "value": "03:15"
-              },
-              {
-                "type": "string",
-                "value": "03:30"
-              },
-              {
-                "type": "string",
-                "value": "03:45"
-              },
-              {
-                "type": "string",
-                "value": "04:00"
-              },
-              {
-                "type": "string",
-                "value": "04:15"
-              },
-              {
-                "type": "string",
-                "value": "04:30"
-              },
-              {
-                "type": "string",
-                "value": "04:45"
-              },
-              {
-                "type": "string",
-                "value": "05:00"
-              },
-              {
-                "type": "string",
-                "value": "05:15"
-              },
-              {
-                "type": "string",
-                "value": "05:30"
-              },
-              {
-                "type": "string",
-                "value": "05:45"
-              },
-              {
-                "type": "string",
-                "value": "06:00"
-              },
-              {
-                "type": "string",
-                "value": "06:15"
-              },
-              {
-                "type": "string",
-                "value": "06:30"
-              },
-              {
-                "type": "string",
-                "value": "06:45"
-              },
-              {
-                "type": "string",
-                "value": "07:00"
-              },
-              {
-                "type": "string",
-                "value": "07:15"
-              },
-              {
-                "type": "string",
-                "value": "07:30"
-              },
-              {
-                "type": "string",
-                "value": "07:45"
-              },
-              {
-                "type": "string",
-                "value": "08:00"
-              },
-              {
-                "type": "string",
-                "value": "08:15"
-              },
-              {
-                "type": "string",
-                "value": "08:30"
-              },
-              {
-                "type": "string",
-                "value": "08:45"
-              },
-              {
-                "type": "string",
-                "value": "09:00"
-              },
-              {
-                "type": "string",
-                "value": "09:15"
-              },
-              {
-                "type": "string",
-                "value": "09:30"
-              },
-              {
-                "type": "string",
-                "value": "09:45"
-              },
-              {
-                "type": "string",
-                "value": "10:00"
-              },
-              {
-                "type": "string",
-                "value": "10:15"
-              },
-              {
-                "type": "string",
-                "value": "10:30"
-              },
-              {
-                "type": "string",
-                "value": "10:45"
-              },
-              {
-                "type": "string",
-                "value": "11:00"
-              },
-              {
-                "type": "string",
-                "value": "11:15"
-              },
-              {
-                "type": "string",
-                "value": "11:30"
-              },
-              {
-                "type": "string",
-                "value": "11:45"
-              },
-              {
-                "type": "string",
-                "value": "12:00"
-              },
-              {
-                "type": "string",
-                "value": "12:15"
-              },
-              {
-                "type": "string",
-                "value": "12:30"
-              },
-              {
-                "type": "string",
-                "value": "12:45"
-              },
-              {
-                "type": "string",
-                "value": "13:00"
-              },
-              {
-                "type": "string",
-                "value": "13:15"
-              },
-              {
-                "type": "string",
-                "value": "13:30"
-              },
-              {
-                "type": "string",
-                "value": "13:45"
-              },
-              {
-                "type": "string",
-                "value": "14:00"
-              },
-              {
-                "type": "string",
-                "value": "14:15"
-              },
-              {
-                "type": "string",
-                "value": "14:30"
-              },
-              {
-                "type": "string",
-                "value": "14:45"
-              },
-              {
-                "type": "string",
-                "value": "15:00"
-              },
-              {
-                "type": "string",
-                "value": "15:15"
-              },
-              {
-                "type": "string",
-                "value": "15:30"
-              },
-              {
-                "type": "string",
-                "value": "15:45"
-              },
-              {
-                "type": "string",
-                "value": "16:00"
-              },
-              {
-                "type": "string",
-                "value": "16:15"
-              },
-              {
-                "type": "string",
-                "value": "16:30"
-              },
-              {
-                "type": "string",
-                "value": "16:45"
-              },
-              {
-                "type": "string",
-                "value": "17:00"
-              },
-              {
-                "type": "string",
-                "value": "17:15"
-              },
-              {
-                "type": "string",
-                "value": "17:30"
-              },
-              {
-                "type": "string",
-                "value": "17:45"
-              },
-              {
-                "type": "string",
-                "value": "18:00"
-              },
-              {
-                "type": "string",
-                "value": "18:15"
-              },
-              {
-                "type": "string",
-                "value": "18:30"
-              },
-              {
-                "type": "string",
-                "value": "18:45"
-              },
-              {
-                "type": "string",
-                "value": "19:00"
-              },
-              {
-                "type": "string",
-                "value": "19:15"
-              },
-              {
-                "type": "string",
-                "value": "19:30"
-              },
-              {
-                "type": "string",
-                "value": "19:45"
-              },
-              {
-                "type": "string",
-                "value": "20:00"
-              },
-              {
-                "type": "string",
-                "value": "20:15"
-              },
-              {
-                "type": "string",
-                "value": "20:30"
-              },
-              {
-                "type": "string",
-                "value": "20:45"
-              },
-              {
-                "type": "string",
-                "value": "21:00"
-              },
-              {
-                "type": "string",
-                "value": "21:15"
-              },
-              {
-                "type": "string",
-                "value": "21:30"
-              },
-              {
-                "type": "string",
-                "value": "21:45"
-              },
-              {
-                "type": "string",
-                "value": "22:00"
-              },
-              {
-                "type": "string",
-                "value": "22:15"
-              },
-              {
-                "type": "string",
-                "value": "22:30"
-              },
-              {
-                "type": "string",
-                "value": "22:45"
-              },
-              {
-                "type": "string",
-                "value": "23:00"
-              },
-              {
-                "type": "string",
-                "value": "23:15"
-              },
-              {
-                "type": "string",
-                "value": "23:30"
-              },
-              {
-                "type": "string",
-                "value": "23:45"
-              }
-            ]
-          },
-          "optional": true
-        },
-        "eveningEnd": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "union",
-            "of": [
-              {
-                "type": "string",
-                "value": "00:00"
-              },
-              {
-                "type": "string",
-                "value": "00:15"
-              },
-              {
-                "type": "string",
-                "value": "00:30"
-              },
-              {
-                "type": "string",
-                "value": "00:45"
-              },
-              {
-                "type": "string",
-                "value": "01:00"
-              },
-              {
-                "type": "string",
-                "value": "01:15"
-              },
-              {
-                "type": "string",
-                "value": "01:30"
-              },
-              {
-                "type": "string",
-                "value": "01:45"
-              },
-              {
-                "type": "string",
-                "value": "02:00"
-              },
-              {
-                "type": "string",
-                "value": "02:15"
-              },
-              {
-                "type": "string",
-                "value": "02:30"
-              },
-              {
-                "type": "string",
-                "value": "02:45"
-              },
-              {
-                "type": "string",
-                "value": "03:00"
-              },
-              {
-                "type": "string",
-                "value": "03:15"
-              },
-              {
-                "type": "string",
-                "value": "03:30"
-              },
-              {
-                "type": "string",
-                "value": "03:45"
-              },
-              {
-                "type": "string",
-                "value": "04:00"
-              },
-              {
-                "type": "string",
-                "value": "04:15"
-              },
-              {
-                "type": "string",
-                "value": "04:30"
-              },
-              {
-                "type": "string",
-                "value": "04:45"
-              },
-              {
-                "type": "string",
-                "value": "05:00"
-              },
-              {
-                "type": "string",
-                "value": "05:15"
-              },
-              {
-                "type": "string",
-                "value": "05:30"
-              },
-              {
-                "type": "string",
-                "value": "05:45"
-              },
-              {
-                "type": "string",
-                "value": "06:00"
-              },
-              {
-                "type": "string",
-                "value": "06:15"
-              },
-              {
-                "type": "string",
-                "value": "06:30"
-              },
-              {
-                "type": "string",
-                "value": "06:45"
-              },
-              {
-                "type": "string",
-                "value": "07:00"
-              },
-              {
-                "type": "string",
-                "value": "07:15"
-              },
-              {
-                "type": "string",
-                "value": "07:30"
-              },
-              {
-                "type": "string",
-                "value": "07:45"
-              },
-              {
-                "type": "string",
-                "value": "08:00"
-              },
-              {
-                "type": "string",
-                "value": "08:15"
-              },
-              {
-                "type": "string",
-                "value": "08:30"
-              },
-              {
-                "type": "string",
-                "value": "08:45"
-              },
-              {
-                "type": "string",
-                "value": "09:00"
-              },
-              {
-                "type": "string",
-                "value": "09:15"
-              },
-              {
-                "type": "string",
-                "value": "09:30"
-              },
-              {
-                "type": "string",
-                "value": "09:45"
-              },
-              {
-                "type": "string",
-                "value": "10:00"
-              },
-              {
-                "type": "string",
-                "value": "10:15"
-              },
-              {
-                "type": "string",
-                "value": "10:30"
-              },
-              {
-                "type": "string",
-                "value": "10:45"
-              },
-              {
-                "type": "string",
-                "value": "11:00"
-              },
-              {
-                "type": "string",
-                "value": "11:15"
-              },
-              {
-                "type": "string",
-                "value": "11:30"
-              },
-              {
-                "type": "string",
-                "value": "11:45"
-              },
-              {
-                "type": "string",
-                "value": "12:00"
-              },
-              {
-                "type": "string",
-                "value": "12:15"
-              },
-              {
-                "type": "string",
-                "value": "12:30"
-              },
-              {
-                "type": "string",
-                "value": "12:45"
-              },
-              {
-                "type": "string",
-                "value": "13:00"
-              },
-              {
-                "type": "string",
-                "value": "13:15"
-              },
-              {
-                "type": "string",
-                "value": "13:30"
-              },
-              {
-                "type": "string",
-                "value": "13:45"
-              },
-              {
-                "type": "string",
-                "value": "14:00"
-              },
-              {
-                "type": "string",
-                "value": "14:15"
-              },
-              {
-                "type": "string",
-                "value": "14:30"
-              },
-              {
-                "type": "string",
-                "value": "14:45"
-              },
-              {
-                "type": "string",
-                "value": "15:00"
-              },
-              {
-                "type": "string",
-                "value": "15:15"
-              },
-              {
-                "type": "string",
-                "value": "15:30"
-              },
-              {
-                "type": "string",
-                "value": "15:45"
-              },
-              {
-                "type": "string",
-                "value": "16:00"
-              },
-              {
-                "type": "string",
-                "value": "16:15"
-              },
-              {
-                "type": "string",
-                "value": "16:30"
-              },
-              {
-                "type": "string",
-                "value": "16:45"
-              },
-              {
-                "type": "string",
-                "value": "17:00"
-              },
-              {
-                "type": "string",
-                "value": "17:15"
-              },
-              {
-                "type": "string",
-                "value": "17:30"
-              },
-              {
-                "type": "string",
-                "value": "17:45"
-              },
-              {
-                "type": "string",
-                "value": "18:00"
-              },
-              {
-                "type": "string",
-                "value": "18:15"
-              },
-              {
-                "type": "string",
-                "value": "18:30"
-              },
-              {
-                "type": "string",
-                "value": "18:45"
-              },
-              {
-                "type": "string",
-                "value": "19:00"
-              },
-              {
-                "type": "string",
-                "value": "19:15"
-              },
-              {
-                "type": "string",
-                "value": "19:30"
-              },
-              {
-                "type": "string",
-                "value": "19:45"
-              },
-              {
-                "type": "string",
-                "value": "20:00"
-              },
-              {
-                "type": "string",
-                "value": "20:15"
-              },
-              {
-                "type": "string",
-                "value": "20:30"
-              },
-              {
-                "type": "string",
-                "value": "20:45"
-              },
-              {
-                "type": "string",
-                "value": "21:00"
-              },
-              {
-                "type": "string",
-                "value": "21:15"
-              },
-              {
-                "type": "string",
-                "value": "21:30"
-              },
-              {
-                "type": "string",
-                "value": "21:45"
-              },
-              {
-                "type": "string",
-                "value": "22:00"
-              },
-              {
-                "type": "string",
-                "value": "22:15"
-              },
-              {
-                "type": "string",
-                "value": "22:30"
-              },
-              {
-                "type": "string",
-                "value": "22:45"
-              },
-              {
-                "type": "string",
-                "value": "23:00"
-              },
-              {
-                "type": "string",
-                "value": "23:15"
-              },
-              {
-                "type": "string",
-                "value": "23:30"
-              },
-              {
-                "type": "string",
-                "value": "23:45"
-              }
-            ]
-          },
-          "optional": true
-        },
-        "morningClosed": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": true
-        },
-        "eveningClosed": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": true
-        },
-        "closed": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "boolean"
           },
           "optional": true
         }
@@ -2599,6 +1078,528 @@
     }
   },
   {
+    "name": "map",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "map"
+          }
+        },
+        "heading": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "localizedString"
+          },
+          "optional": true
+        },
+        "mapCenter": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "geopoint"
+          },
+          "optional": true
+        },
+        "locations": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "array",
+            "of": {
+              "type": "object",
+              "attributes": {
+                "_key": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "rest": {
+                "type": "inline",
+                "name": "geopoint"
+              }
+            }
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "name": "locations",
+    "type": "document",
+    "attributes": {
+      "_id": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_type": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string",
+          "value": "locations"
+        }
+      },
+      "_createdAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_updatedAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_rev": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "location": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "geopoint"
+        },
+        "optional": true
+      },
+      "title": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "localizedString"
+        },
+        "optional": true
+      },
+      "city": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "address": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "postalCode": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "email": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "phone": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "menu": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "_ref": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              }
+            },
+            "_type": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string",
+                "value": "reference"
+              }
+            },
+            "_weak": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "boolean"
+              },
+              "optional": true
+            }
+          },
+          "dereferencesTo": "dishesMenu"
+        },
+        "optional": true
+      },
+      "slug": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "slug"
+        },
+        "optional": true
+      },
+      "heroImage": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "asset": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "object",
+                "attributes": {
+                  "_ref": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "_type": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string",
+                      "value": "reference"
+                    }
+                  },
+                  "_weak": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "boolean"
+                    },
+                    "optional": true
+                  }
+                },
+                "dereferencesTo": "sanity.imageAsset"
+              },
+              "optional": true
+            },
+            "media": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "unknown"
+              },
+              "optional": true
+            },
+            "hotspot": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "sanity.imageHotspot"
+              },
+              "optional": true
+            },
+            "crop": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "sanity.imageCrop"
+              },
+              "optional": true
+            },
+            "alt": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              },
+              "optional": true
+            },
+            "_type": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string",
+                "value": "image"
+              }
+            }
+          }
+        },
+        "optional": true
+      },
+      "description": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "localizedBlockContent"
+        },
+        "optional": true
+      },
+      "pageBuilder": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "array",
+          "of": {
+            "type": "union",
+            "of": [
+              {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "inline",
+                  "name": "banner"
+                }
+              },
+              {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "inline",
+                  "name": "gallery"
+                }
+              },
+              {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "inline",
+                  "name": "textWithIllustration"
+                }
+              },
+              {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "inline",
+                  "name": "separator"
+                }
+              },
+              {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "inline",
+                  "name": "video"
+                }
+              },
+              {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "inline",
+                  "name": "promotion"
+                }
+              },
+              {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "inline",
+                  "name": "quickActions"
+                }
+              }
+            ]
+          }
+        },
+        "optional": true
+      },
+      "metaTitle": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "localizedString"
+        },
+        "optional": true
+      },
+      "metaDescription": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "localizedString"
+        },
+        "optional": true
+      },
+      "monday": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "duration"
+        },
+        "optional": true
+      },
+      "tuesday": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "duration"
+        },
+        "optional": true
+      },
+      "wednesday": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "duration"
+        },
+        "optional": true
+      },
+      "thursday": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "duration"
+        },
+        "optional": true
+      },
+      "friday": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "duration"
+        },
+        "optional": true
+      },
+      "saturday": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "duration"
+        },
+        "optional": true
+      },
+      "sunday": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "duration"
+        },
+        "optional": true
+      }
+    }
+  },
+  {
+    "name": "duration",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "duration"
+          }
+        },
+        "morningStart": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "timeValue"
+          },
+          "optional": true
+        },
+        "morningEnd": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "timeValue"
+          },
+          "optional": true
+        },
+        "eveningStart": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "timeValue"
+          },
+          "optional": true
+        },
+        "eveningEnd": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "timeValue"
+          },
+          "optional": true
+        },
+        "morningClosed": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
+        "eveningClosed": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
+        "closed": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
     "name": "dishesMenu",
     "type": "document",
     "attributes": {
@@ -2670,60 +1671,6 @@
           }
         },
         "optional": true
-      }
-    }
-  },
-  {
-    "name": "map",
-    "type": "type",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "map"
-          }
-        },
-        "heading": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "inline",
-            "name": "localizedString"
-          },
-          "optional": true
-        },
-        "mapCenter": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "inline",
-            "name": "geopoint"
-          },
-          "optional": true
-        },
-        "locations": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "array",
-            "of": {
-              "type": "object",
-              "attributes": {
-                "_key": {
-                  "type": "objectAttribute",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              },
-              "rest": {
-                "type": "inline",
-                "name": "geopoint"
-              }
-            }
-          },
-          "optional": true
-        }
       }
     }
   },
@@ -5213,30 +4160,61 @@
         "internalLink": {
           "type": "objectAttribute",
           "value": {
-            "type": "object",
-            "attributes": {
-              "_ref": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
-                }
-              },
-              "_type": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string",
-                  "value": "reference"
-                }
-              },
-              "_weak": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "boolean"
+            "type": "union",
+            "of": [
+              {
+                "type": "object",
+                "attributes": {
+                  "_ref": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "_type": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string",
+                      "value": "reference"
+                    }
+                  },
+                  "_weak": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "boolean"
+                    },
+                    "optional": true
+                  }
                 },
-                "optional": true
+                "dereferencesTo": "page"
+              },
+              {
+                "type": "object",
+                "attributes": {
+                  "_ref": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "_type": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string",
+                      "value": "reference"
+                    }
+                  },
+                  "_weak": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "boolean"
+                    },
+                    "optional": true
+                  }
+                },
+                "dereferencesTo": "locations"
               }
-            },
-            "dereferencesTo": "page"
+            ]
           },
           "optional": true
         },
@@ -5283,6 +4261,137 @@
           "value": {
             "type": "inline",
             "name": "link"
+          },
+          "optional": true
+        },
+        "children": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "array",
+            "of": {
+              "type": "object",
+              "attributes": {
+                "text": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "inline",
+                    "name": "localizedString"
+                  },
+                  "optional": true
+                },
+                "url": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "inline",
+                    "name": "link"
+                  },
+                  "optional": true
+                },
+                "description": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "inline",
+                    "name": "localizedString"
+                  },
+                  "optional": true
+                },
+                "_type": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string",
+                    "value": "subItem"
+                  }
+                }
+              },
+              "rest": {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "optional": true
+        },
+        "megamenuImage": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "object",
+            "attributes": {
+              "asset": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "object",
+                  "attributes": {
+                    "_ref": {
+                      "type": "objectAttribute",
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "_type": {
+                      "type": "objectAttribute",
+                      "value": {
+                        "type": "string",
+                        "value": "reference"
+                      }
+                    },
+                    "_weak": {
+                      "type": "objectAttribute",
+                      "value": {
+                        "type": "boolean"
+                      },
+                      "optional": true
+                    }
+                  },
+                  "dereferencesTo": "sanity.imageAsset"
+                },
+                "optional": true
+              },
+              "media": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "unknown"
+                },
+                "optional": true
+              },
+              "hotspot": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "inline",
+                  "name": "sanity.imageHotspot"
+                },
+                "optional": true
+              },
+              "crop": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "inline",
+                  "name": "sanity.imageCrop"
+                },
+                "optional": true
+              },
+              "_type": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string",
+                  "value": "image"
+                }
+              }
+            }
+          },
+          "optional": true
+        },
+        "megamenuLabel": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "localizedString"
           },
           "optional": true
         }

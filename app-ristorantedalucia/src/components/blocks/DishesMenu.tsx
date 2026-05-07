@@ -15,7 +15,7 @@ export default function DishesMenu({ item }: { item: TransformedDishesMenu }) {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>(0);
 
   const categories = useMemo(() => item.menu?.categories || [], [item.menu?.categories]);
-  
+
   const filteredDishes = useMemo(() => {
     return categories[selectedCategoryIndex]?.dishes || [];
   }, [categories, selectedCategoryIndex]);
@@ -23,30 +23,30 @@ export default function DishesMenu({ item }: { item: TransformedDishesMenu }) {
   return (
     <AOSComponent>
       <div className="dishes-menu-container pb-20" data-aos="fade-up" data-aos-delay="200">
-        <h2 className="family-playfair text-white text-center py-5">{item.menu?.title}</h2>
+        <h2 className="family-playfair text-foreground text-center py-5">{item.menu?.title}</h2>
         {item.menu?.introText && (
           <div className="px-5 pb-10">
             <PortableText value={item.menu?.introText || []} components={components} />
           </div>
         )}
-        
+
         {/* Category Filter */}
         <ul className="filter-list flex justify-center flex-wrap pb-10">
           {categories.map((category, index) => (
-            <li 
-              key={index} 
-              onClick={() => setSelectedCategoryIndex(index)} 
+            <li
+              key={index}
+              onClick={() => setSelectedCategoryIndex(index)}
               className={`filter-item cursor-pointer text-center flex flex-col md:px-5 px-2 pb-5 justify-center items-center transition-all duration-300 ${selectedCategoryIndex === index ? "active scale-110" : "opacity-60 grayscale hover:opacity-100 hover:grayscale-0"}`}
             >
               {category.flaticonClass ? (
-                <i className={`${category.flaticonClass} md:text-5xl text-4xl text-center md:mb-5 mb-2 transition-colors duration-300 ${selectedCategoryIndex === index ? 'text-gold' : 'text-white'}`}></i>
+                <i className={`${category.flaticonClass} md:text-5xl text-4xl text-center md:mb-5 mb-2 transition-colors duration-300 ${selectedCategoryIndex === index ? 'text-gold' : 'text-foreground'}`}></i>
               ) : (
-                <Icon 
-                  icon={category.icon?.name || 'ph:bowl-food'} 
-                  className={`md:text-5xl text-4xl text-center md:mb-5 mb-2 transition-colors duration-300 ${selectedCategoryIndex === index ? 'text-gold' : 'text-white'}`} 
+                <Icon
+                  icon={category.icon?.name || 'ph:bowl-food'}
+                  className={`md:text-5xl text-4xl text-center md:mb-5 mb-2 transition-colors duration-300 ${selectedCategoryIndex === index ? 'text-gold' : 'text-foreground'}`}
                 />
               )}
-              <h3 className={`uppercase md:text-2xl text-md font-bold tracking-widest transition-colors duration-300 ${selectedCategoryIndex === index ? 'text-foreground' : 'text-gold'}`}>
+              <h3 className={`uppercase md:text-2xl text-md tracking-widest transition-colors duration-300 ${selectedCategoryIndex === index ? 'text-foreground' : 'text-gold'}`}>
                 {category.title}
               </h3>
             </li>

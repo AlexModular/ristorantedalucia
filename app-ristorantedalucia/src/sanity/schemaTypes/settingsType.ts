@@ -22,5 +22,13 @@ export const settingsType = defineType({
       },
       initialValue: "light",
     }),
+    defineField({
+      name: "ogImage",
+      title: "Immagine Social (OG Image)",
+      description:
+        "Immagine mostrata quando il sito viene condiviso su social network e WhatsApp. Dimensioni consigliate: 1200×630px.",
+      type: "image",
+      options: { hotspot: true },
+    }),
   ],
 });

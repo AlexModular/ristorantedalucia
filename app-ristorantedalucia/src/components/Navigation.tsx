@@ -1,234 +1,533 @@
 'use client'
 import { Link, usePathname } from "@/i18n/routing";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { HEADERMENU_QUERYResult, LOCATIONS_QUERYResult } from "../../sanity.types";
-import { useMediaQuery } from 'react-responsive';
 import Logo from "./Logo";
-import { Phone } from 'lucide-react';
+import { Phone, ChevronLeft, X } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
+import Image from 'next/image';
+import { urlFor } from '@/sanity/lib/image';
 
-export default function Navbar({ navItems, theme, locations }: { navItems: HEADERMENU_QUERYResult, theme: string, locations: LOCATIONS_QUERYResult }) {
-  const isMobile = useMediaQuery({ query: `(max-width: 1024px)` });
+// ─── Types ───────────────────────────────────────────────────────────────────
+type NavItem = NonNullable<NonNullable<HEADERMENU_QUERYResult>[number]['items']>[number];
+type SubItem = NonNullable<NavItem['children']>[number];
+type LocalizableText = NavItem['text'];
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+function resolveText(text: LocalizableText, locale: string): string {
+  if (!text) return '';
+  if (typeof text === 'string') return text || '';
+  if (Array.isArray(text)) {
+    const first = text[0] as { it?: string; en?: string } | undefined;
+    if (!first) return '';
+    const preferred = locale === 'en' ? first.en : first.it;
+    return preferred?.trim() ? preferred : (locale === 'en' ? first.it : first.en) ?? '';
+  }
+  const loc = text as { it?: string; en?: string };
+  const preferred = locale === 'en' ? loc.en : loc.it;
+  return preferred?.trim() ? preferred : (locale === 'en' ? loc.it : loc.en) ?? '';
+}
+
+function resolveHref(slug?: string | null, externalUrl?: string | null): string {
+  if (slug) return slug === 'home' ? '/' : `/${slug}`;
+  return externalUrl ?? '#';
+}
+
+// ─── Main Navbar ──────────────────────────────────────────────────────────────
+export default function Navbar({
+  navItems,
+  theme,
+  locations,
+}: {
+  navItems: HEADERMENU_QUERYResult;
+  theme: string;
+  locations: LOCATIONS_QUERYResult;
+}) {
   const t = useTranslations('Navigation');
   const locale = useLocale();
   const pathname = usePathname();
 
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-  
-  const [isSticky, setIsSticky] = useState(false);
-  const [isOverTransparentSection, setIsOverTransparentSection] = useState(true);
-
+  // ── Scroll state ──────────────────────────────────────────────────────────
+  const [isScrolled, setIsScrolled] = useState(false);
   useEffect(() => {
-    const handleScroll = () => {
-      setIsSticky(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    const observerOptions = {
-      root: null,
-      rootMargin: '-10% 0px -90% 0px', 
-      threshold: 0
-    };
-
-    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-      let isOver = false;
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          isOver = true;
-        }
-      });
-      setIsOverTransparentSection(isOver);
-    };
-
-    const observer = new IntersectionObserver(handleIntersection, observerOptions);
-    const targets = document.querySelectorAll('.transparent-header-trigger');
-    targets.forEach(target => observer.observe(target));
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      observer.disconnect();
-    };
+    const onScroll = () => setIsScrolled(window.scrollY > 50);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, [pathname]);
 
-  const headerIsTransparent = !isSticky || isOverTransparentSection;
-  const headerShouldBeSticky = isSticky && !isOverTransparentSection;
+  // ── Desktop megamenu state ────────────────────────────────────────────────
+  const [activeDesktopItem, setActiveDesktopItem] = useState<NavItem | null>(null);
+  const megaOpen = activeDesktopItem !== null;
+  const headerIsTransparent = !isScrolled && !megaOpen;
+  const useWhiteLogo =
+    headerIsTransparent ||
+    theme === 'dark' ||
+    (theme === 'auto' &&
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const useWhiteLogo = headerIsTransparent || theme === 'dark' || (theme === 'auto' && typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  const openMega = useCallback((item: NavItem) => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    if (item.children && item.children.length > 0) setActiveDesktopItem(item);
+    else setActiveDesktopItem(null);
+  }, []);
 
-  const LanguageSwitcher = () => (
-    <div className="flex items-center gap-2 text-sm font-medium">
-      <Link 
-        href={pathname} 
-        locale="it" 
-        className={`transition-colors ${locale === 'it' ? 'text-gold' : (headerIsTransparent ? 'text-white' : 'text-foreground')} hover:text-gold`}
+  const closeMega = useCallback(() => {
+    closeTimer.current = setTimeout(() => setActiveDesktopItem(null), 180);
+  }, []);
+
+  // keepMega is unused now (handled by header-level onMouseLeave)
+  const keepMega = useCallback(() => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+  }, []);
+
+  // ── Mobile drawer state ───────────────────────────────────────────────────
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [mobileSubItem, setMobileSubItem] = useState<NavItem | null>(null);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen((v) => {
+      if (v) setMobileSubItem(null); // reset sub when closing
+      return !v;
+    });
+  };
+
+  const openMobileSub = (item: NavItem) => {
+    setMobileSubItem(item);
+  };
+
+  const closeMobileSub = () => {
+    setMobileSubItem(null);
+  };
+
+  // ── Nav items ─────────────────────────────────────────────────────────────
+  const getMenuItems = (navId: string): NavItem[] =>
+    navItems?.flatMap((item) =>
+      item.navId === navId && item.items ? item.items : []
+    ) ?? [];
+
+  const leftItems = getMenuItems('main-menu-left');
+  const rightItems = getMenuItems('main-menu-right');
+  const allItems = navItems?.flatMap((item) => item.items ?? []) ?? [];
+
+  // ── Language switcher ─────────────────────────────────────────────────────
+  const LanguageSwitcher = ({ inverse = false }: { inverse?: boolean }) => (
+    <div className="flex items-center gap-2 text-sm font-medium shrink-0">
+      <Link
+        href={pathname}
+        locale="it"
+        className={`transition-colors ${locale === 'it' ? 'text-gold' : inverse ? 'text-foreground' : (headerIsTransparent ? 'text-white' : 'text-foreground')} hover:text-gold`}
       >
         IT
       </Link>
-      <span className={headerIsTransparent ? 'text-white/30' : 'text-foreground/30'}>|</span>
-      <Link 
-        href={pathname} 
-        locale="en" 
-        className={`transition-colors ${locale === 'en' ? 'text-gold' : (headerIsTransparent ? 'text-white' : 'text-foreground')} hover:text-gold`}
+      <span className={inverse ? 'text-foreground/30' : (headerIsTransparent ? 'text-white/30' : 'text-foreground/30')}>|</span>
+      <Link
+        href={pathname}
+        locale="en"
+        className={`transition-colors ${locale === 'en' ? 'text-gold' : inverse ? 'text-foreground' : (headerIsTransparent ? 'text-white' : 'text-foreground')} hover:text-gold`}
       >
         EN
       </Link>
     </div>
   );
 
+  // ── Desktop nav link ──────────────────────────────────────────────────────
+  const DesktopLink = ({ nav }: { nav: NavItem }) => {
+    const hasSub = (nav.children?.length ?? 0) > 0;
+    const href = resolveHref(nav.link?.slug, nav.externalUrl);
+    const label = resolveText(nav.text, locale);
+    const isActive = activeDesktopItem === nav;
+
+    const cls = `flex items-center gap-1 px-1 py-2 text-[15px] uppercase tracking-widest transition-colors duration-200 family-oswald whitespace-nowrap ${isActive
+        ? 'text-gold'
+        : headerIsTransparent
+          ? 'text-white hover:text-gold'
+          : 'text-foreground hover:text-gold'
+      }`;
+
+    if (hasSub) {
+      return (
+        <button
+          type="button"
+          className={cls}
+          onMouseEnter={() => openMega(nav)}
+          onMouseLeave={closeMega}
+          aria-expanded={isActive}
+          aria-haspopup="true"
+        >
+          {label}
+          <svg
+            width="10" height="10" viewBox="0 0 10 10"
+            className={`transition-transform duration-200 ${isActive ? 'rotate-180' : ''}`}
+            fill="currentColor"
+          >
+            <path d="M1 3l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+          </svg>
+        </button>
+      );
+    }
+
+    return (
+      <Link href={href} className={cls}>
+        {label}
+      </Link>
+    );
+  };
+
   return (
-    <header className={headerShouldBeSticky ? 'sticky z-50 top-0 active' : 'z-50 top-0'}>
-      <nav className={`w-full px-4 py-4 md:px-8 sticky top-0 z-[9999] ${headerIsTransparent ? 'bg-transparent' : 'bg-background border-b-2 border-gold shadow-lg'}`}>
-        <div className="flex items-center justify-between mx-auto relative w-full">
-          {/* Mobile Menu Left (Hamburger) */}
-          <div className="lg:hidden flex-1 flex justify-start items-center z-[10000]">
+    <>
+      {/* Page overlay — only in DOM when megamenu is open */}
+      {megaOpen && (
+        <div
+          className="hidden lg:block fixed inset-0 bg-black/50 z-[700]"
+          onClick={() => setActiveDesktopItem(null)}
+        />
+      )}
+
+      {/* Header: sticky when scrolled OR when megamenu is open */}
+      <header
+        className={(isScrolled || megaOpen) ? 'sticky z-[900] top-0 active' : 'z-[900] top-0'}
+        onMouseLeave={closeMega}
+      >
+        <nav
+          className={`w-full px-4 py-4 md:px-8 sticky top-0 z-[900] transition-all duration-300 ${headerIsTransparent
+              ? ''
+              : 'bg-background border-b border-gold/40 shadow-xl'
+            }`}
+        >
+          <div className="flex items-center justify-between mx-auto relative w-full">
+
+            {/* Mobile: Hamburger */}
+            <div className="lg:hidden flex-1 flex justify-start items-center z-[10000]">
+              <button
+                className={`hamburger-menu ${isMobileMenuOpen ? 'open' : ''} ${headerIsTransparent ? 'transparent' : 'sticky'}`}
+                onClick={toggleMobileMenu}
+                type="button"
+                aria-label="Toggle menu"
+              >
+                <span></span>
+                <span></span>
+              </button>
+            </div>
+
+            {/* Desktop Left */}
+            <div className="hidden lg:flex flex-1 justify-start items-center gap-6 menu-left">
+              {locations?.[0]?.phone && (
+                <Link
+                  href={`tel:${locations[0].phone}`}
+                  className={`flex items-center gap-2 family-oswald text-base transition-colors duration-200 ${headerIsTransparent ? 'text-white hover:text-gold' : 'text-foreground hover:text-gold'}`}
+                  aria-label={`${t('call')} ${locations[0].phone}`}
+                >
+                  <Phone size={18} />
+                  <span className="sr-only">{locations[0].phone}</span>
+                </Link>
+              )}
+              <ul className="flex flex-row items-center gap-6">
+                {leftItems.map((nav, i) => (
+                  <li
+                    key={i}
+                    onMouseEnter={() => openMega(nav)}
+                  >
+                    <DesktopLink nav={nav} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Logo */}
+            <div className="logo-container">
+              <Link href="/" className="logo">
+                <Logo
+                  className={`w-full h-full transition-all duration-500 ${useWhiteLogo ? 'text-white' : 'text-foreground'}`}
+                  width={headerIsTransparent ? 140 : 110}
+                  height={headerIsTransparent ? 140 : 110}
+                />
+              </Link>
+            </div>
+
+            {/* Desktop Right */}
+            <div className="hidden lg:flex flex-1 justify-end items-center gap-6 menu-right">
+              <ul className="flex flex-row items-center gap-6">
+                {rightItems.map((nav, i) => (
+                  <li
+                    key={i}
+                    onMouseEnter={() => openMega(nav)}
+                  >
+                    <DesktopLink nav={nav} />
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/contattaci"
+                className={`cta-btn-header px-5 py-2 border-2 uppercase family-oswald tracking-widest text-sm transition-all duration-300 shrink-0 ${headerIsTransparent
+                    ? 'border-white text-white hover:bg-white hover:text-foreground'
+                    : 'border-gold bg-gold text-white hover:bg-background hover:text-gold'
+                  }`}
+              >
+                {t('bookNow')}
+              </Link>
+              <LanguageSwitcher />
+            </div>
+
+            {/* Mobile Right */}
+            <div className="lg:hidden flex-1 flex justify-end items-center z-[10000] gap-3">
+              <LanguageSwitcher />
+              {locations?.[0]?.phone && (
+                <Link
+                  href={`tel:${locations[0].phone}`}
+                  className={`transition-colors duration-200 ${headerIsTransparent ? 'text-white hover:text-gold' : 'text-foreground hover:text-gold'}`}
+                  aria-label={`${t('call')} ${locations[0].phone}`}
+                >
+                  <Phone size={22} />
+                </Link>
+              )}
+            </div>
+          </div>
+        </nav>
+
+        {/* ── Desktop Megamenu Panel ─────────────────────────────────────── */}
+        <div
+          className={`hidden lg:block absolute left-0 right-0 z-[800] transition-all duration-300 ${activeDesktopItem
+              ? 'opacity-100 translate-y-0 pointer-events-auto'
+              : 'opacity-0 -translate-y-2 pointer-events-none'
+            }`}
+          onMouseEnter={keepMega}
+          onMouseLeave={closeMega}
+          style={{ top: '100%' }}
+        >
+          {activeDesktopItem && (
+            // Full-width panel: text column left (max-width constrained), image bleeds to right edge
+            <div className="bg-background/97 backdrop-blur-md border-b-2 border-gold/50 shadow-2xl flex overflow-hidden">
+              {/* Links column — centered with auto left margin */}
+              <div className="flex-1 py-10 pl-16 pr-8 max-w-2xl ml-auto">
+                {activeDesktopItem.megamenuLabel && (
+                  <p className="text-gold text-xs uppercase tracking-[0.3em] mb-6 pb-4 border-b border-gold/20">
+                    {resolveText(activeDesktopItem.megamenuLabel, locale)}
+                  </p>
+                )}
+                <ul className="grid grid-cols-1 gap-1">
+                  {(activeDesktopItem.children ?? []).map((sub: SubItem, i: number) => {
+                    const subHref = resolveHref(sub.link?.slug, sub.externalUrl);
+                    const subLabel = resolveText(sub.text, locale);
+                    const subDesc = resolveText(sub.description, locale);
+                    return (
+                      <li key={i}>
+                        <Link
+                          href={subHref}
+                          onClick={() => setActiveDesktopItem(null)}
+                          className="group flex items-start gap-4 py-4 px-3 rounded transition-colors hover:bg-gold/5"
+                        >
+                          <span className="mt-1 w-1.5 h-1.5 rounded-full bg-gold shrink-0 group-hover:scale-125 transition-transform" />
+                          <span className="flex flex-col">
+                            <span className="family-oswald uppercase text-base tracking-widest text-foreground group-hover:text-gold transition-colors">
+                              {subLabel}
+                            </span>
+                            {subDesc && (
+                              <span className="text-sm text-foreground/50 mt-0.5 normal-case font-normal tracking-normal" style={{ fontFamily: 'var(--font-montserrat)' }}>
+                                {subDesc}
+                              </span>
+                            )}
+                          </span>
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+
+              {/* Image — bleeds to right viewport edge, no padding, full height */}
+              {activeDesktopItem.megamenuImage ? (
+                <div className="relative w-80 xl:w-[420px] shrink-0 self-stretch min-h-[200px]">
+                  <Image
+                    src={urlFor(activeDesktopItem.megamenuImage).width(840).height(400).url()}
+                    alt={(activeDesktopItem.megamenuImage as { alt?: string }).alt ?? resolveText(activeDesktopItem.text, locale)}
+                    fill
+                    className="object-cover object-center"
+                    sizes="(min-width: 1280px) 420px, 320px"
+                  />
+                </div>
+              ) : (
+                // No image: add padding so text isn't edge-to-edge
+                <div className="w-16 shrink-0" />
+              )}
+            </div>
+          )}
+        </div>
+      </header>
+
+      {/* ── Mobile Drawer ─────────────────────────────────────────────────── */}
+      {/* Backdrop — only rendered when open, avoids z-index pollution */}
+      {isMobileMenuOpen && (
+        <div
+          className="lg:hidden fixed inset-0 bg-black/60 z-[9000]"
+          onClick={toggleMobileMenu}
+        />
+      )}
+
+      {/* Drawer shell — invisible+pointer-events-none when closed */}
+      <div
+        className={`lg:hidden fixed top-0 left-0 h-full w-full sm:w-80 z-[9500] overflow-hidden transform transition-transform duration-500 ease-in-out ${isMobileMenuOpen
+            ? 'translate-x-0 visible pointer-events-auto'
+            : '-translate-x-full invisible pointer-events-none'
+          }`}
+      >
+        {/* ── Main menu panel ── */}
+        <div
+          className={`absolute inset-0 bg-background flex flex-col transform transition-transform duration-400 ease-in-out ${mobileSubItem ? '-translate-x-full' : 'translate-x-0'
+            }`}
+        >
+          {/* Header bar */}
+          <div className="flex items-center justify-between px-6 py-5 border-b border-foreground/10">
+            <Logo className="w-14 h-14 text-foreground" />
             <button
-              className={`hamburger-menu ${isMobileMenuOpen ? 'open' : ''} ${headerIsTransparent ? 'transparent' : 'sticky'}`}
               onClick={toggleMobileMenu}
-              type="button"
-              aria-label="Toggle menu"
+              className="p-2 text-foreground/60 hover:text-foreground transition-colors"
+              aria-label="Close menu"
             >
-              <span></span>
-              <span></span>
+              <X size={22} />
             </button>
           </div>
 
-          <div className="hidden lg:flex flex-1 justify-start menu-left items-center gap-8">
-            {locations && locations[0]?.phone && (
-              <Link
-                href={`tel:${locations[0].phone}`}
-                className={`flex items-center gap-2 family-oswald text-lg transition-colors duration-300 text-white hover:text-gold`}
-                aria-label={`${t('call')} ${locations[0].phone}`}
-              >
-                <Phone size={20} className="text-white" />
-                <span className="sr-only">{locations[0].phone}</span>
-              </Link>
-            )}
-            <ul className="flex flex-row items-center gap-8">
-              {navItems?.map((item) => {
-                if (item.navId === 'main-menu-left' && item?.items) {
-                  return item.items.map((nav, index: number) => {
-                    const href = nav.link?.slug ? (nav.link.slug === 'home' ? '/' : `/${nav.link.slug}`) : (nav.externalUrl ?? '#');
-                    const isActive = nav.link?.slug ? (pathname === (nav.link.slug === 'home' ? '/' : `/${nav.link.slug}`)) : false;
-                    return (
-                      <li
-                        key={index}
-                        className={`flex items-center p-1 text-lg gap-x-2 uppercase transition-colors duration-300 family-oswald ${headerIsTransparent ? 'text-white' : 'text-foreground'}`}
+          {/* Nav list */}
+          <nav className="flex-1 overflow-y-auto px-6 py-6">
+            <ul className="flex flex-col gap-1">
+              {allItems.map((nav, i) => {
+                const hasSub = (nav.children?.length ?? 0) > 0;
+                const href = resolveHref(nav.link?.slug, nav.externalUrl);
+                const label = resolveText(nav.text, locale);
+
+                if (hasSub) {
+                  return (
+                    <li key={i}>
+                      <button
+                        type="button"
+                        onClick={() => openMobileSub(nav)}
+                        className="w-full flex items-center justify-between py-4 text-xl family-oswald uppercase tracking-widest text-foreground hover:text-gold transition-colors border-b border-foreground/8"
                       >
-                        <Link href={href} className={`flex items-center${isActive ? ' active' : ''}`}>
-                          {(nav.text as unknown as string)}
-                        </Link>
-                      </li>
-                    );
-                  });
+                        {label}
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-gold shrink-0">
+                          <path d="M5 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                        </svg>
+                      </button>
+                    </li>
+                  );
                 }
-                return null;
+
+                return (
+                  <li key={i}>
+                    <Link
+                      href={href}
+                      onClick={toggleMobileMenu}
+                      className="flex py-4 text-xl family-oswald uppercase tracking-widest text-foreground hover:text-gold transition-colors border-b border-foreground/8"
+                    >
+                      {label}
+                    </Link>
+                  </li>
+                );
               })}
             </ul>
-          </div>
+          </nav>
 
-          <div className="logo-container">
-            <Link href="/" className="logo">
-              <Logo
-                className={`w-full h-full transition-all duration-500 ${useWhiteLogo ? 'text-white' : 'text-foreground'}`}
-                width={isMobile ? 90 : (headerIsTransparent ? 140 : 110)}
-                height={isMobile ? 90 : (headerIsTransparent ? 140 : 110)}
-              />
-            </Link>
-          </div>
-
-          {/* Desktop Menu Right */}
-          <div className="hidden lg:flex flex-1 justify-end menu-right items-center gap-8">
-            <ul className="flex flex-row items-center gap-8">
-              {navItems?.map((item) => {
-                if (item.navId === 'main-menu-right' && item?.items) {
-                  return item.items.map((nav, index: number) => {
-                    const href = nav.link?.slug ? (nav.link.slug === 'home' ? '/' : `/${nav.link.slug}`) : (nav.externalUrl ?? '#');
-                    return (
-                      <li
-                        key={index}
-                        className={`flex items-center p-1 text-lg gap-x-2 uppercase transition-colors duration-300 family-oswald ${headerIsTransparent ? 'text-white' : 'text-foreground'}`}
-                      >
-                        <Link href={href} className="flex items-center">
-                          {(nav.text as unknown as string)}
-                        </Link>
-                      </li>
-                    );
-                  });
-                }
-                return null;
-              })}
-            </ul>
+          {/* Footer */}
+          <div className="px-6 py-6 border-t border-foreground/10 flex flex-col gap-4">
             <Link
               href="/contattaci"
-              className={`cta-btn-header px-6 py-2 border-2 uppercase family-oswald tracking-widest transition-all duration-300 ${headerIsTransparent ? 'border-white text-white hover:bg-white hover:text-foreground' : 'border-gold bg-gold text-white hover:bg-background hover:text-gold'}`}
+              onClick={toggleMobileMenu}
+              className="block text-center py-3 border-2 border-gold bg-gold text-white uppercase family-oswald tracking-widest text-sm transition-all active:bg-foreground"
             >
               {t('bookNow')}
             </Link>
-            <LanguageSwitcher />
-          </div>
-
-          {/* Mobile Menu Right (Phone) */}
-          <div className="lg:hidden flex-1 flex justify-end items-center z-[10000] gap-4">
-            <LanguageSwitcher />
-            {locations && locations[0]?.phone && (
-              <Link
-                href={`tel:${locations[0].phone}`}
-                className={`transition-colors duration-300 text-white hover:text-gold`}
-                aria-label={`${t('call')} ${locations[0].phone}`}
-              >
-                <Phone size={24} className="text-white" />
-              </Link>
-            )}
-          </div>
-
-          {/* Mobile Menu */}
-          <div
-            className={`mobile-menu fixed top-0 left-0 min-h-screen w-full sm:w-80 bg-background shadow-2xl transform transition-transform duration-500 ease-in-out z-[9999] ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-              }`}
-          >
-            <div className="flex flex-col h-full pt-12 px-10">
-              <div className="flex justify-center mb-12">
-                <Logo className="w-32 h-32 text-foreground" />
-              </div>
-              <ul className="flex flex-col gap-8 text-center">
-                {navItems?.map((item) => {
-                  if (item?.items) {
-                    return item.items.map((nav, index: number) => {
-                      const href = nav.link?.slug ? (nav.link.slug === 'home' ? '/' : `/${nav.link.slug}`) : (nav.externalUrl ?? '#');
-                      return (
-                        <li
-                          key={`${item.navId}-${index}`}
-                          className="border-b border-white/10 pb-4"
-                        >
-                          <Link href={href}
-                            className="text-2xl family-oswald uppercase tracking-widest text-foreground hover:text-gold transition-colors"
-                            onClick={toggleMobileMenu}>
-                            {(nav.text as unknown as string)}
-                          </Link>
-                        </li>
-                      );
-                    });
-                  }
-                  return null;
-                })}
-                <li className="pt-4 flex justify-center">
-                  <Link
-                    href="/contattaci"
-                    className="inline-block px-8 py-3 border-2 border-gold bg-gold text-white uppercase family-oswald tracking-widest transition-all duration-300 active:bg-foreground active:border-foreground"
-                    onClick={toggleMobileMenu}
-                  >
-                    {t('bookNow')}
-                  </Link>
-                </li>
-              </ul>
-            </div>
+            <LanguageSwitcher inverse />
           </div>
         </div>
-      </nav>
-    </header>
+
+        {/* ── Submenu panel (slides in from right) ── */}
+        <div
+          className={`absolute inset-0 bg-background flex flex-col transform transition-transform duration-400 ease-in-out ${mobileSubItem
+              ? 'translate-x-0 pointer-events-auto'
+              : 'translate-x-full pointer-events-none'
+            }`}
+          aria-hidden={!mobileSubItem}
+        >
+          {mobileSubItem && (
+            <>
+              {/* Header bar */}
+              <div className="flex items-center justify-between px-6 py-5 border-b border-foreground/10">
+                <button
+                  onClick={closeMobileSub}
+                  className="flex items-center gap-2 text-foreground/60 hover:text-foreground transition-colors"
+                >
+                  <ChevronLeft size={20} />
+                  <span className="family-oswald text-sm uppercase tracking-widest">Indietro</span>
+                </button>
+                <button
+                  onClick={toggleMobileMenu}
+                  className="p-2 text-foreground/60 hover:text-foreground transition-colors"
+                  aria-label="Close menu"
+                >
+                  <X size={22} />
+                </button>
+              </div>
+
+              {/* Sub label */}
+              <div className="px-6 pt-6 pb-2">
+                <p className="family-playfair text-2xl text-foreground">
+                  {resolveText(mobileSubItem.text, locale)}
+                </p>
+                {mobileSubItem.megamenuLabel && (
+                  <p className="text-xs text-gold uppercase tracking-[0.2em] mt-1">
+                    {resolveText(mobileSubItem.megamenuLabel, locale)}
+                  </p>
+                )}
+              </div>
+
+              {/* Sub links */}
+              <nav className="flex-1 overflow-y-auto px-6 py-2">
+                <ul className="flex flex-col gap-1">
+                  {(mobileSubItem.children ?? []).map((sub: SubItem, i: number) => {
+                    const subHref = resolveHref(sub.link?.slug, sub.externalUrl);
+                    const subLabel = resolveText(sub.text, locale);
+                    const subDesc = resolveText(sub.description, locale);
+                    return (
+                      <li key={i}>
+                        <Link
+                          href={subHref}
+                          onClick={toggleMobileMenu}
+                          className="flex flex-col py-4 border-b border-foreground/8 hover:pl-2 transition-all"
+                        >
+                          <span className="family-oswald uppercase tracking-widest text-lg text-foreground hover:text-gold transition-colors">
+                            {subLabel}
+                          </span>
+                          {subDesc && (
+                            <span className="text-sm text-foreground/50 mt-0.5">
+                              {subDesc}
+                            </span>
+                          )}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </nav>
+
+              {/* Bottom image */}
+              {mobileSubItem.megamenuImage && (
+                <div className="relative h-44 shrink-0">
+                  <Image
+                    src={urlFor(mobileSubItem.megamenuImage).width(480).height(176).url()}
+                    alt={(mobileSubItem.megamenuImage as { alt?: string }).alt ?? resolveText(mobileSubItem.text, locale)}
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent" />
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      </div>
+    </>
   );
 }

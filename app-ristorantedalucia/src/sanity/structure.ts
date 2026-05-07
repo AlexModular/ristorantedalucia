@@ -1,26 +1,35 @@
 import type {StructureResolver} from 'sanity/structure'
 import {
   singletonDocumentListItem,
-  singletonDocumentListItems,
 } from 'sanity-plugin-singleton-tools';
+import { MdOutlineArticle } from 'react-icons/md';
+import { GiShop } from 'react-icons/gi';
 
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
 export const structure: StructureResolver = (S, context) =>
   S.list()
-    .title('Ristorante Enoteca Da Lucia')
+    .title('Ristorante Da Lucia')
     .items([
-      S.documentTypeListItem('page').title('Pages'),
-      S.documentTypeListItem('navigation').title('Menu Navigation'),
+      // ─── Pages ────────────────────────────────────────────────────────────
+      S.documentTypeListItem('page').title('Pagine'),
+      S.documentTypeListItem('navigation').title('Menu Navigazione'),
       S.divider(),
-      S.documentTypeListItem('dishesMenu').title('Restaurant Menu'),
-      S.documentTypeListItem('locations').title('Locations'),
+
+      // ─── Restaurant content ───────────────────────────────────────────────
+      S.documentTypeListItem('dishesMenu').title('Menù del Ristorante'),
+      S.documentTypeListItem('locations').title('Locations').icon(GiShop),
       S.divider(),
-      ...singletonDocumentListItems({ S, context }),
+
+      // ─── News & Events ────────────────────────────────────────────────────
+      S.documentTypeListItem('post').title('News & Events').icon(MdOutlineArticle),
+      S.divider(),
+
+      // ─── Singletons ───────────────────────────────────────────────────────
       singletonDocumentListItem({
         S,
         context,
         type: 'socials',
-        title: 'Socials',
+        title: 'Social Media',
         id: 'socials',
       }),
       singletonDocumentListItem({
@@ -30,7 +39,25 @@ export const structure: StructureResolver = (S, context) =>
         title: 'Footer Copyright',
         id: 'copyright',
       }),
+      singletonDocumentListItem({
+        S,
+        context,
+        type: 'settings',
+        title: 'Impostazioni',
+        id: 'settings',
+      }),
+
+      // ─── Remaining types (auto-discovered) ───────────────────────────────
       ...S.documentTypeListItems().filter(
-        (item) => item.getId() && !['page', 'navigation', 'dishesMenu', 'locations', 'socials', 'copyright'].includes(item.getId()!),
+        (item) => item.getId() && ![
+          'page',
+          'navigation',
+          'dishesMenu',
+          'locations',
+          'post',
+          'socials',
+          'copyright',
+          'settings',
+        ].includes(item.getId()!),
       ),
     ])

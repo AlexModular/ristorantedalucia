@@ -99,7 +99,7 @@ export default function TextWithIllustration({item}: {item: TransformedTextWithI
           {item.imagePosition === 'left' && renderImage(imageClasses)}
           
           <div className={textClasses} data-aos={txtAosFx}>
-            <h2 className={`family-playfair ${hasBg ? textColorClasses : 'text-white'} ${hasBg ? 'text-4xl md:text-5xl mb-8' : 'mb-6'}`}>
+            <h2 className={`family-playfair ${hasBg ? textColorClasses : 'text-foreground'} ${hasBg ? 'text-4xl md:text-5xl mb-8' : 'mb-6'}`}>
               {item.heading}
             </h2>
             
@@ -109,7 +109,7 @@ export default function TextWithIllustration({item}: {item: TransformedTextWithI
             {/* Mobile Image (Top layout) */}
             {item.imagePosition === 'top' && renderImage("py-4 md:hidden")}
  
-            <div className={`portable-text-container ${hasBg ? textColorClasses : 'text-white'} ${hasBg ? 'text-lg md:text-xl leading-relaxed' : 'text-lg'}`}>
+            <div className={`portable-text-container ${hasBg ? textColorClasses : 'text-foreground'} ${hasBg ? 'text-lg md:text-xl leading-relaxed' : 'text-lg'}`}>
               <PortableText value={item?.text || []} components={components} />
             </div>
 

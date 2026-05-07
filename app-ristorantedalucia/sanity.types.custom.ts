@@ -1,5 +1,5 @@
 import { SanityImageCrop, SanityImageHotspot } from '@sanity/asset-utils';
-import { 
+import {
   Banner as SanityBanner,
   Slider as SanitySlider,
   Gallery as SanityGallery,
@@ -8,13 +8,34 @@ import {
   Form as SanityForm,
   Map as SanityMap,
   Promotion as SanityPromotion,
-  Separator as SanitySeparator
+  Separator as SanitySeparator,
+  BlockContent,
+  Icon,
 } from './sanity.types';
+
+// ─── Sanity image asset reference ───────────────────────────────────────────
+type SanityImageAssetRef = {
+  _ref: string;
+  _type: 'reference';
+  _weak?: boolean;
+};
+
+// ─── Sanity image with asset fields ─────────────────────────────────────────
+type SanityImageWithMeta = {
+  asset?: SanityImageAssetRef;
+  media?: unknown;
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  _type: 'image';
+};
+
+// ─── Transformed types ──────────────────────────────────────────────────────
 
 export type TransformedBanner = Omit<SanityBanner, 'heading' | 'subtitle' | 'text'> & {
   heading?: string;
   subtitle?: string;
-  text?: any;
+  /** Localised PortableText array resolved to the current locale */
+  text?: BlockContent;
 };
 
 export type TransformedVideo = Omit<SanityVideo, 'videoLabel'> & {
@@ -28,9 +49,9 @@ export type TransformedSlider = Omit<SanitySlider, 'heading' | 'subtitle'> & {
 };
 
 export type TransformedSlideshow = {
-  _type: "slideshow";
+  _type: 'slideshow';
   images?: Array<{
-    asset?: { _ref: string; _type: "reference" };
+    asset?: SanityImageAssetRef;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
@@ -39,16 +60,20 @@ export type TransformedSlideshow = {
     ctaText?: string;
     link?: { slug?: string };
     externalUrl?: string;
-    logo?: any;
-    _type: "image";
+    logo?: SanityImageWithMeta;
+    _type: 'image';
     _key: string;
   }>;
   effect?: 'fade' | 'slide' | 'creative' | 'coverflow';
 };
 
-export type TransformedTextWithIllustration = Omit<SanityTextWithIllustration, 'heading' | 'text'> & {
+export type TransformedTextWithIllustration = Omit<
+  SanityTextWithIllustration,
+  'heading' | 'text'
+> & {
   heading?: string;
-  text?: any;
+  /** Localised PortableText array resolved to the current locale */
+  text?: BlockContent;
   backgroundFixed?: boolean;
   hasOverlay?: boolean;
   overlayColor?: 'dark' | 'light';
@@ -87,10 +112,12 @@ export type TransformedDishesMenu = {
   _ref: string;
   menu: {
     title?: string;
-    introText?: any;
+    /** Localised PortableText array resolved to the current locale */
+    introText?: BlockContent;
     categories?: Array<{
       title?: string;
-      icon?: any;
+      /** Sanity Iconify Icon object */
+      icon?: Icon;
       flaticonClass?: string;
       dishes?: Array<{
         title?: string;
@@ -99,14 +126,27 @@ export type TransformedDishesMenu = {
         subcategory?: string;
       }>;
     }>;
-  }
+  };
 };
+
+/** Lucide icon name as typed by the Sanity quickActionsType schema */
+export type QuickActionIconName =
+  | 'Calendar'
+  | 'Camera'
+  | 'Clock'
+  | 'Info'
+  | 'Mail'
+  | 'MapPin'
+  | 'Phone'
+  | 'Star'
+  | 'Users'
+  | 'Utensils';
 
 export type TransformedQuickActions = {
   _type: 'quickActions';
   actions?: Array<{
     label?: string;
-    icon?: string;
+    icon?: QuickActionIconName | null;
     isPrimary?: boolean;
     link?: {
       slug?: string;
@@ -116,16 +156,16 @@ export type TransformedQuickActions = {
   }>;
 };
 
-export type PageBlock = 
-  | TransformedBanner 
-  | TransformedVideo 
-  | TransformedSlider 
-  | TransformedSlideshow 
-  | TransformedGallery 
-  | TransformedTextWithIllustration 
-  | TransformedForm 
-  | TransformedMap 
-  | TransformedPromotion 
-  | TransformedDishesMenu 
+export type PageBlock =
+  | TransformedBanner
+  | TransformedVideo
+  | TransformedSlider
+  | TransformedSlideshow
+  | TransformedGallery
+  | TransformedTextWithIllustration
+  | TransformedForm
+  | TransformedMap
+  | TransformedPromotion
+  | TransformedDishesMenu
   | TransformedQuickActions
   | SanitySeparator;

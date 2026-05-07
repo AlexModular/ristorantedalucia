@@ -17,6 +17,7 @@ import 'swiper/css/scrollbar';
 import { Metadata } from 'next';
 import { sanityFetch } from "@/sanity/lib/live"
 import { COPYRIGHT_QUERY, HEADERMENU_QUERY, LOCATIONS_QUERY, SOCIALS_QUERY, SETTINGS_QUERY } from "@/sanity/lib/queries"
+import { urlFor } from "@/sanity/lib/image"
 import Footer from "@/components/Footer";
 import { ReCaptchaProvider } from "next-recaptcha-v3";
 import { NextIntlClientProvider } from 'next-intl';
@@ -43,25 +44,36 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const host = (await headers()).get('host') || '';
   const isVercel = host.includes('.vercel');
 
+  const { data: settings } = await sanityFetch({ query: SETTINGS_QUERY, params: { locale } });
+
+  const siteName = 'Ristorante Da Lucia';
+  const defaultDescription = locale === 'it'
+    ? 'Cucina tradizionale e di pesce nel cuore di Bologna. Piatti genuini, pesce fresco e un\'atmosfera autentica a pochi passi dal centro.'
+    : 'Traditional Italian and seafood cuisine in the heart of Bologna. Honest, flavourful dishes in a warm atmosphere, just a short walk from the city centre.';
+
+  const ogImageUrl = settings?.ogImage
+    ? urlFor(settings.ogImage).width(1200).height(630).url()
+    : 'https://ristorantedalucia.it/images/og-home.jpg';
+
   return {
     title: {
-      default: 'Ristorante Enoteca Da Lucia',
-      template: '%s - Ristorante Enoteca Da Lucia',
+      default: siteName,
+      template: `%s | ${siteName}`,
     },
-    description: 'Ristorante Enoteca Da Lucia - Cucina tipica toscana nel cuore di Roma.',
+    description: defaultDescription,
     metadataBase: new URL('https://ristorantedalucia.it'),
     openGraph: {
-      title: 'Ristorante Enoteca Da Lucia',
-      description: 'Ristorante Enoteca Da Lucia - Cucina tipica toscana nel cuore di Roma.',
+      title: siteName,
+      description: defaultDescription,
       url: 'https://ristorantedalucia.it',
-      siteName: 'Ristorante Enoteca Da Lucia',
+      siteName,
       images: [
         {
-          url: 'https://ristorantedalucia.it/images/logo.png',
-          width: 800,
-          height: 125,
-          alt: 'Ristorante Enoteca Da Lucia',
-          type: 'image/png',
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: siteName,
+          type: 'image/jpeg',
         },
       ],
       locale: locale === 'it' ? 'it-IT' : 'en-US',
