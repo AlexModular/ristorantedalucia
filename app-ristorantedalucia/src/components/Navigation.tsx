@@ -62,7 +62,6 @@ export default function Navbar({
       // We check ALL sections with data-header-theme, not just trigger ones
       const allSections = document.querySelectorAll<HTMLElement>('[data-header-theme]');
       let topSection: HTMLElement | null = null;
-      let topSectionBottom = 0;
 
       allSections.forEach((el) => {
         const rect = el.getBoundingClientRect();
@@ -70,7 +69,6 @@ export default function Navbar({
         // and its top is above the middle of the nav
         if (rect.bottom > NAV_HEIGHT && rect.top < NAV_HEIGHT) {
           topSection = el;
-          topSectionBottom = rect.bottom;
         }
       });
 
@@ -119,9 +117,6 @@ export default function Navbar({
     (theme === 'auto' &&
       typeof window !== 'undefined' &&
       window.matchMedia('(prefers-color-scheme: dark)').matches);
-  (theme === 'auto' &&
-    typeof window !== 'undefined' &&
-    window.matchMedia('(prefers-color-scheme: dark)').matches);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const openMega = useCallback((item: NavItem) => {
