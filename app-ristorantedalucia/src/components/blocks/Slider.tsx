@@ -55,6 +55,7 @@ export default function Slider(params: {key: number, item: TransformedSlider}) {
                     fill
                     className="object-cover rounded-lg shadow-2xl"
                     sizes="(max-width: 768px) 80vw, (max-width: 1200px) 50vw, 40vw"
+                    priority={index < 5}
                   />
                 </div>
               </SwiperSlide>

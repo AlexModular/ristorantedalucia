@@ -1,6 +1,9 @@
-import { sanityFetch } from "@/sanity/lib/live";
 import { LOCATION_QUERY, LOCATIONS_PATHS_QUERY } from "@/sanity/lib/queries";
 import { client } from "@/sanity/lib/client";
+
+// Revalidate every 60 seconds (ISR) instead of relying on Live API
+// which calls draftMode() and breaks static generation.
+export const revalidate = 60;
 import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -24,7 +27,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
-  const { data: location } = await sanityFetch({ query: LOCATION_QUERY, params: { locale, slug } });
+  const location = await client.fetch(LOCATION_QUERY, { locale, slug });
   if (!location) return {};
 
   const siteName = "Ristorante Da Lucia";
@@ -63,7 +66,7 @@ export default async function LocationPage({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
-  const { data: location } = await sanityFetch({ query: LOCATION_QUERY, params: { locale, slug } });
+  const location = await client.fetch(LOCATION_QUERY, { locale, slug });
 
   if (!location) notFound();
 
