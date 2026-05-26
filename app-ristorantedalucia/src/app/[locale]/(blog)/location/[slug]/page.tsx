@@ -34,11 +34,29 @@ function localStr(
 }
 
 export async function generateStaticParams() {
-  // Use direct client — generateStaticParams runs at build time outside
-  // any request scope, so draftMode() inside sanityFetch would throw.
   type LocationSlug = { slug: string | null };
   const locations = await client.fetch<LocationSlug[]>(LOCATIONS_PATHS_QUERY);
-  return (locations ?? []).map((l) => ({ slug: l.slug ?? "" }));
+
+  // Definisci gli array dei locali supportati (puoi anche importarli 
+  // dal tuo file di configurazione i18n se lo hai centralizzato)
+  const locales = ["it", "en"];
+
+  const params: { locale: string; slug: string }[] = [];
+
+  // Cicla su ogni location di Sanity
+  (locations ?? []).forEach((l) => {
+    if (l.slug) {
+      // Per ogni location, crea una rotta per ogni lingua
+      locales.forEach((locale) => {
+        params.push({
+          locale: locale,
+          slug: l.slug
+        });
+      });
+    }
+  });
+
+  return params;
 }
 
 export async function generateMetadata({
