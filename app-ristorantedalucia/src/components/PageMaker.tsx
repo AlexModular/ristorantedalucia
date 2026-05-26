@@ -93,10 +93,21 @@ type PageMakerInput =
 export default function PageMaker({ page }: { page: PageMakerInput }) {
   if (!page) return null;
   const pageBuilder = (page.pageBuilder as PageBlock[]) || [];
-  const slug = 'slug' in page && page.slug ? page.slug : undefined;
+
   const fullWidth = 'fullWidth' in page && page.fullWidth ? true : false;
+
+  // slug can be string | { current?: string } | null[] after localizedSlug migration —
+  // normalize to a plain string for the className check.
+  const rawSlug = 'slug' in page ? page.slug : undefined;
+  const slugStr: string =
+    typeof rawSlug === 'string'
+      ? rawSlug
+      : Array.isArray(rawSlug)
+        ? String((rawSlug as (string | null)[]).find((v) => typeof v === 'string') ?? '')
+        : (rawSlug as { current?: string | null } | null | undefined)?.current ?? '';
+
   return (
-    <div className={slug?.current?.includes('home') ? "homepage" : ("page-content" + (fullWidth ? " full-width" : ""))}>
+    <div className={slugStr.includes('home') ? "homepage" : ("page-content" + (fullWidth ? " full-width" : ""))}>
       {pageBuilder?.map((item, index) => {
         return makeBlock(item, index);
       })}

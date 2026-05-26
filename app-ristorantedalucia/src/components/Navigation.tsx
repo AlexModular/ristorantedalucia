@@ -28,8 +28,9 @@ function resolveText(text: LocalizableText, locale: string): string {
   return preferred?.trim() ? preferred : (locale === 'en' ? loc.it : loc.en) ?? '';
 }
 
-function resolveHref(slug?: string | null, externalUrl?: string | null): string {
-  if (slug) return slug === 'home' ? '/' : `/${slug}`;
+function resolveHref(slug?: string | null | null[] | string[], externalUrl?: string | null): string {
+  const s = Array.isArray(slug) ? (slug as (string | null)[]).find((v) => typeof v === 'string') ?? null : slug;
+  if (s) return s === 'home' ? '/' : `/${s}`;
   return externalUrl ?? '#';
 }
 
@@ -301,7 +302,7 @@ export default function Navbar({
 
             {/* Logo */}
             <div className="logo-container">
-              <Link href="/" className="logo">
+              <Link href="/" className="logo" aria-label="Ristorante Da Lucia — torna alla homepage">
                 <Logo
                   className={`w-full h-full transition-all duration-500 ${useWhiteLogo ? 'text-white' : 'text-foreground'}`}
                   width={headerIsTransparent ? 140 : 110}

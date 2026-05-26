@@ -76,14 +76,9 @@ export const locationsType = defineType({
     defineField({
       name: 'slug',
       title: 'Slug (URL della pagina)',
-      description: 'Genera automaticamente dallo slug. Es: bologna-centro → /it/location/bologna-centro',
-      type: 'slug',
+      description: 'Es: it=bologna-centro → /it/location/bologna-centro | en=bologna-downtown → /en/location/bologna-downtown',
+      type: 'localizedSlug',
       group: 'page',
-      options: {
-        source: 'city',
-        maxLength: 96,
-        isUnique: (value, context) => context.defaultIsUnique(value, context),
-      },
     }),
     defineField({
       name: 'heroImage',
@@ -93,7 +88,7 @@ export const locationsType = defineType({
       group: 'page',
       options: { hotspot: true },
       fields: [
-        defineField({ name: 'alt', type: 'string', title: 'Alt text' })
+        defineField({ name: 'alt', type: 'localizedString', title: 'Alt text' })
       ],
     }),
     defineField({

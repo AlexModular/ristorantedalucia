@@ -65,7 +65,7 @@ export const textWithIllustrationType = defineType({
       fields: [
         defineField({
           name: 'alt',
-          type: 'string',
+          type: 'localizedString',
           title: 'Alternative text',
         }),
       ],

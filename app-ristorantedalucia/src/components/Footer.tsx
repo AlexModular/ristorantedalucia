@@ -36,7 +36,7 @@ export default function Footer({ locations, socials, copyright }: { locations: L
           />
         </div>
         <div className="locations md:col-span-2 lg:col-span-2 px-5">
-          <h5 className="text-center family-playfair md:text-left">{t('whereWeAre')}</h5>
+          <p className="text-center family-playfair md:text-left footer-section-label">{t('whereWeAre')}</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {locations && locations.map((location, index) => (
               <div className={`md:text-left text-center pb-6 footer-location-${index}`} key={index}>
@@ -58,7 +58,7 @@ export default function Footer({ locations, socials, copyright }: { locations: L
           </div>
         </div>
         <div className="md:text-left text-center px-5 pb-8">
-          <h5 className="family-playfair">{t('followUs')}</h5>
+          <p className="family-playfair footer-section-label">{t('followUs')}</p>
           <div className="footer-socials flex justify-center md:justify-start gap-4">
             {socials && socials.map((social, index) => (
               <Link href={social.link || '#'} target="__blank" title={social.title} className="social-icon-wrapper" key={index} aria-label={`Seguici su ${social.title}`}>

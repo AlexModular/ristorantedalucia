@@ -26,7 +26,7 @@ export const imageGalleryType = defineType({
           fields: [
             {
               name: 'alt',
-              type: 'string',
+              type: 'localizedString',
               title: 'Alternative text',
             },
           ],

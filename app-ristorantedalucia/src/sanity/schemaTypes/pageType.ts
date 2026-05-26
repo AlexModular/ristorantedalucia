@@ -17,11 +17,7 @@ export const pageType = defineType({
     defineField({
       name: 'slug',
       title: 'Slug',
-      type: 'slug',
-      options: {
-        maxLength: 96,
-        isUnique: (value, context) => context.defaultIsUnique(value, context),
-      },
+      type: 'localizedSlug',
       validation: (rule) => rule.required()
     }),
     defineField({name: 'metaTitle', type: 'localizedString'}),
@@ -143,7 +139,7 @@ export const pageType = defineType({
   preview: {
     select: {
       title: 'title.it',
-      slug: 'slug.current',
+      slug: 'slug.it.current',
       media: 'introImage'
     },
     prepare({ title, slug, media }) {

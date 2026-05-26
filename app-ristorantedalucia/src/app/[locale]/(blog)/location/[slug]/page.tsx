@@ -10,6 +10,7 @@ import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import type { Metadata } from "next";
 import type { LocalizedString, LocalizedBlockContent, BlockContent, LOCATION_QUERYResult } from "@/../sanity.types";
 import type { PageBlock } from "@/../sanity.types.custom";
+import { resolveAlt } from "@/lib/resolveAlt";
 
 // Revalidate every 60 seconds (ISR) instead of relying on Live API
 // which calls draftMode() and breaks static generation.
@@ -67,27 +68,15 @@ function resolveBlockContent(
 }
 
 export async function generateStaticParams() {
-  type LocationSlug = { slug: string | null };
-  const locations = await client.fetch<LocationSlug[]>(LOCATIONS_PATHS_QUERY);
-
-  // Definisci gli array dei locali supportati (puoi anche importarli 
-  // dal tuo file di configurazione i18n se lo hai centralizzato)
-  const locales = ["it", "en"];
+  type LocationSlugs = { slugIt: string; slugEn: string };
+  const locations = await client.fetch<LocationSlugs[]>(LOCATIONS_PATHS_QUERY);
 
   const params: { locale: string; slug: string }[] = [];
 
-  // Cicla su ogni location di Sanity
   (locations ?? []).forEach((l) => {
-    const slug = l.slug;
-    if (slug) {
-      // Per ogni location, crea una rotta per ogni lingua
-      locales.forEach((locale) => {
-        params.push({
-          locale: locale,
-          slug: slug,
-        });
-      });
-    }
+    if (l.slugIt) params.push({ locale: 'it', slug: l.slugIt });
+    // EN slug falls back to IT slug when not set (safe for existing content)
+    if (l.slugEn) params.push({ locale: 'en', slug: l.slugEn });
   });
 
   return params;
@@ -163,7 +152,7 @@ export default async function LocationPage({
         >
           <Image
             src={urlFor(location.heroImage).width(1920).height(1080).url()}
-            alt={(location.heroImage as { alt?: string }).alt ?? localStr(location.title, locale) ?? ""}
+            alt={resolveAlt(location.heroImage?.alt, locale, localStr(location.title, locale) ?? '')}
             fill
             className="object-cover"
             priority

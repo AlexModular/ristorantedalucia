@@ -22,7 +22,7 @@ export const imageSliderType = defineType({
       fields: [
         {
           name: 'alt',
-          type: 'string',
+          type: 'localizedString',
           title: 'Alternative text',
         },
       ],
@@ -45,7 +45,7 @@ export const imageSliderType = defineType({
           fields: [
             {
               name: 'alt',
-              type: 'string',
+              type: 'localizedString',
               title: 'Alternative text',
             },
           ],

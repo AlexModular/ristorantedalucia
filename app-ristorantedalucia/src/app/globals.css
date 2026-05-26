@@ -202,3 +202,11 @@ p {
 .iub__us-widget {
   display: none !important;
 }
+
+/* ── A11y: Swiper pagination bullets — minimum tap target (WCAG 2.5.5) ──────── */
+/* Bullets stay visually small, but gain invisible padding for touch */
+.swiper-pagination-bullet {
+  padding: 10px;
+  box-sizing: content-box;
+  background-clip: content-box;
+}

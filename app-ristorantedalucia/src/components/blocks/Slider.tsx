@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { A11y, Pagination, Navigation } from 'swiper/modules';
 import Image from 'next/image'
 import { urlFor } from "@/sanity/lib/image";
+import { resolveAlt } from "@/lib/resolveAlt";
 
 // Import Swiper styles
 import 'swiper/css/bundle';
@@ -51,7 +52,7 @@ export default function Slider(params: {key: number, item: TransformedSlider}) {
                 <div className="relative w-full h-[300px] md:h-[400px] lg:h-[600px]">
                   <Image 
                     src={urlFor(item).width(1200).url()} 
-                    alt={item?.alt ?? `Slide #${index}`} 
+                    alt={resolveAlt(item?.alt, 'it', `Slide #${index}`)}
                     fill
                     className="object-cover rounded-lg shadow-2xl"
                     sizes="(max-width: 768px) 80vw, (max-width: 1200px) 50vw, 40vw"

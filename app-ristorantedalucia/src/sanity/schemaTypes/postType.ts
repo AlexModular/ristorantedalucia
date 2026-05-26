@@ -22,13 +22,8 @@ export const postType = defineType({
     defineField({
       name: 'slug',
       title: 'Slug',
-      type: 'slug',
+      type: 'localizedSlug',
       group: 'content',
-      options: {
-        source: 'title.it',
-        maxLength: 96,
-        isUnique: (value, context) => context.defaultIsUnique(value, context),
-      },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -62,7 +57,7 @@ export const postType = defineType({
       group: 'content',
       options: { hotspot: true },
       fields: [
-        defineField({ name: 'alt', type: 'string', title: 'Alt text' })
+        defineField({ name: 'alt', type: 'localizedString', title: 'Alt text' })
       ],
     }),
     defineField({

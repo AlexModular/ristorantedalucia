@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { A11y, Pagination, Navigation, Autoplay, EffectCreative, EffectFade } from 'swiper/modules';
 import Image from 'next/image'
 import { urlFor } from "@/sanity/lib/image";
+import { resolveAlt } from "@/lib/resolveAlt";
 
 // Import Swiper styles
 import 'swiper/css/bundle';
@@ -78,7 +79,7 @@ export default function Slideshow(params: { key: number, item: TransformedSlides
               <SwiperSlide key={index} itemID={`${index}`} className="relative">
                 <Image
                   src={urlFor(item).width(2560).url()}
-                  alt={item?.alt ?? `Slide #${index}`}
+                  alt={resolveAlt(item?.alt, 'it', `Slide #${index}`)}
                   fill
                   className="object-cover"
                   priority={index === 0}

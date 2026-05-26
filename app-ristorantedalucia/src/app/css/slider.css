@@ -32,6 +32,12 @@
   background: var(--gold);
   opacity: 0.5;
   transition: all 0.3s ease;
+  /* A11y: ensure tap target ≥ 44×44px via padding (visual size stays small) */
+  width: 8px;
+  height: 8px;
+  padding: 10px;
+  box-sizing: content-box;
+  background-clip: content-box;
 }
 
 .slider-container .swiper-pagination .swiper-pagination-bullet-active {

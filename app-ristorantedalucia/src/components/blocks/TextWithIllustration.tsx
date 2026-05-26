@@ -1,5 +1,6 @@
 import { TransformedTextWithIllustration } from '../../../sanity.types.custom';
 import { getProportions, urlFor } from "@/sanity/lib/image";
+import { resolveAlt } from "@/lib/resolveAlt";
 import { PortableText } from "@portabletext/react";
 import React from "react";
 import { components } from "../PortableTextComponents";
@@ -63,7 +64,7 @@ export default function TextWithIllustration({item}: {item: TransformedTextWithI
           src={urlFor(item.image).width(w).height(h).url()} 
           width={w} 
           height={h} 
-          alt={item.image?.alt || item.heading || "Illustration"} 
+          alt={resolveAlt(item.image?.alt, 'it', item.heading ?? 'Illustration')}
           className="mx-auto rounded-lg shadow-xl object-cover"
         />
       </div>

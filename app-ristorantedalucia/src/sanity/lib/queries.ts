@@ -14,8 +14,8 @@ export const HEADERMENU_QUERY = defineQuery(`*[navId.current match "main-menu*"]
     ][0]{
       _type,
       'slug': select(
-        _type == "locations" => "location/" + slug.current,
-        slug.current
+        _type == "locations" => "location/" + coalesce(slug[$locale].current, slug.it.current),
+        coalesce(slug[$locale].current, slug.it.current)
       )
     },
     'externalUrl': navigationItemUrl.externalUrl,
@@ -31,8 +31,8 @@ export const HEADERMENU_QUERY = defineQuery(`*[navId.current match "main-menu*"]
       ][0]{
         _type,
         'slug': select(
-          _type == "locations" => "location/" + slug.current,
-          slug.current
+          _type == "locations" => "location/" + coalesce(slug[$locale].current, slug.it.current),
+          coalesce(slug[$locale].current, slug.it.current)
         )
       },
       'externalUrl': url.externalUrl,
@@ -65,10 +65,10 @@ export const COPYRIGHT_QUERY = defineQuery(`*[_type == "copyright"][0].content{
   "en": en
 }[$locale]`)
 
-export const HOMEPAGE_QUERY = defineQuery(`*[slug.current match "home*"][0]{
+export const HOMEPAGE_QUERY = defineQuery(`*[slug.it.current match "home*"][0]{
   "title": coalesce(title[$locale], title.it, title),
   "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),
-  slug,
+  "slug": coalesce(slug[$locale].current, slug.it.current),
   "metaTitle": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),
   "metaDescription": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),
   fullWidth,
@@ -97,9 +97,15 @@ export const HOMEPAGE_QUERY = defineQuery(`*[slug.current match "home*"][0]{
       _type,
       "heading": coalesce(heading[$locale], heading.it, heading),
       "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),
-      backgroundImage,
+      backgroundImage {
+        ...,
+        "alt": coalesce(alt[$locale], alt.it, alt)
+      },
       backgroundFixed,
-      images
+      images[] {
+        ...,
+        "alt": coalesce(alt[$locale], alt.it, alt)
+      }
     },
     _type == "slideshow" => {
       _type,
@@ -107,7 +113,7 @@ export const HOMEPAGE_QUERY = defineQuery(`*[slug.current match "home*"][0]{
         asset,
         hotspot,
         crop,
-        alt,
+        "alt": coalesce(alt[$locale], alt.it, alt),
         "heading": coalesce(heading[$locale], heading.it, heading),
         "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),
         logo,
@@ -122,7 +128,10 @@ export const HOMEPAGE_QUERY = defineQuery(`*[slug.current match "home*"][0]{
       _type,
       "heading": coalesce(heading[$locale], heading.it, heading),
       "text": coalesce(text[$locale], text.it, text),
-      image,
+      image {
+        ...,
+        "alt": coalesce(alt[$locale], alt.it, alt)
+      },
       backgroundImage,
       backgroundFixed,
       hasOverlay,
@@ -134,7 +143,10 @@ export const HOMEPAGE_QUERY = defineQuery(`*[slug.current match "home*"][0]{
       _type,
       "heading": coalesce(heading[$locale], heading.it, heading),
       "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),
-      images
+      images[] {
+        ...,
+        "alt": coalesce(alt[$locale], alt.it, alt)
+      }
     },
     _type == "form" => {
       _type,
@@ -190,10 +202,13 @@ export const HOMEPAGE_QUERY = defineQuery(`*[slug.current match "home*"][0]{
   },
 }`)
 
-export const PAGE_QUERY = defineQuery(`*[slug.current == $slug][0]{
+export const PAGE_QUERY = defineQuery(`*[
+  _type == "page" &&
+  coalesce(slug[$locale].current, slug.it.current) == $slug
+][0]{
   "title": coalesce(title[$locale], title.it, title),
   "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),
-  slug,
+  "slug": coalesce(slug[$locale].current, slug.it.current),
   "metaTitle": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),
   "metaDescription": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),
   introImage,
@@ -223,9 +238,15 @@ export const PAGE_QUERY = defineQuery(`*[slug.current == $slug][0]{
       _type,
       "heading": coalesce(heading[$locale], heading.it, heading),
       "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),
-      backgroundImage,
+      backgroundImage {
+        ...,
+        "alt": coalesce(alt[$locale], alt.it, alt)
+      },
       backgroundFixed,
-      images
+      images[] {
+        ...,
+        "alt": coalesce(alt[$locale], alt.it, alt)
+      }
     },
     _type == "slideshow" => {
       _type,
@@ -233,12 +254,12 @@ export const PAGE_QUERY = defineQuery(`*[slug.current == $slug][0]{
         asset,
         hotspot,
         crop,
-        alt,
+        "alt": coalesce(alt[$locale], alt.it, alt),
         "heading": coalesce(heading[$locale], heading.it, heading),
         "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),
         logo,
         'link': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{
-          'slug': slug.current
+          'slug': coalesce(slug[$locale].current, slug.it.current)
         },
         'externalUrl': cta.navigationItemUrl.externalUrl,
         'ctaText': coalesce(cta.text[$locale], cta.text.it, cta.text)
@@ -248,7 +269,10 @@ export const PAGE_QUERY = defineQuery(`*[slug.current == $slug][0]{
       _type,
       "heading": coalesce(heading[$locale], heading.it, heading),
       "text": coalesce(text[$locale], text.it, text),
-      image,
+      image {
+        ...,
+        "alt": coalesce(alt[$locale], alt.it, alt)
+      },
       backgroundImage,
       backgroundFixed,
       imagePosition,
@@ -258,7 +282,10 @@ export const PAGE_QUERY = defineQuery(`*[slug.current == $slug][0]{
       _type,
       "heading": coalesce(heading[$locale], heading.it, heading),
       "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),
-      images
+      images[] {
+        ...,
+        "alt": coalesce(alt[$locale], alt.it, alt)
+      }
     },
     _type == "form" => {
       _type,
@@ -305,7 +332,7 @@ export const PAGE_QUERY = defineQuery(`*[slug.current == $slug][0]{
         icon,
         isPrimary,
         "link": {
-          "slug": *[_type == "page" && _id == ^.link.internalLink._ref][0].slug.current,
+          "slug": coalesce(*[_type == "page" && _id == ^.link.internalLink._ref][0].slug[$locale].current, *[_type == "page" && _id == ^.link.internalLink._ref][0].slug.it.current),
           "externalUrl": link.externalUrl,
           "phone": link.phone
         }
@@ -316,12 +343,18 @@ export const PAGE_QUERY = defineQuery(`*[slug.current == $slug][0]{
 
 // ─── Location page ────────────────────────────────────────────────────────────
 
-export const LOCATION_QUERY = defineQuery(`*[_type == "locations" && slug.current == $slug][0]{
+export const LOCATION_QUERY = defineQuery(`*[
+  _type == "locations" &&
+  coalesce(slug[$locale].current, slug.it.current) == $slug
+][0]{
   "title": coalesce(title[$locale], title.it, title),
   "metaTitle": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),
   "metaDescription": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),
-  slug,
-  heroImage,
+  "slug": coalesce(slug[$locale].current, slug.it.current),
+  heroImage {
+    ...,
+    "alt": coalesce(alt[$locale], alt.it, alt)
+  },
   "description": coalesce(description[$locale], description.it, description),
   city,
   address,
@@ -342,7 +375,10 @@ export const LOCATION_QUERY = defineQuery(`*[_type == "locations" && slug.curren
       _type,
       "heading": coalesce(heading[$locale], heading.it, heading),
       "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),
-      images
+      images[] {
+        ...,
+        "alt": coalesce(alt[$locale], alt.it, alt)
+      }
     },
     _type == "slideshow" => {
       _type,
@@ -350,12 +386,12 @@ export const LOCATION_QUERY = defineQuery(`*[_type == "locations" && slug.curren
         asset,
         hotspot,
         crop,
-        alt,
+        "alt": coalesce(alt[$locale], alt.it, alt),
         "heading": coalesce(heading[$locale], heading.it, heading),
         "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),
         logo,
         'link': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{
-          'slug': slug.current
+          'slug': coalesce(slug[$locale].current, slug.it.current)
         },
         'externalUrl': cta.navigationItemUrl.externalUrl,
         'ctaText': coalesce(cta.text[$locale], cta.text.it, cta.text)
@@ -365,15 +401,24 @@ export const LOCATION_QUERY = defineQuery(`*[_type == "locations" && slug.curren
       _type,
       "heading": coalesce(heading[$locale], heading.it, heading),
       "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),
-      backgroundImage,
+      backgroundImage {
+        ...,
+        "alt": coalesce(alt[$locale], alt.it, alt)
+      },
       backgroundFixed,
-      images
+      images[] {
+        ...,
+        "alt": coalesce(alt[$locale], alt.it, alt)
+      }
     },
     _type == "textWithIllustration" => {
       _type,
       "heading": coalesce(heading[$locale], heading.it, heading),
       "text": coalesce(text[$locale], text.it, text),
-      image,
+      image {
+        ...,
+        "alt": coalesce(alt[$locale], alt.it, alt)
+      },
       backgroundImage,
       backgroundFixed,
       imagePosition,
@@ -417,7 +462,7 @@ export const LOCATION_QUERY = defineQuery(`*[_type == "locations" && slug.curren
         "label": coalesce(label[$locale], label.it, label),
         icon, isPrimary,
         "link": {
-          "slug": *[_type == "page" && _id == ^.link.internalLink._ref][0].slug.current,
+          "slug": coalesce(*[_type == "page" && _id == ^.link.internalLink._ref][0].slug[$locale].current, *[_type == "page" && _id == ^.link.internalLink._ref][0].slug.it.current),
           "externalUrl": link.externalUrl,
           "phone": link.phone
         }
@@ -427,7 +472,10 @@ export const LOCATION_QUERY = defineQuery(`*[_type == "locations" && slug.curren
 }`)
 
 export const LOCATIONS_PATHS_QUERY = defineQuery(
-  `*[_type == "locations" && defined(slug.current)]{ "slug": slug.current }`
+  `*[_type == "locations" && defined(slug.it.current)]{
+    "slugIt": slug.it.current,
+    "slugEn": coalesce(slug.en.current, slug.it.current)
+  }`
 )
 
 // ─── News & Events ────────────────────────────────────────────────────────────
@@ -436,10 +484,13 @@ export const POSTS_QUERY = defineQuery(`
   *[_type == "post"] | order(publishedAt desc) [$offset...$limit] {
     "title": coalesce(title[$locale], title.it, title),
     "excerpt": coalesce(excerpt[$locale], excerpt.it, excerpt),
-    slug,
+    "slug": coalesce(slug[$locale].current, slug.it.current),
     publishedAt,
     category,
-    coverImage
+    coverImage {
+      ...,
+      "alt": coalesce(alt[$locale], alt.it, alt)
+    }
   }
 `)
 
@@ -447,7 +498,10 @@ export const POSTS_COUNT_QUERY = defineQuery(
   `count(*[_type == "post"])`
 )
 
-export const POST_QUERY = defineQuery(`*[_type == "post" && slug.current == $slug][0]{
+export const POST_QUERY = defineQuery(`*[
+  _type == "post" &&
+  coalesce(slug[$locale].current, slug.it.current) == $slug
+][0]{
   "title": coalesce(title[$locale], title.it, title),
   "excerpt": coalesce(excerpt[$locale], excerpt.it, excerpt),
   "metaTitle": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),
@@ -456,5 +510,8 @@ export const POST_QUERY = defineQuery(`*[_type == "post" && slug.current == $slu
   slug,
   publishedAt,
   category,
-  coverImage
+  coverImage {
+    ...,
+    "alt": coalesce(alt[$locale], alt.it, alt)
+  }
 }`)

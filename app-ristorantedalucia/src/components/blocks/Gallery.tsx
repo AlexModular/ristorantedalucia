@@ -3,6 +3,7 @@
 import { TransformedGallery } from "../../../sanity.types.custom";
 import { urlFor } from "@/sanity/lib/image";
 import AOSComponent from "../AOS";
+import { resolveAlt } from "@/lib/resolveAlt";
 import lightGallery from 'lightgallery';
 import lgThumbnail from 'lightgallery/plugins/thumbnail';
 import lgZoom from 'lightgallery/plugins/zoom';
@@ -48,7 +49,7 @@ export default function Gallery({item}: {item: TransformedGallery}) {
                 src={urlFor(image).width(400).height(400).url()} 
                 width={400}
                 height={400}
-                alt={image.alt || `Gallery Image ${index} - ${item.heading}`}
+                alt={resolveAlt(image.alt, 'it', `Gallery Image ${index} - ${item.heading ?? ''}`)}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
             </div>

@@ -1,16 +1,13 @@
 import { defineField, defineType } from 'sanity'
+import { LocalizedStringInput } from '@/sanity/components/LocalizedStringInput'
 
 export const localizedString = defineType({
   title: 'Localized String',
   name: 'localizedString',
   type: 'object',
-  fieldsets: [
-    {
-      title: 'Translations',
-      name: 'translations',
-      options: { collapsible: true, collapsed: false }
-    }
-  ],
+  components: {
+    input: LocalizedStringInput,
+  },
   fields: [
     defineField({
       title: 'Italian',

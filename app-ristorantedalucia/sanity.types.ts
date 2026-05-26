@@ -20,7 +20,7 @@ export type Post = {
   _updatedAt: string;
   _rev: string;
   title?: LocalizedString;
-  slug?: Slug;
+  slug?: LocalizedSlug;
   publishedAt?: string;
   category?: "news" | "eventi" | "premi" | "stagioni";
   coverImage?: {
@@ -33,7 +33,7 @@ export type Post = {
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    alt?: string;
+    alt?: LocalizedString;
     _type: "image";
   };
   excerpt?: LocalizedString;
@@ -149,7 +149,7 @@ export type Locations = {
     _weak?: boolean;
     [internalGroqTypeReferenceTo]?: "dishesMenu";
   };
-  slug?: Slug;
+  slug?: LocalizedSlug;
   heroImage?: {
     asset?: {
       _ref: string;
@@ -160,7 +160,7 @@ export type Locations = {
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    alt?: string;
+    alt?: LocalizedString;
     _type: "image";
   };
   description?: LocalizedBlockContent;
@@ -247,7 +247,7 @@ export type Slideshow = {
     heading?: LocalizedString;
     subtitle?: LocalizedString;
     cta?: NavigationItem;
-    alt?: string;
+    alt?: LocalizedString;
     logo?: {
       asset?: {
         _ref: string;
@@ -280,7 +280,7 @@ export type Slider = {
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    alt?: string;
+    alt?: LocalizedString;
     _type: "image";
   };
   backgroundFixed?: boolean;
@@ -294,7 +294,7 @@ export type Slider = {
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    alt?: string;
+    alt?: LocalizedString;
     _type: "image";
     _key: string;
   }>;
@@ -337,7 +337,7 @@ export type Gallery = {
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    alt?: string;
+    alt?: LocalizedString;
     _type: "image";
     _key: string;
   }>;
@@ -372,7 +372,7 @@ export type TextWithIllustration = {
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    alt?: string;
+    alt?: LocalizedString;
     _type: "image";
   };
   imagePosition?: "left" | "right" | "top" | "bottom";
@@ -418,7 +418,7 @@ export type LocalizedBlockContent = {
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    alt?: string;
+    alt?: LocalizedString;
     _type: "image";
     _key: string;
   }>;
@@ -451,7 +451,7 @@ export type LocalizedBlockContent = {
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    alt?: string;
+    alt?: LocalizedString;
     _type: "image";
     _key: string;
   }>;
@@ -494,7 +494,7 @@ export type BlockContent = Array<{
   media?: unknown;
   hotspot?: SanityImageHotspot;
   crop?: SanityImageCrop;
-  alt?: string;
+  alt?: LocalizedString;
   _type: "image";
   _key: string;
 }>;
@@ -507,7 +507,7 @@ export type Page = {
   _rev: string;
   title?: LocalizedString;
   subtitle?: LocalizedString;
-  slug?: Slug;
+  slug?: LocalizedSlug;
   metaTitle?: LocalizedString;
   metaDescription?: LocalizedString;
   introImage?: {
@@ -609,6 +609,12 @@ export type NavigationItem = {
     _type: "image";
   };
   megamenuLabel?: LocalizedString;
+};
+
+export type LocalizedSlug = {
+  _type: "localizedSlug";
+  it?: Slug;
+  en?: Slug;
 };
 
 export type LocalizedString = {
@@ -781,7 +787,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = Post | QuickActions | Settings | Copyright | Socials | Social | TimeValue | Dish | DishesCategory | Map | Locations | Duration | DishesMenu | Navigation | Separator | Slideshow | Slider | Video | Form | Gallery | TextWithIllustration | Banner | LocalizedBlockContent | Promotion | BlockContent | Page | Link | NavigationItem | LocalizedString | Color | RgbaColor | HsvaColor | HslaColor | GeopointRadius | Icon | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = Post | QuickActions | Settings | Copyright | Socials | Social | TimeValue | Dish | DishesCategory | Map | Locations | Duration | DishesMenu | Navigation | Separator | Slideshow | Slider | Video | Form | Gallery | TextWithIllustration | Banner | LocalizedBlockContent | Promotion | BlockContent | Page | Link | NavigationItem | LocalizedSlug | LocalizedString | Color | RgbaColor | HsvaColor | HslaColor | GeopointRadius | Icon | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: SETTINGS_QUERY
@@ -802,16 +808,16 @@ export type SETTINGS_QUERYResult = {
   } | null;
 } | null;
 // Variable: HEADERMENU_QUERY
-// Query: *[navId.current match "main-menu*"]{  'navId': navId.current,  'items': items[] {    'link': *[      (_type == "page" || _type == "locations") &&      _id == ^.navigationItemUrl.internalLink._ref    ][0]{      _type,      'slug': select(        _type == "locations" => "location/" + slug.current,        slug.current      )    },    'externalUrl': navigationItemUrl.externalUrl,    "text": coalesce(select(text[$locale] != "" => text[$locale]), select(text.it != "" => text.it), select(text.en != "" => text.en), text),    "megamenuLabel": coalesce(select(megamenuLabel[$locale] != "" => megamenuLabel[$locale]), select(megamenuLabel.it != "" => megamenuLabel.it), select(megamenuLabel.en != "" => megamenuLabel.en)),    megamenuImage,    'children': children[] {      "text": coalesce(select(text[$locale] != "" => text[$locale]), select(text.it != "" => text.it), select(text.en != "" => text.en), text),      "description": coalesce(select(description[$locale] != "" => description[$locale]), select(description.it != "" => description.it), select(description.en != "" => description.en)),      'link': *[        (_type == "page" || _type == "locations") &&        _id == ^.url.internalLink._ref      ][0]{        _type,        'slug': select(          _type == "locations" => "location/" + slug.current,          slug.current        )      },      'externalUrl': url.externalUrl,    }  }}
+// Query: *[navId.current match "main-menu*"]{  'navId': navId.current,  'items': items[] {    'link': *[      (_type == "page" || _type == "locations") &&      _id == ^.navigationItemUrl.internalLink._ref    ][0]{      _type,      'slug': select(        _type == "locations" => "location/" + coalesce(slug[$locale].current, slug.it.current),        coalesce(slug[$locale].current, slug.it.current)      )    },    'externalUrl': navigationItemUrl.externalUrl,    "text": coalesce(select(text[$locale] != "" => text[$locale]), select(text.it != "" => text.it), select(text.en != "" => text.en), text),    "megamenuLabel": coalesce(select(megamenuLabel[$locale] != "" => megamenuLabel[$locale]), select(megamenuLabel.it != "" => megamenuLabel.it), select(megamenuLabel.en != "" => megamenuLabel.en)),    megamenuImage,    'children': children[] {      "text": coalesce(select(text[$locale] != "" => text[$locale]), select(text.it != "" => text.it), select(text.en != "" => text.en), text),      "description": coalesce(select(description[$locale] != "" => description[$locale]), select(description.it != "" => description.it), select(description.en != "" => description.en)),      'link': *[        (_type == "page" || _type == "locations") &&        _id == ^.url.internalLink._ref      ][0]{        _type,        'slug': select(          _type == "locations" => "location/" + coalesce(slug[$locale].current, slug.it.current),          coalesce(slug[$locale].current, slug.it.current)        )      },      'externalUrl': url.externalUrl,    }  }}
 export type HEADERMENU_QUERYResult = Array<{
   navId: string | null;
   items: Array<{
     link: {
       _type: "locations";
-      slug: string | null;
+      slug: null | string;
     } | {
       _type: "page";
-      slug: string | null;
+      slug: Array<null> | string | null;
     } | null;
     externalUrl: string | null;
     text: Array<{
@@ -849,10 +855,10 @@ export type HEADERMENU_QUERYResult = Array<{
       }> | string | null;
       link: {
         _type: "locations";
-        slug: string | null;
+        slug: null | string;
       } | {
         _type: "page";
-        slug: string | null;
+        slug: Array<null> | string | null;
       } | null;
       externalUrl: string | null;
     }> | null;
@@ -889,7 +895,7 @@ export type LOCATIONS_QUERYResult = Array<{
 // Query: *[_type == "copyright"][0].content{  "it": coalesce(it, ^.content),  "en": en}[$locale]
 export type COPYRIGHT_QUERYResult = null;
 // Variable: HOMEPAGE_QUERY
-// Query: *[slug.current match "home*"][0]{  "title": coalesce(title[$locale], title.it, title),  "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),  slug,  "metaTitle": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),  "metaDescription": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),  fullWidth,  backgroundImage,  backgroundFixed,  theme,  pageBuilder[]{    _type == "video" => {      _type,      videoLabel,      cssClasses,      file    },    _type == "banner" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "text": coalesce(text[$locale], text.it, text),      headingCSSClasses,      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle)    },    _type == "separator" => {      _type,      separatorColor    },    _type == "slider" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),      backgroundImage,      backgroundFixed,      images    },    _type == "slideshow" => {      _type,      'images':  images[] {        asset,        hotspot,        crop,        alt,        "heading": coalesce(heading[$locale], heading.it, heading),        "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),        logo,        'link': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{          'slug': slug.current        },        'externalUrl': cta.navigationItemUrl.externalUrl,        'ctaText': coalesce(cta.text[$locale], cta.text.it, cta.text)      }    },    _type == "textWithIllustration" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "text": coalesce(text[$locale], text.it, text),      image,      backgroundImage,      backgroundFixed,      hasOverlay,      overlayColor,      imagePosition,      gridSize    },    _type == "gallery" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),      images    },    _type == "form" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      label,      form    },    _type == "promotion" => {      _type,      "title": coalesce(title[$locale], title.it, title),      link,      direction,      speed    },    _type == "map" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      mapCenter,      locations    },    _type == "dishesMenu" => {      _type,      _ref,      "menu": *[ _type == "dishesMenu" && _id == ^._ref ][0] {        "title": coalesce(title[$locale], title.it, title),        "introText": coalesce(introText[$locale], introText.it, introText),        categories[] {          "title": coalesce(title[$locale], title.it, title),          icon,          flaticonClass,          dishes[] {            "title": coalesce(title[$locale], title.it, title),            "description": coalesce(description[$locale], description.it, description),            price,            "subcategory": coalesce(subcategory[$locale], subcategory.it, subcategory)          }        }      }    },    _type == "quickActions" => {      _type,      actions[] {        "label": coalesce(label[$locale], label.it, label),        icon,        isPrimary,        "link": {          "slug": *[_type == "page" && _id == ^.link.internalLink._ref][0].slug.current,          "externalUrl": link.externalUrl,          "phone": link.phone        }      }    }  },}
+// Query: *[slug.it.current match "home*"][0]{  "title": coalesce(title[$locale], title.it, title),  "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),  "slug": coalesce(slug[$locale].current, slug.it.current),  "metaTitle": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),  "metaDescription": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),  fullWidth,  backgroundImage,  backgroundFixed,  theme,  pageBuilder[]{    _type == "video" => {      _type,      videoLabel,      cssClasses,      file    },    _type == "banner" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "text": coalesce(text[$locale], text.it, text),      headingCSSClasses,      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle)    },    _type == "separator" => {      _type,      separatorColor    },    _type == "slider" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),      backgroundImage {        ...,        "alt": coalesce(alt[$locale], alt.it, alt)      },      backgroundFixed,      images[] {        ...,        "alt": coalesce(alt[$locale], alt.it, alt)      }    },    _type == "slideshow" => {      _type,      'images':  images[] {        asset,        hotspot,        crop,        "alt": coalesce(alt[$locale], alt.it, alt),        "heading": coalesce(heading[$locale], heading.it, heading),        "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),        logo,        'link': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{          'slug': slug.current        },        'externalUrl': cta.navigationItemUrl.externalUrl,        'ctaText': coalesce(cta.text[$locale], cta.text.it, cta.text)      }    },    _type == "textWithIllustration" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "text": coalesce(text[$locale], text.it, text),      image {        ...,        "alt": coalesce(alt[$locale], alt.it, alt)      },      backgroundImage,      backgroundFixed,      hasOverlay,      overlayColor,      imagePosition,      gridSize    },    _type == "gallery" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),      images[] {        ...,        "alt": coalesce(alt[$locale], alt.it, alt)      }    },    _type == "form" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      label,      form    },    _type == "promotion" => {      _type,      "title": coalesce(title[$locale], title.it, title),      link,      direction,      speed    },    _type == "map" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      mapCenter,      locations    },    _type == "dishesMenu" => {      _type,      _ref,      "menu": *[ _type == "dishesMenu" && _id == ^._ref ][0] {        "title": coalesce(title[$locale], title.it, title),        "introText": coalesce(introText[$locale], introText.it, introText),        categories[] {          "title": coalesce(title[$locale], title.it, title),          icon,          flaticonClass,          dishes[] {            "title": coalesce(title[$locale], title.it, title),            "description": coalesce(description[$locale], description.it, description),            price,            "subcategory": coalesce(subcategory[$locale], subcategory.it, subcategory)          }        }      }    },    _type == "quickActions" => {      _type,      actions[] {        "label": coalesce(label[$locale], label.it, label),        icon,        isPrimary,        "link": {          "slug": *[_type == "page" && _id == ^.link.internalLink._ref][0].slug.current,          "externalUrl": link.externalUrl,          "phone": link.phone        }      }    }  },}
 export type HOMEPAGE_QUERYResult = {
   title: Array<{
     _type: "localizedString";
@@ -897,7 +903,7 @@ export type HOMEPAGE_QUERYResult = {
     en?: string;
   }> | LocalizedString | string | null;
   subtitle: null;
-  slug: Slug | null;
+  slug: Array<null> | string | null;
   metaTitle: Array<{
     _type: "localizedString";
     it?: string;
@@ -920,7 +926,7 @@ export type HOMEPAGE_QUERYResult = {
     en?: string;
   }> | LocalizedString | string | null;
   subtitle: null;
-  slug: Slug | null;
+  slug: Array<null> | string | null;
   metaTitle: Array<{
     _type: "localizedString";
     it?: string;
@@ -971,7 +977,7 @@ export type HOMEPAGE_QUERYResult = {
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      alt?: string;
+      alt?: LocalizedString;
       _type: "image";
       _key: string;
     }> | Array<{
@@ -1005,7 +1011,7 @@ export type HOMEPAGE_QUERYResult = {
         media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
-        alt?: string;
+        alt?: LocalizedString;
         _type: "image";
         _key: string;
       }>;
@@ -1038,7 +1044,7 @@ export type HOMEPAGE_QUERYResult = {
         media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
-        alt?: string;
+        alt?: LocalizedString;
         _type: "image";
         _key: string;
       }>;
@@ -1071,7 +1077,11 @@ export type HOMEPAGE_QUERYResult = {
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      alt?: string;
+      alt: Array<{
+        _type: "localizedString";
+        it?: string;
+        en?: string;
+      }> | LocalizedString | string | null;
       _type: "image";
       _key: string;
     }> | null;
@@ -1096,7 +1106,7 @@ export type HOMEPAGE_QUERYResult = {
       icon: "Calendar" | "Camera" | "Clock" | "Info" | "Mail" | "MapPin" | "Phone" | "Star" | "Users" | "Utensils" | null;
       isPrimary: boolean | null;
       link: {
-        slug: string | null;
+        slug: null;
         externalUrl: string | null;
         phone: string | null;
       };
@@ -1140,7 +1150,7 @@ export type HOMEPAGE_QUERYResult = {
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      alt?: string;
+      alt?: LocalizedString;
       _type: "image";
       _key: string;
     }> | Array<{
@@ -1174,7 +1184,7 @@ export type HOMEPAGE_QUERYResult = {
         media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
-        alt?: string;
+        alt?: LocalizedString;
         _type: "image";
         _key: string;
       }>;
@@ -1207,7 +1217,7 @@ export type HOMEPAGE_QUERYResult = {
         media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
-        alt?: string;
+        alt?: LocalizedString;
         _type: "image";
         _key: string;
       }>;
@@ -1222,7 +1232,11 @@ export type HOMEPAGE_QUERYResult = {
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      alt?: string;
+      alt: Array<{
+        _type: "localizedString";
+        it?: string;
+        en?: string;
+      }> | LocalizedString | string | null;
       _type: "image";
     } | null;
     backgroundImage: {
@@ -1268,7 +1282,7 @@ export type HOMEPAGE_QUERYResult = {
     it?: string;
     en?: string;
   }> | LocalizedString | string | null;
-  slug: Slug | null;
+  slug: Array<null> | string | null;
   metaTitle: Array<{
     _type: "localizedString";
     it?: string;
@@ -1330,7 +1344,7 @@ export type HOMEPAGE_QUERYResult = {
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      alt?: string;
+      alt?: LocalizedString;
       _type: "image";
       _key: string;
     }> | Array<{
@@ -1364,7 +1378,7 @@ export type HOMEPAGE_QUERYResult = {
         media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
-        alt?: string;
+        alt?: LocalizedString;
         _type: "image";
         _key: string;
       }>;
@@ -1397,7 +1411,7 @@ export type HOMEPAGE_QUERYResult = {
         media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
-        alt?: string;
+        alt?: LocalizedString;
         _type: "image";
         _key: string;
       }>;
@@ -1439,7 +1453,11 @@ export type HOMEPAGE_QUERYResult = {
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      alt?: string;
+      alt: Array<{
+        _type: "localizedString";
+        it?: string;
+        en?: string;
+      }> | LocalizedString | string | null;
       _type: "image";
       _key: string;
     }> | null;
@@ -1475,7 +1493,7 @@ export type HOMEPAGE_QUERYResult = {
       icon: "Calendar" | "Camera" | "Clock" | "Info" | "Mail" | "MapPin" | "Phone" | "Star" | "Users" | "Utensils" | null;
       isPrimary: boolean | null;
       link: {
-        slug: string | null;
+        slug: null;
         externalUrl: string | null;
         phone: string | null;
       };
@@ -1505,7 +1523,11 @@ export type HOMEPAGE_QUERYResult = {
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      alt?: string;
+      alt: Array<{
+        _type: "localizedString";
+        it?: string;
+        en?: string;
+      }> | LocalizedString | string | null;
       _type: "image";
     } | null;
     backgroundFixed: boolean | null;
@@ -1519,7 +1541,11 @@ export type HOMEPAGE_QUERYResult = {
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      alt?: string;
+      alt: Array<{
+        _type: "localizedString";
+        it?: string;
+        en?: string;
+      }> | LocalizedString | string | null;
       _type: "image";
       _key: string;
     }> | null;
@@ -1534,7 +1560,11 @@ export type HOMEPAGE_QUERYResult = {
       } | null;
       hotspot: SanityImageHotspot | null;
       crop: SanityImageCrop | null;
-      alt: string | null;
+      alt: Array<{
+        _type: "localizedString";
+        it?: string;
+        en?: string;
+      }> | LocalizedString | string | null;
       heading: Array<{
         _type: "localizedString";
         it?: string;
@@ -1558,7 +1588,7 @@ export type HOMEPAGE_QUERYResult = {
         _type: "image";
       } | null;
       link: {
-        slug: string | null;
+        slug: null;
       } | null;
       externalUrl: string | null;
       ctaText: Array<{
@@ -1603,7 +1633,7 @@ export type HOMEPAGE_QUERYResult = {
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      alt?: string;
+      alt?: LocalizedString;
       _type: "image";
       _key: string;
     }> | Array<{
@@ -1637,7 +1667,7 @@ export type HOMEPAGE_QUERYResult = {
         media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
-        alt?: string;
+        alt?: LocalizedString;
         _type: "image";
         _key: string;
       }>;
@@ -1670,7 +1700,7 @@ export type HOMEPAGE_QUERYResult = {
         media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
-        alt?: string;
+        alt?: LocalizedString;
         _type: "image";
         _key: string;
       }>;
@@ -1685,7 +1715,11 @@ export type HOMEPAGE_QUERYResult = {
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      alt?: string;
+      alt: Array<{
+        _type: "localizedString";
+        it?: string;
+        en?: string;
+      }> | LocalizedString | string | null;
       _type: "image";
     } | null;
     backgroundImage: {
@@ -1722,427 +1756,8 @@ export type HOMEPAGE_QUERYResult = {
   } | {}> | null;
 } | null;
 // Variable: PAGE_QUERY
-// Query: *[slug.current == $slug][0]{  "title": coalesce(title[$locale], title.it, title),  "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),  slug,  "metaTitle": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),  "metaDescription": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),  introImage,  fullWidth,  backgroundImage,  backgroundFixed,  theme,  pageBuilder[]{    _type == "video" => {      _type,      videoLabel,      cssClasses,      file    },    _type == "banner" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "text": coalesce(text[$locale], text.it, text),      headingCSSClasses,      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle)    },    _type == "separator" => {      _type,      separatorColor    },    _type == "slider" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),      backgroundImage,      backgroundFixed,      images    },    _type == "slideshow" => {      _type,      'images':  images[] {        asset,        hotspot,        crop,        alt,        "heading": coalesce(heading[$locale], heading.it, heading),        "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),        logo,        'link': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{          'slug': slug.current        },        'externalUrl': cta.navigationItemUrl.externalUrl,        'ctaText': coalesce(cta.text[$locale], cta.text.it, cta.text)      }    },    _type == "textWithIllustration" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "text": coalesce(text[$locale], text.it, text),      image,      backgroundImage,      backgroundFixed,      imagePosition,      gridSize    },    _type == "gallery" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),      images    },    _type == "form" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      label,      form    },    _type == "promotion" => {      _type,      "title": coalesce(title[$locale], title.it, title),      link,      direction,      speed    },    _type == "map" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      mapCenter,      locations    },    _type == "dishesMenu" => {      _type,      _ref,      "menu": *[_type == "dishesMenu" && _id == ^._ref][0] {        "title": coalesce(title[$locale], title.it, title),        "introText": coalesce(introText[$locale], introText.it, introText),        categories[] {          "title": coalesce(title[$locale], title.it, title),          icon,          flaticonClass,          dishes[] {            "title": coalesce(title[$locale], title.it, title),            "description": coalesce(description[$locale], description.it, description),            price,            "subcategory": coalesce(subcategory[$locale], subcategory.it, subcategory)          }        }      }    },    _type == "quickActions" => {      _type,      actions[] {        "label": coalesce(label[$locale], label.it, label),        icon,        isPrimary,        "link": {          "slug": *[_type == "page" && _id == ^.link.internalLink._ref][0].slug.current,          "externalUrl": link.externalUrl,          "phone": link.phone        }      }    }  },}
+// Query: *[  _type == "page" &&  coalesce(slug[$locale].current, slug.it.current) == $slug][0]{  "title": coalesce(title[$locale], title.it, title),  "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),  "slug": coalesce(slug[$locale].current, slug.it.current),  "metaTitle": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),  "metaDescription": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),  introImage,  fullWidth,  backgroundImage,  backgroundFixed,  theme,  pageBuilder[]{    _type == "video" => {      _type,      videoLabel,      cssClasses,      file    },    _type == "banner" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "text": coalesce(text[$locale], text.it, text),      headingCSSClasses,      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle)    },    _type == "separator" => {      _type,      separatorColor    },    _type == "slider" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),      backgroundImage {        ...,        "alt": coalesce(alt[$locale], alt.it, alt)      },      backgroundFixed,      images[] {        ...,        "alt": coalesce(alt[$locale], alt.it, alt)      }    },    _type == "slideshow" => {      _type,      'images':  images[] {        asset,        hotspot,        crop,        "alt": coalesce(alt[$locale], alt.it, alt),        "heading": coalesce(heading[$locale], heading.it, heading),        "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),        logo,        'link': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{          'slug': coalesce(slug[$locale].current, slug.it.current)        },        'externalUrl': cta.navigationItemUrl.externalUrl,        'ctaText': coalesce(cta.text[$locale], cta.text.it, cta.text)      }    },    _type == "textWithIllustration" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "text": coalesce(text[$locale], text.it, text),      image {        ...,        "alt": coalesce(alt[$locale], alt.it, alt)      },      backgroundImage,      backgroundFixed,      imagePosition,      gridSize    },    _type == "gallery" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),      images[] {        ...,        "alt": coalesce(alt[$locale], alt.it, alt)      }    },    _type == "form" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      label,      form    },    _type == "promotion" => {      _type,      "title": coalesce(title[$locale], title.it, title),      link,      direction,      speed    },    _type == "map" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      mapCenter,      locations    },    _type == "dishesMenu" => {      _type,      _ref,      "menu": *[_type == "dishesMenu" && _id == ^._ref][0] {        "title": coalesce(title[$locale], title.it, title),        "introText": coalesce(introText[$locale], introText.it, introText),        categories[] {          "title": coalesce(title[$locale], title.it, title),          icon,          flaticonClass,          dishes[] {            "title": coalesce(title[$locale], title.it, title),            "description": coalesce(description[$locale], description.it, description),            price,            "subcategory": coalesce(subcategory[$locale], subcategory.it, subcategory)          }        }      }    },    _type == "quickActions" => {      _type,      actions[] {        "label": coalesce(label[$locale], label.it, label),        icon,        isPrimary,        "link": {          "slug": coalesce(*[_type == "page" && _id == ^.link.internalLink._ref][0].slug[$locale].current, *[_type == "page" && _id == ^.link.internalLink._ref][0].slug.it.current),          "externalUrl": link.externalUrl,          "phone": link.phone        }      }    }  },}
 export type PAGE_QUERYResult = {
-  title: null;
-  subtitle: null;
-  slug: null;
-  metaTitle: null;
-  metaDescription: null;
-  introImage: null;
-  fullWidth: null;
-  backgroundImage: null;
-  backgroundFixed: null;
-  theme: null;
-  pageBuilder: null;
-} | {
-  title: Array<{
-    _type: "localizedString";
-    it?: string;
-    en?: string;
-  }> | LocalizedString | string | null;
-  subtitle: null;
-  slug: null;
-  metaTitle: null;
-  metaDescription: null;
-  introImage: null;
-  fullWidth: null;
-  backgroundImage: null;
-  backgroundFixed: null;
-  theme: null;
-  pageBuilder: null;
-} | {
-  title: Array<string> | string | null;
-  subtitle: null;
-  slug: null;
-  metaTitle: null;
-  metaDescription: null;
-  introImage: null;
-  fullWidth: null;
-  backgroundImage: null;
-  backgroundFixed: null;
-  theme: null;
-  pageBuilder: null;
-} | {
-  title: null;
-  subtitle: null;
-  slug: null;
-  metaTitle: null;
-  metaDescription: null;
-  introImage: null;
-  fullWidth: null;
-  backgroundImage: null;
-  backgroundFixed: null;
-  theme: "auto" | "cream" | "dark" | "light" | null;
-  pageBuilder: null;
-} | {
-  title: Array<{
-    _type: "localizedString";
-    it?: string;
-    en?: string;
-  }> | LocalizedString | string | null;
-  subtitle: null;
-  slug: Slug | null;
-  metaTitle: Array<{
-    _type: "localizedString";
-    it?: string;
-    en?: string;
-  }> | LocalizedString | string | null;
-  metaDescription: Array<{
-    _type: "localizedString";
-    it?: string;
-    en?: string;
-  }> | LocalizedString | string | null;
-  introImage: null;
-  fullWidth: null;
-  backgroundImage: null;
-  backgroundFixed: null;
-  theme: null;
-  pageBuilder: null;
-} | {
-  title: Array<{
-    _type: "localizedString";
-    it?: string;
-    en?: string;
-  }> | LocalizedString | string | null;
-  subtitle: null;
-  slug: Slug | null;
-  metaTitle: Array<{
-    _type: "localizedString";
-    it?: string;
-    en?: string;
-  }> | LocalizedString | string | null;
-  metaDescription: Array<{
-    _type: "localizedString";
-    it?: string;
-    en?: string;
-  }> | LocalizedString | string | null;
-  introImage: null;
-  fullWidth: null;
-  backgroundImage: null;
-  backgroundFixed: null;
-  theme: null;
-  pageBuilder: Array<{
-    _type: "banner";
-    heading: Array<{
-      _type: "localizedString";
-      it?: string;
-      en?: string;
-    }> | LocalizedString | string | null;
-    text: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet";
-      markDefs?: Array<{
-        _key: string;
-      } & Color | {
-        href?: string;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    } | {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      _type: "image";
-      _key: string;
-    }> | Array<{
-      _type: "localizedBlockContent";
-      it?: Array<{
-        children?: Array<{
-          marks?: Array<string>;
-          text?: string;
-          _type: "span";
-          _key: string;
-        }>;
-        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-        listItem?: "bullet";
-        markDefs?: Array<{
-          _key: string;
-        } & Color | {
-          href?: string;
-          _type: "link";
-          _key: string;
-        }>;
-        level?: number;
-        _type: "block";
-        _key: string;
-      } | {
-        asset?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-        };
-        media?: unknown;
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-        alt?: string;
-        _type: "image";
-        _key: string;
-      }>;
-      en?: Array<{
-        children?: Array<{
-          marks?: Array<string>;
-          text?: string;
-          _type: "span";
-          _key: string;
-        }>;
-        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-        listItem?: "bullet";
-        markDefs?: Array<{
-          _key: string;
-        } & Color | {
-          href?: string;
-          _type: "link";
-          _key: string;
-        }>;
-        level?: number;
-        _type: "block";
-        _key: string;
-      } | {
-        asset?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-        };
-        media?: unknown;
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-        alt?: string;
-        _type: "image";
-        _key: string;
-      }>;
-    }> | LocalizedBlockContent | null;
-    headingCSSClasses: string | null;
-    subtitle: Array<{
-      _type: "localizedString";
-      it?: string;
-      en?: string;
-    }> | LocalizedString | string | null;
-  } | {
-    _type: "gallery";
-    heading: Array<{
-      _type: "localizedString";
-      it?: string;
-      en?: string;
-    }> | LocalizedString | string | null;
-    subtitle: Array<{
-      _type: "localizedString";
-      it?: string;
-      en?: string;
-    }> | LocalizedString | string | null;
-    images: Array<{
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      _type: "image";
-      _key: string;
-    }> | null;
-  } | {
-    _type: "promotion";
-    title: Array<{
-      _type: "localizedString";
-      it?: string;
-      en?: string;
-    }> | LocalizedString | string | null;
-    link: string | null;
-    direction: "left" | "right" | null;
-    speed: number | null;
-  } | {
-    _type: "quickActions";
-    actions: Array<{
-      label: Array<{
-        _type: "localizedString";
-        it?: string;
-        en?: string;
-      }> | LocalizedString | string | null;
-      icon: "Calendar" | "Camera" | "Clock" | "Info" | "Mail" | "MapPin" | "Phone" | "Star" | "Users" | "Utensils" | null;
-      isPrimary: boolean | null;
-      link: {
-        slug: string | null;
-        externalUrl: string | null;
-        phone: string | null;
-      };
-    }> | null;
-  } | {
-    _type: "separator";
-    separatorColor: Color | null;
-  } | {
-    _type: "textWithIllustration";
-    heading: Array<{
-      _type: "localizedString";
-      it?: string;
-      en?: string;
-    }> | LocalizedString | string | null;
-    text: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet";
-      markDefs?: Array<{
-        _key: string;
-      } & Color | {
-        href?: string;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    } | {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      _type: "image";
-      _key: string;
-    }> | Array<{
-      _type: "localizedBlockContent";
-      it?: Array<{
-        children?: Array<{
-          marks?: Array<string>;
-          text?: string;
-          _type: "span";
-          _key: string;
-        }>;
-        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-        listItem?: "bullet";
-        markDefs?: Array<{
-          _key: string;
-        } & Color | {
-          href?: string;
-          _type: "link";
-          _key: string;
-        }>;
-        level?: number;
-        _type: "block";
-        _key: string;
-      } | {
-        asset?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-        };
-        media?: unknown;
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-        alt?: string;
-        _type: "image";
-        _key: string;
-      }>;
-      en?: Array<{
-        children?: Array<{
-          marks?: Array<string>;
-          text?: string;
-          _type: "span";
-          _key: string;
-        }>;
-        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-        listItem?: "bullet";
-        markDefs?: Array<{
-          _key: string;
-        } & Color | {
-          href?: string;
-          _type: "link";
-          _key: string;
-        }>;
-        level?: number;
-        _type: "block";
-        _key: string;
-      } | {
-        asset?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-        };
-        media?: unknown;
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-        alt?: string;
-        _type: "image";
-        _key: string;
-      }>;
-    }> | LocalizedBlockContent | null;
-    image: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      _type: "image";
-    } | null;
-    backgroundImage: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      _type: "image";
-    } | null;
-    backgroundFixed: boolean | null;
-    imagePosition: "bottom" | "left" | "right" | "top" | null;
-    gridSize: "grid-cols-2" | "grid-cols-3" | null;
-  } | {
-    _type: "video";
-    videoLabel: LocalizedString | null;
-    cssClasses: string | null;
-    file: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
-      };
-      media?: unknown;
-      _type: "file";
-    } | null;
-  }> | null;
-} | {
   title: Array<{
     _type: "localizedString";
     it?: string;
@@ -2153,7 +1768,7 @@ export type PAGE_QUERYResult = {
     it?: string;
     en?: string;
   }> | LocalizedString | string | null;
-  slug: Slug | null;
+  slug: Array<null> | string | null;
   metaTitle: Array<{
     _type: "localizedString";
     it?: string;
@@ -2227,7 +1842,7 @@ export type PAGE_QUERYResult = {
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      alt?: string;
+      alt?: LocalizedString;
       _type: "image";
       _key: string;
     }> | Array<{
@@ -2261,7 +1876,7 @@ export type PAGE_QUERYResult = {
         media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
-        alt?: string;
+        alt?: LocalizedString;
         _type: "image";
         _key: string;
       }>;
@@ -2294,7 +1909,7 @@ export type PAGE_QUERYResult = {
         media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
-        alt?: string;
+        alt?: LocalizedString;
         _type: "image";
         _key: string;
       }>;
@@ -2336,7 +1951,11 @@ export type PAGE_QUERYResult = {
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      alt?: string;
+      alt: Array<{
+        _type: "localizedString";
+        it?: string;
+        en?: string;
+      }> | LocalizedString | string | null;
       _type: "image";
       _key: string;
     }> | null;
@@ -2372,7 +1991,7 @@ export type PAGE_QUERYResult = {
       icon: "Calendar" | "Camera" | "Clock" | "Info" | "Mail" | "MapPin" | "Phone" | "Star" | "Users" | "Utensils" | null;
       isPrimary: boolean | null;
       link: {
-        slug: string | null;
+        slug: Array<null> | string | null;
         externalUrl: string | null;
         phone: string | null;
       };
@@ -2402,7 +2021,11 @@ export type PAGE_QUERYResult = {
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      alt?: string;
+      alt: Array<{
+        _type: "localizedString";
+        it?: string;
+        en?: string;
+      }> | LocalizedString | string | null;
       _type: "image";
     } | null;
     backgroundFixed: boolean | null;
@@ -2416,7 +2039,11 @@ export type PAGE_QUERYResult = {
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      alt?: string;
+      alt: Array<{
+        _type: "localizedString";
+        it?: string;
+        en?: string;
+      }> | LocalizedString | string | null;
       _type: "image";
       _key: string;
     }> | null;
@@ -2431,7 +2058,11 @@ export type PAGE_QUERYResult = {
       } | null;
       hotspot: SanityImageHotspot | null;
       crop: SanityImageCrop | null;
-      alt: string | null;
+      alt: Array<{
+        _type: "localizedString";
+        it?: string;
+        en?: string;
+      }> | LocalizedString | string | null;
       heading: Array<{
         _type: "localizedString";
         it?: string;
@@ -2455,7 +2086,7 @@ export type PAGE_QUERYResult = {
         _type: "image";
       } | null;
       link: {
-        slug: string | null;
+        slug: Array<null> | string | null;
       } | null;
       externalUrl: string | null;
       ctaText: Array<{
@@ -2500,7 +2131,7 @@ export type PAGE_QUERYResult = {
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      alt?: string;
+      alt?: LocalizedString;
       _type: "image";
       _key: string;
     }> | Array<{
@@ -2534,7 +2165,7 @@ export type PAGE_QUERYResult = {
         media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
-        alt?: string;
+        alt?: LocalizedString;
         _type: "image";
         _key: string;
       }>;
@@ -2567,7 +2198,7 @@ export type PAGE_QUERYResult = {
         media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
-        alt?: string;
+        alt?: LocalizedString;
         _type: "image";
         _key: string;
       }>;
@@ -2582,7 +2213,11 @@ export type PAGE_QUERYResult = {
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      alt?: string;
+      alt: Array<{
+        _type: "localizedString";
+        it?: string;
+        en?: string;
+      }> | LocalizedString | string | null;
       _type: "image";
     } | null;
     backgroundImage: {
@@ -2617,7 +2252,7 @@ export type PAGE_QUERYResult = {
   } | {}> | null;
 } | null;
 // Variable: LOCATION_QUERY
-// Query: *[_type == "locations" && slug.current == $slug][0]{  "title": coalesce(title[$locale], title.it, title),  "metaTitle": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),  "metaDescription": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),  slug,  heroImage,  "description": coalesce(description[$locale], description.it, description),  city,  address,  postalCode,  phone,  email,  location,  monday, tuesday, wednesday, thursday, friday, saturday, sunday,  pageBuilder[]{    _type == "banner" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "text": coalesce(text[$locale], text.it, text),      headingCSSClasses,      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle)    },    _type == "gallery" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),      images    },    _type == "slideshow" => {      _type,      'images': images[] {        asset,        hotspot,        crop,        alt,        "heading": coalesce(heading[$locale], heading.it, heading),        "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),        logo,        'link': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{          'slug': slug.current        },        'externalUrl': cta.navigationItemUrl.externalUrl,        'ctaText': coalesce(cta.text[$locale], cta.text.it, cta.text)      }    },    _type == "slider" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),      backgroundImage,      backgroundFixed,      images    },    _type == "textWithIllustration" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "text": coalesce(text[$locale], text.it, text),      image,      backgroundImage,      backgroundFixed,      imagePosition,      gridSize    },    _type == "separator" => { _type, separatorColor },    _type == "video" => { _type, videoLabel, cssClasses, file },    _type == "promotion" => {      _type,      "title": coalesce(title[$locale], title.it, title),      link, direction, speed    },    _type == "map" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      mapCenter,      locations    },    _type == "dishesMenu" => {      _type,      _ref,      "menu": *[_type == "dishesMenu" && _id == ^._ref][0] {        "title": coalesce(title[$locale], title.it, title),        "introText": coalesce(introText[$locale], introText.it, introText),        categories[] {          "title": coalesce(title[$locale], title.it, title),          icon,          flaticonClass,          dishes[] {            "title": coalesce(title[$locale], title.it, title),            "description": coalesce(description[$locale], description.it, description),            price,            "subcategory": coalesce(subcategory[$locale], subcategory.it, subcategory)          }        }      }    },    _type == "quickActions" => {      _type,      actions[] {        "label": coalesce(label[$locale], label.it, label),        icon, isPrimary,        "link": {          "slug": *[_type == "page" && _id == ^.link.internalLink._ref][0].slug.current,          "externalUrl": link.externalUrl,          "phone": link.phone        }      }    }  }}
+// Query: *[  _type == "locations" &&  coalesce(slug[$locale].current, slug.it.current) == $slug][0]{  "title": coalesce(title[$locale], title.it, title),  "metaTitle": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),  "metaDescription": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),  "slug": coalesce(slug[$locale].current, slug.it.current),  heroImage {    ...,    "alt": coalesce(alt[$locale], alt.it, alt)  },  "description": coalesce(description[$locale], description.it, description),  city,  address,  postalCode,  phone,  email,  location,  monday, tuesday, wednesday, thursday, friday, saturday, sunday,  pageBuilder[]{    _type == "banner" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "text": coalesce(text[$locale], text.it, text),      headingCSSClasses,      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle)    },    _type == "gallery" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),      images[] {        ...,        "alt": coalesce(alt[$locale], alt.it, alt)      }    },    _type == "slideshow" => {      _type,      'images': images[] {        asset,        hotspot,        crop,        "alt": coalesce(alt[$locale], alt.it, alt),        "heading": coalesce(heading[$locale], heading.it, heading),        "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),        logo,        'link': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{          'slug': coalesce(slug[$locale].current, slug.it.current)        },        'externalUrl': cta.navigationItemUrl.externalUrl,        'ctaText': coalesce(cta.text[$locale], cta.text.it, cta.text)      }    },    _type == "slider" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),      backgroundImage {        ...,        "alt": coalesce(alt[$locale], alt.it, alt)      },      backgroundFixed,      images[] {        ...,        "alt": coalesce(alt[$locale], alt.it, alt)      }    },    _type == "textWithIllustration" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      "text": coalesce(text[$locale], text.it, text),      image {        ...,        "alt": coalesce(alt[$locale], alt.it, alt)      },      backgroundImage,      backgroundFixed,      imagePosition,      gridSize    },    _type == "separator" => { _type, separatorColor },    _type == "video" => { _type, videoLabel, cssClasses, file },    _type == "promotion" => {      _type,      "title": coalesce(title[$locale], title.it, title),      link, direction, speed    },    _type == "map" => {      _type,      "heading": coalesce(heading[$locale], heading.it, heading),      mapCenter,      locations    },    _type == "dishesMenu" => {      _type,      _ref,      "menu": *[_type == "dishesMenu" && _id == ^._ref][0] {        "title": coalesce(title[$locale], title.it, title),        "introText": coalesce(introText[$locale], introText.it, introText),        categories[] {          "title": coalesce(title[$locale], title.it, title),          icon,          flaticonClass,          dishes[] {            "title": coalesce(title[$locale], title.it, title),            "description": coalesce(description[$locale], description.it, description),            price,            "subcategory": coalesce(subcategory[$locale], subcategory.it, subcategory)          }        }      }    },    _type == "quickActions" => {      _type,      actions[] {        "label": coalesce(label[$locale], label.it, label),        icon, isPrimary,        "link": {          "slug": coalesce(*[_type == "page" && _id == ^.link.internalLink._ref][0].slug[$locale].current, *[_type == "page" && _id == ^.link.internalLink._ref][0].slug.it.current),          "externalUrl": link.externalUrl,          "phone": link.phone        }      }    }  }}
 export type LOCATION_QUERYResult = {
   title: Array<{
     _type: "localizedString";
@@ -2634,7 +2269,7 @@ export type LOCATION_QUERYResult = {
     it?: string;
     en?: string;
   }> | LocalizedString | string | null;
-  slug: Slug | null;
+  slug: Array<null> | string | null;
   heroImage: {
     asset?: {
       _ref: string;
@@ -2645,7 +2280,11 @@ export type LOCATION_QUERYResult = {
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    alt?: string;
+    alt: Array<{
+      _type: "localizedString";
+      it?: string;
+      en?: string;
+    }> | LocalizedString | string | null;
     _type: "image";
   } | null;
   description: Array<{
@@ -2677,7 +2316,7 @@ export type LOCATION_QUERYResult = {
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    alt?: string;
+    alt?: LocalizedString;
     _type: "image";
     _key: string;
   }> | Array<{
@@ -2711,7 +2350,7 @@ export type LOCATION_QUERYResult = {
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      alt?: string;
+      alt?: LocalizedString;
       _type: "image";
       _key: string;
     }>;
@@ -2744,7 +2383,7 @@ export type LOCATION_QUERYResult = {
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      alt?: string;
+      alt?: LocalizedString;
       _type: "image";
       _key: string;
     }>;
@@ -2798,7 +2437,7 @@ export type LOCATION_QUERYResult = {
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      alt?: string;
+      alt?: LocalizedString;
       _type: "image";
       _key: string;
     }> | Array<{
@@ -2832,7 +2471,7 @@ export type LOCATION_QUERYResult = {
         media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
-        alt?: string;
+        alt?: LocalizedString;
         _type: "image";
         _key: string;
       }>;
@@ -2865,7 +2504,7 @@ export type LOCATION_QUERYResult = {
         media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
-        alt?: string;
+        alt?: LocalizedString;
         _type: "image";
         _key: string;
       }>;
@@ -2898,7 +2537,11 @@ export type LOCATION_QUERYResult = {
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      alt?: string;
+      alt: Array<{
+        _type: "localizedString";
+        it?: string;
+        en?: string;
+      }> | LocalizedString | string | null;
       _type: "image";
       _key: string;
     }> | null;
@@ -2923,7 +2566,7 @@ export type LOCATION_QUERYResult = {
       icon: "Calendar" | "Camera" | "Clock" | "Info" | "Mail" | "MapPin" | "Phone" | "Star" | "Users" | "Utensils" | null;
       isPrimary: boolean | null;
       link: {
-        slug: string | null;
+        slug: Array<null> | string | null;
         externalUrl: string | null;
         phone: string | null;
       };
@@ -2967,7 +2610,7 @@ export type LOCATION_QUERYResult = {
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      alt?: string;
+      alt?: LocalizedString;
       _type: "image";
       _key: string;
     }> | Array<{
@@ -3001,7 +2644,7 @@ export type LOCATION_QUERYResult = {
         media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
-        alt?: string;
+        alt?: LocalizedString;
         _type: "image";
         _key: string;
       }>;
@@ -3034,7 +2677,7 @@ export type LOCATION_QUERYResult = {
         media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
-        alt?: string;
+        alt?: LocalizedString;
         _type: "image";
         _key: string;
       }>;
@@ -3049,7 +2692,11 @@ export type LOCATION_QUERYResult = {
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      alt?: string;
+      alt: Array<{
+        _type: "localizedString";
+        it?: string;
+        en?: string;
+      }> | LocalizedString | string | null;
       _type: "image";
     } | null;
     backgroundImage: {
@@ -3084,12 +2731,13 @@ export type LOCATION_QUERYResult = {
   }> | null;
 } | null;
 // Variable: LOCATIONS_PATHS_QUERY
-// Query: *[_type == "locations" && defined(slug.current)]{ "slug": slug.current }
+// Query: *[_type == "locations" && defined(slug.it.current)]{    "slugIt": slug.it.current,    "slugEn": coalesce(slug.en.current, slug.it.current)  }
 export type LOCATIONS_PATHS_QUERYResult = Array<{
-  slug: string | null;
+  slugIt: string | null;
+  slugEn: string | null;
 }>;
 // Variable: POSTS_QUERY
-// Query: *[_type == "post"] | order(publishedAt desc) [$offset...$limit] {    "title": coalesce(title[$locale], title.it, title),    "excerpt": coalesce(excerpt[$locale], excerpt.it, excerpt),    slug,    publishedAt,    category,    coverImage  }
+// Query: *[_type == "post"] | order(publishedAt desc) [$offset...$limit] {    "title": coalesce(title[$locale], title.it, title),    "excerpt": coalesce(excerpt[$locale], excerpt.it, excerpt),    "slug": coalesce(slug[$locale].current, slug.it.current),    publishedAt,    category,    coverImage {      ...,      "alt": coalesce(alt[$locale], alt.it, alt)    }  }
 export type POSTS_QUERYResult = Array<{
   title: Array<{
     _type: "localizedString";
@@ -3101,7 +2749,7 @@ export type POSTS_QUERYResult = Array<{
     it?: string;
     en?: string;
   }> | LocalizedString | string | null;
-  slug: Slug | null;
+  slug: Array<null> | string | null;
   publishedAt: string | null;
   category: "eventi" | "news" | "premi" | "stagioni" | null;
   coverImage: {
@@ -3114,7 +2762,11 @@ export type POSTS_QUERYResult = Array<{
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    alt?: string;
+    alt: Array<{
+      _type: "localizedString";
+      it?: string;
+      en?: string;
+    }> | LocalizedString | string | null;
     _type: "image";
   } | null;
 }>;
@@ -3122,7 +2774,7 @@ export type POSTS_QUERYResult = Array<{
 // Query: count(*[_type == "post"])
 export type POSTS_COUNT_QUERYResult = number;
 // Variable: POST_QUERY
-// Query: *[_type == "post" && slug.current == $slug][0]{  "title": coalesce(title[$locale], title.it, title),  "excerpt": coalesce(excerpt[$locale], excerpt.it, excerpt),  "metaTitle": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),  "metaDescription": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),  "body": coalesce(body[$locale], body.it, body),  slug,  publishedAt,  category,  coverImage}
+// Query: *[  _type == "post" &&  coalesce(slug[$locale].current, slug.it.current) == $slug][0]{  "title": coalesce(title[$locale], title.it, title),  "excerpt": coalesce(excerpt[$locale], excerpt.it, excerpt),  "metaTitle": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),  "metaDescription": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),  "body": coalesce(body[$locale], body.it, body),  slug,  publishedAt,  category,  coverImage {    ...,    "alt": coalesce(alt[$locale], alt.it, alt)  }}
 export type POST_QUERYResult = {
   title: Array<{
     _type: "localizedString";
@@ -3173,7 +2825,7 @@ export type POST_QUERYResult = {
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    alt?: string;
+    alt?: LocalizedString;
     _type: "image";
     _key: string;
   }> | Array<{
@@ -3207,7 +2859,7 @@ export type POST_QUERYResult = {
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      alt?: string;
+      alt?: LocalizedString;
       _type: "image";
       _key: string;
     }>;
@@ -3240,12 +2892,12 @@ export type POST_QUERYResult = {
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      alt?: string;
+      alt?: LocalizedString;
       _type: "image";
       _key: string;
     }>;
   }> | LocalizedBlockContent | null;
-  slug: Slug | null;
+  slug: LocalizedSlug | null;
   publishedAt: string | null;
   category: "eventi" | "news" | "premi" | "stagioni" | null;
   coverImage: {
@@ -3258,7 +2910,11 @@ export type POST_QUERYResult = {
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    alt?: string;
+    alt: Array<{
+      _type: "localizedString";
+      it?: string;
+      en?: string;
+    }> | LocalizedString | string | null;
     _type: "image";
   } | null;
 } | null;
@@ -3268,16 +2924,16 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"settings\"] | order(_updatedAt desc)[0]{\n  theme,\n  ogImage\n}": SETTINGS_QUERYResult;
-    "*[navId.current match \"main-menu*\"]{\n  'navId': navId.current,\n  'items': items[] {\n    'link': *[\n      (_type == \"page\" || _type == \"locations\") &&\n      _id == ^.navigationItemUrl.internalLink._ref\n    ][0]{\n      _type,\n      'slug': select(\n        _type == \"locations\" => \"location/\" + slug.current,\n        slug.current\n      )\n    },\n    'externalUrl': navigationItemUrl.externalUrl,\n    \"text\": coalesce(select(text[$locale] != \"\" => text[$locale]), select(text.it != \"\" => text.it), select(text.en != \"\" => text.en), text),\n    \"megamenuLabel\": coalesce(select(megamenuLabel[$locale] != \"\" => megamenuLabel[$locale]), select(megamenuLabel.it != \"\" => megamenuLabel.it), select(megamenuLabel.en != \"\" => megamenuLabel.en)),\n    megamenuImage,\n    'children': children[] {\n      \"text\": coalesce(select(text[$locale] != \"\" => text[$locale]), select(text.it != \"\" => text.it), select(text.en != \"\" => text.en), text),\n      \"description\": coalesce(select(description[$locale] != \"\" => description[$locale]), select(description.it != \"\" => description.it), select(description.en != \"\" => description.en)),\n      'link': *[\n        (_type == \"page\" || _type == \"locations\") &&\n        _id == ^.url.internalLink._ref\n      ][0]{\n        _type,\n        'slug': select(\n          _type == \"locations\" => \"location/\" + slug.current,\n          slug.current\n        )\n      },\n      'externalUrl': url.externalUrl,\n    }\n  }\n}": HEADERMENU_QUERYResult;
+    "*[navId.current match \"main-menu*\"]{\n  'navId': navId.current,\n  'items': items[] {\n    'link': *[\n      (_type == \"page\" || _type == \"locations\") &&\n      _id == ^.navigationItemUrl.internalLink._ref\n    ][0]{\n      _type,\n      'slug': select(\n        _type == \"locations\" => \"location/\" + coalesce(slug[$locale].current, slug.it.current),\n        coalesce(slug[$locale].current, slug.it.current)\n      )\n    },\n    'externalUrl': navigationItemUrl.externalUrl,\n    \"text\": coalesce(select(text[$locale] != \"\" => text[$locale]), select(text.it != \"\" => text.it), select(text.en != \"\" => text.en), text),\n    \"megamenuLabel\": coalesce(select(megamenuLabel[$locale] != \"\" => megamenuLabel[$locale]), select(megamenuLabel.it != \"\" => megamenuLabel.it), select(megamenuLabel.en != \"\" => megamenuLabel.en)),\n    megamenuImage,\n    'children': children[] {\n      \"text\": coalesce(select(text[$locale] != \"\" => text[$locale]), select(text.it != \"\" => text.it), select(text.en != \"\" => text.en), text),\n      \"description\": coalesce(select(description[$locale] != \"\" => description[$locale]), select(description.it != \"\" => description.it), select(description.en != \"\" => description.en)),\n      'link': *[\n        (_type == \"page\" || _type == \"locations\") &&\n        _id == ^.url.internalLink._ref\n      ][0]{\n        _type,\n        'slug': select(\n          _type == \"locations\" => \"location/\" + coalesce(slug[$locale].current, slug.it.current),\n          coalesce(slug[$locale].current, slug.it.current)\n        )\n      },\n      'externalUrl': url.externalUrl,\n    }\n  }\n}": HEADERMENU_QUERYResult;
     "*[_type == \"socials\"][0].socials": SOCIALS_QUERYResult;
     "*[_type == \"locations\"]{\n  \"title\": coalesce(title[$locale], title.it, title),\n  location,\n  city,\n  address,\n  postalCode,\n  phone,\n  email,\n  monday,\n  tuesday,\n  wednesday,\n  thursday,\n  friday,\n  saturday,\n  sunday\n}": LOCATIONS_QUERYResult;
     "*[_type == \"copyright\"][0].content{\n  \"it\": coalesce(it, ^.content),\n  \"en\": en\n}[$locale]": COPYRIGHT_QUERYResult;
-    "*[slug.current match \"home*\"][0]{\n  \"title\": coalesce(title[$locale], title.it, title),\n  \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n  slug,\n  \"metaTitle\": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),\n  \"metaDescription\": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),\n  fullWidth,\n  backgroundImage,\n  backgroundFixed,\n  theme,\n  pageBuilder[]{\n    _type == \"video\" => {\n      _type,\n      videoLabel,\n      cssClasses,\n      file\n    },\n    _type == \"banner\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"text\": coalesce(text[$locale], text.it, text),\n      headingCSSClasses,\n      \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle)\n    },\n    _type == \"separator\" => {\n      _type,\n      separatorColor\n    },\n    _type == \"slider\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n      backgroundImage,\n      backgroundFixed,\n      images\n    },\n    _type == \"slideshow\" => {\n      _type,\n      'images':  images[] {\n        asset,\n        hotspot,\n        crop,\n        alt,\n        \"heading\": coalesce(heading[$locale], heading.it, heading),\n        \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n        logo,\n        'link': *[_type == \"page\" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{\n          'slug': slug.current\n        },\n        'externalUrl': cta.navigationItemUrl.externalUrl,\n        'ctaText': coalesce(cta.text[$locale], cta.text.it, cta.text)\n      }\n    },\n    _type == \"textWithIllustration\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"text\": coalesce(text[$locale], text.it, text),\n      image,\n      backgroundImage,\n      backgroundFixed,\n      hasOverlay,\n      overlayColor,\n      imagePosition,\n      gridSize\n    },\n    _type == \"gallery\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n      images\n    },\n    _type == \"form\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      label,\n      form\n    },\n    _type == \"promotion\" => {\n      _type,\n      \"title\": coalesce(title[$locale], title.it, title),\n      link,\n      direction,\n      speed\n    },\n    _type == \"map\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      mapCenter,\n      locations\n    },\n    _type == \"dishesMenu\" => {\n      _type,\n      _ref,\n      \"menu\": *[ _type == \"dishesMenu\" && _id == ^._ref ][0] {\n        \"title\": coalesce(title[$locale], title.it, title),\n        \"introText\": coalesce(introText[$locale], introText.it, introText),\n        categories[] {\n          \"title\": coalesce(title[$locale], title.it, title),\n          icon,\n          flaticonClass,\n          dishes[] {\n            \"title\": coalesce(title[$locale], title.it, title),\n            \"description\": coalesce(description[$locale], description.it, description),\n            price,\n            \"subcategory\": coalesce(subcategory[$locale], subcategory.it, subcategory)\n          }\n        }\n      }\n    },\n    _type == \"quickActions\" => {\n      _type,\n      actions[] {\n        \"label\": coalesce(label[$locale], label.it, label),\n        icon,\n        isPrimary,\n        \"link\": {\n          \"slug\": *[_type == \"page\" && _id == ^.link.internalLink._ref][0].slug.current,\n          \"externalUrl\": link.externalUrl,\n          \"phone\": link.phone\n        }\n      }\n    }\n  },\n}": HOMEPAGE_QUERYResult;
-    "*[slug.current == $slug][0]{\n  \"title\": coalesce(title[$locale], title.it, title),\n  \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n  slug,\n  \"metaTitle\": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),\n  \"metaDescription\": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),\n  introImage,\n  fullWidth,\n  backgroundImage,\n  backgroundFixed,\n  theme,\n  pageBuilder[]{\n    _type == \"video\" => {\n      _type,\n      videoLabel,\n      cssClasses,\n      file\n    },\n    _type == \"banner\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"text\": coalesce(text[$locale], text.it, text),\n      headingCSSClasses,\n      \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle)\n    },\n    _type == \"separator\" => {\n      _type,\n      separatorColor\n    },\n    _type == \"slider\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n      backgroundImage,\n      backgroundFixed,\n      images\n    },\n    _type == \"slideshow\" => {\n      _type,\n      'images':  images[] {\n        asset,\n        hotspot,\n        crop,\n        alt,\n        \"heading\": coalesce(heading[$locale], heading.it, heading),\n        \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n        logo,\n        'link': *[_type == \"page\" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{\n          'slug': slug.current\n        },\n        'externalUrl': cta.navigationItemUrl.externalUrl,\n        'ctaText': coalesce(cta.text[$locale], cta.text.it, cta.text)\n      }\n    },\n    _type == \"textWithIllustration\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"text\": coalesce(text[$locale], text.it, text),\n      image,\n      backgroundImage,\n      backgroundFixed,\n      imagePosition,\n      gridSize\n    },\n    _type == \"gallery\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n      images\n    },\n    _type == \"form\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      label,\n      form\n    },\n    _type == \"promotion\" => {\n      _type,\n      \"title\": coalesce(title[$locale], title.it, title),\n      link,\n      direction,\n      speed\n    },\n    _type == \"map\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      mapCenter,\n      locations\n    },\n    _type == \"dishesMenu\" => {\n      _type,\n      _ref,\n      \"menu\": *[_type == \"dishesMenu\" && _id == ^._ref][0] {\n        \"title\": coalesce(title[$locale], title.it, title),\n        \"introText\": coalesce(introText[$locale], introText.it, introText),\n        categories[] {\n          \"title\": coalesce(title[$locale], title.it, title),\n          icon,\n          flaticonClass,\n          dishes[] {\n            \"title\": coalesce(title[$locale], title.it, title),\n            \"description\": coalesce(description[$locale], description.it, description),\n            price,\n            \"subcategory\": coalesce(subcategory[$locale], subcategory.it, subcategory)\n          }\n        }\n      }\n    },\n    _type == \"quickActions\" => {\n      _type,\n      actions[] {\n        \"label\": coalesce(label[$locale], label.it, label),\n        icon,\n        isPrimary,\n        \"link\": {\n          \"slug\": *[_type == \"page\" && _id == ^.link.internalLink._ref][0].slug.current,\n          \"externalUrl\": link.externalUrl,\n          \"phone\": link.phone\n        }\n      }\n    }\n  },\n}": PAGE_QUERYResult;
-    "*[_type == \"locations\" && slug.current == $slug][0]{\n  \"title\": coalesce(title[$locale], title.it, title),\n  \"metaTitle\": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),\n  \"metaDescription\": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),\n  slug,\n  heroImage,\n  \"description\": coalesce(description[$locale], description.it, description),\n  city,\n  address,\n  postalCode,\n  phone,\n  email,\n  location,\n  monday, tuesday, wednesday, thursday, friday, saturday, sunday,\n  pageBuilder[]{\n    _type == \"banner\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"text\": coalesce(text[$locale], text.it, text),\n      headingCSSClasses,\n      \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle)\n    },\n    _type == \"gallery\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n      images\n    },\n    _type == \"slideshow\" => {\n      _type,\n      'images': images[] {\n        asset,\n        hotspot,\n        crop,\n        alt,\n        \"heading\": coalesce(heading[$locale], heading.it, heading),\n        \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n        logo,\n        'link': *[_type == \"page\" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{\n          'slug': slug.current\n        },\n        'externalUrl': cta.navigationItemUrl.externalUrl,\n        'ctaText': coalesce(cta.text[$locale], cta.text.it, cta.text)\n      }\n    },\n    _type == \"slider\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n      backgroundImage,\n      backgroundFixed,\n      images\n    },\n    _type == \"textWithIllustration\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"text\": coalesce(text[$locale], text.it, text),\n      image,\n      backgroundImage,\n      backgroundFixed,\n      imagePosition,\n      gridSize\n    },\n    _type == \"separator\" => { _type, separatorColor },\n    _type == \"video\" => { _type, videoLabel, cssClasses, file },\n    _type == \"promotion\" => {\n      _type,\n      \"title\": coalesce(title[$locale], title.it, title),\n      link, direction, speed\n    },\n    _type == \"map\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      mapCenter,\n      locations\n    },\n    _type == \"dishesMenu\" => {\n      _type,\n      _ref,\n      \"menu\": *[_type == \"dishesMenu\" && _id == ^._ref][0] {\n        \"title\": coalesce(title[$locale], title.it, title),\n        \"introText\": coalesce(introText[$locale], introText.it, introText),\n        categories[] {\n          \"title\": coalesce(title[$locale], title.it, title),\n          icon,\n          flaticonClass,\n          dishes[] {\n            \"title\": coalesce(title[$locale], title.it, title),\n            \"description\": coalesce(description[$locale], description.it, description),\n            price,\n            \"subcategory\": coalesce(subcategory[$locale], subcategory.it, subcategory)\n          }\n        }\n      }\n    },\n    _type == \"quickActions\" => {\n      _type,\n      actions[] {\n        \"label\": coalesce(label[$locale], label.it, label),\n        icon, isPrimary,\n        \"link\": {\n          \"slug\": *[_type == \"page\" && _id == ^.link.internalLink._ref][0].slug.current,\n          \"externalUrl\": link.externalUrl,\n          \"phone\": link.phone\n        }\n      }\n    }\n  }\n}": LOCATION_QUERYResult;
-    "*[_type == \"locations\" && defined(slug.current)]{ \"slug\": slug.current }": LOCATIONS_PATHS_QUERYResult;
-    "\n  *[_type == \"post\"] | order(publishedAt desc) [$offset...$limit] {\n    \"title\": coalesce(title[$locale], title.it, title),\n    \"excerpt\": coalesce(excerpt[$locale], excerpt.it, excerpt),\n    slug,\n    publishedAt,\n    category,\n    coverImage\n  }\n": POSTS_QUERYResult;
+    "*[slug.it.current match \"home*\"][0]{\n  \"title\": coalesce(title[$locale], title.it, title),\n  \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n  \"slug\": coalesce(slug[$locale].current, slug.it.current),\n  \"metaTitle\": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),\n  \"metaDescription\": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),\n  fullWidth,\n  backgroundImage,\n  backgroundFixed,\n  theme,\n  pageBuilder[]{\n    _type == \"video\" => {\n      _type,\n      videoLabel,\n      cssClasses,\n      file\n    },\n    _type == \"banner\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"text\": coalesce(text[$locale], text.it, text),\n      headingCSSClasses,\n      \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle)\n    },\n    _type == \"separator\" => {\n      _type,\n      separatorColor\n    },\n    _type == \"slider\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n      backgroundImage {\n        ...,\n        \"alt\": coalesce(alt[$locale], alt.it, alt)\n      },\n      backgroundFixed,\n      images[] {\n        ...,\n        \"alt\": coalesce(alt[$locale], alt.it, alt)\n      }\n    },\n    _type == \"slideshow\" => {\n      _type,\n      'images':  images[] {\n        asset,\n        hotspot,\n        crop,\n        \"alt\": coalesce(alt[$locale], alt.it, alt),\n        \"heading\": coalesce(heading[$locale], heading.it, heading),\n        \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n        logo,\n        'link': *[_type == \"page\" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{\n          'slug': slug.current\n        },\n        'externalUrl': cta.navigationItemUrl.externalUrl,\n        'ctaText': coalesce(cta.text[$locale], cta.text.it, cta.text)\n      }\n    },\n    _type == \"textWithIllustration\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"text\": coalesce(text[$locale], text.it, text),\n      image {\n        ...,\n        \"alt\": coalesce(alt[$locale], alt.it, alt)\n      },\n      backgroundImage,\n      backgroundFixed,\n      hasOverlay,\n      overlayColor,\n      imagePosition,\n      gridSize\n    },\n    _type == \"gallery\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n      images[] {\n        ...,\n        \"alt\": coalesce(alt[$locale], alt.it, alt)\n      }\n    },\n    _type == \"form\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      label,\n      form\n    },\n    _type == \"promotion\" => {\n      _type,\n      \"title\": coalesce(title[$locale], title.it, title),\n      link,\n      direction,\n      speed\n    },\n    _type == \"map\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      mapCenter,\n      locations\n    },\n    _type == \"dishesMenu\" => {\n      _type,\n      _ref,\n      \"menu\": *[ _type == \"dishesMenu\" && _id == ^._ref ][0] {\n        \"title\": coalesce(title[$locale], title.it, title),\n        \"introText\": coalesce(introText[$locale], introText.it, introText),\n        categories[] {\n          \"title\": coalesce(title[$locale], title.it, title),\n          icon,\n          flaticonClass,\n          dishes[] {\n            \"title\": coalesce(title[$locale], title.it, title),\n            \"description\": coalesce(description[$locale], description.it, description),\n            price,\n            \"subcategory\": coalesce(subcategory[$locale], subcategory.it, subcategory)\n          }\n        }\n      }\n    },\n    _type == \"quickActions\" => {\n      _type,\n      actions[] {\n        \"label\": coalesce(label[$locale], label.it, label),\n        icon,\n        isPrimary,\n        \"link\": {\n          \"slug\": *[_type == \"page\" && _id == ^.link.internalLink._ref][0].slug.current,\n          \"externalUrl\": link.externalUrl,\n          \"phone\": link.phone\n        }\n      }\n    }\n  },\n}": HOMEPAGE_QUERYResult;
+    "*[\n  _type == \"page\" &&\n  coalesce(slug[$locale].current, slug.it.current) == $slug\n][0]{\n  \"title\": coalesce(title[$locale], title.it, title),\n  \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n  \"slug\": coalesce(slug[$locale].current, slug.it.current),\n  \"metaTitle\": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),\n  \"metaDescription\": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),\n  introImage,\n  fullWidth,\n  backgroundImage,\n  backgroundFixed,\n  theme,\n  pageBuilder[]{\n    _type == \"video\" => {\n      _type,\n      videoLabel,\n      cssClasses,\n      file\n    },\n    _type == \"banner\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"text\": coalesce(text[$locale], text.it, text),\n      headingCSSClasses,\n      \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle)\n    },\n    _type == \"separator\" => {\n      _type,\n      separatorColor\n    },\n    _type == \"slider\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n      backgroundImage {\n        ...,\n        \"alt\": coalesce(alt[$locale], alt.it, alt)\n      },\n      backgroundFixed,\n      images[] {\n        ...,\n        \"alt\": coalesce(alt[$locale], alt.it, alt)\n      }\n    },\n    _type == \"slideshow\" => {\n      _type,\n      'images':  images[] {\n        asset,\n        hotspot,\n        crop,\n        \"alt\": coalesce(alt[$locale], alt.it, alt),\n        \"heading\": coalesce(heading[$locale], heading.it, heading),\n        \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n        logo,\n        'link': *[_type == \"page\" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{\n          'slug': coalesce(slug[$locale].current, slug.it.current)\n        },\n        'externalUrl': cta.navigationItemUrl.externalUrl,\n        'ctaText': coalesce(cta.text[$locale], cta.text.it, cta.text)\n      }\n    },\n    _type == \"textWithIllustration\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"text\": coalesce(text[$locale], text.it, text),\n      image {\n        ...,\n        \"alt\": coalesce(alt[$locale], alt.it, alt)\n      },\n      backgroundImage,\n      backgroundFixed,\n      imagePosition,\n      gridSize\n    },\n    _type == \"gallery\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n      images[] {\n        ...,\n        \"alt\": coalesce(alt[$locale], alt.it, alt)\n      }\n    },\n    _type == \"form\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      label,\n      form\n    },\n    _type == \"promotion\" => {\n      _type,\n      \"title\": coalesce(title[$locale], title.it, title),\n      link,\n      direction,\n      speed\n    },\n    _type == \"map\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      mapCenter,\n      locations\n    },\n    _type == \"dishesMenu\" => {\n      _type,\n      _ref,\n      \"menu\": *[_type == \"dishesMenu\" && _id == ^._ref][0] {\n        \"title\": coalesce(title[$locale], title.it, title),\n        \"introText\": coalesce(introText[$locale], introText.it, introText),\n        categories[] {\n          \"title\": coalesce(title[$locale], title.it, title),\n          icon,\n          flaticonClass,\n          dishes[] {\n            \"title\": coalesce(title[$locale], title.it, title),\n            \"description\": coalesce(description[$locale], description.it, description),\n            price,\n            \"subcategory\": coalesce(subcategory[$locale], subcategory.it, subcategory)\n          }\n        }\n      }\n    },\n    _type == \"quickActions\" => {\n      _type,\n      actions[] {\n        \"label\": coalesce(label[$locale], label.it, label),\n        icon,\n        isPrimary,\n        \"link\": {\n          \"slug\": coalesce(*[_type == \"page\" && _id == ^.link.internalLink._ref][0].slug[$locale].current, *[_type == \"page\" && _id == ^.link.internalLink._ref][0].slug.it.current),\n          \"externalUrl\": link.externalUrl,\n          \"phone\": link.phone\n        }\n      }\n    }\n  },\n}": PAGE_QUERYResult;
+    "*[\n  _type == \"locations\" &&\n  coalesce(slug[$locale].current, slug.it.current) == $slug\n][0]{\n  \"title\": coalesce(title[$locale], title.it, title),\n  \"metaTitle\": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),\n  \"metaDescription\": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),\n  \"slug\": coalesce(slug[$locale].current, slug.it.current),\n  heroImage {\n    ...,\n    \"alt\": coalesce(alt[$locale], alt.it, alt)\n  },\n  \"description\": coalesce(description[$locale], description.it, description),\n  city,\n  address,\n  postalCode,\n  phone,\n  email,\n  location,\n  monday, tuesday, wednesday, thursday, friday, saturday, sunday,\n  pageBuilder[]{\n    _type == \"banner\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"text\": coalesce(text[$locale], text.it, text),\n      headingCSSClasses,\n      \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle)\n    },\n    _type == \"gallery\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n      images[] {\n        ...,\n        \"alt\": coalesce(alt[$locale], alt.it, alt)\n      }\n    },\n    _type == \"slideshow\" => {\n      _type,\n      'images': images[] {\n        asset,\n        hotspot,\n        crop,\n        \"alt\": coalesce(alt[$locale], alt.it, alt),\n        \"heading\": coalesce(heading[$locale], heading.it, heading),\n        \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n        logo,\n        'link': *[_type == \"page\" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{\n          'slug': coalesce(slug[$locale].current, slug.it.current)\n        },\n        'externalUrl': cta.navigationItemUrl.externalUrl,\n        'ctaText': coalesce(cta.text[$locale], cta.text.it, cta.text)\n      }\n    },\n    _type == \"slider\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"subtitle\": coalesce(subtitle[$locale], subtitle.it, subtitle),\n      backgroundImage {\n        ...,\n        \"alt\": coalesce(alt[$locale], alt.it, alt)\n      },\n      backgroundFixed,\n      images[] {\n        ...,\n        \"alt\": coalesce(alt[$locale], alt.it, alt)\n      }\n    },\n    _type == \"textWithIllustration\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      \"text\": coalesce(text[$locale], text.it, text),\n      image {\n        ...,\n        \"alt\": coalesce(alt[$locale], alt.it, alt)\n      },\n      backgroundImage,\n      backgroundFixed,\n      imagePosition,\n      gridSize\n    },\n    _type == \"separator\" => { _type, separatorColor },\n    _type == \"video\" => { _type, videoLabel, cssClasses, file },\n    _type == \"promotion\" => {\n      _type,\n      \"title\": coalesce(title[$locale], title.it, title),\n      link, direction, speed\n    },\n    _type == \"map\" => {\n      _type,\n      \"heading\": coalesce(heading[$locale], heading.it, heading),\n      mapCenter,\n      locations\n    },\n    _type == \"dishesMenu\" => {\n      _type,\n      _ref,\n      \"menu\": *[_type == \"dishesMenu\" && _id == ^._ref][0] {\n        \"title\": coalesce(title[$locale], title.it, title),\n        \"introText\": coalesce(introText[$locale], introText.it, introText),\n        categories[] {\n          \"title\": coalesce(title[$locale], title.it, title),\n          icon,\n          flaticonClass,\n          dishes[] {\n            \"title\": coalesce(title[$locale], title.it, title),\n            \"description\": coalesce(description[$locale], description.it, description),\n            price,\n            \"subcategory\": coalesce(subcategory[$locale], subcategory.it, subcategory)\n          }\n        }\n      }\n    },\n    _type == \"quickActions\" => {\n      _type,\n      actions[] {\n        \"label\": coalesce(label[$locale], label.it, label),\n        icon, isPrimary,\n        \"link\": {\n          \"slug\": coalesce(*[_type == \"page\" && _id == ^.link.internalLink._ref][0].slug[$locale].current, *[_type == \"page\" && _id == ^.link.internalLink._ref][0].slug.it.current),\n          \"externalUrl\": link.externalUrl,\n          \"phone\": link.phone\n        }\n      }\n    }\n  }\n}": LOCATION_QUERYResult;
+    "*[_type == \"locations\" && defined(slug.it.current)]{\n    \"slugIt\": slug.it.current,\n    \"slugEn\": coalesce(slug.en.current, slug.it.current)\n  }": LOCATIONS_PATHS_QUERYResult;
+    "\n  *[_type == \"post\"] | order(publishedAt desc) [$offset...$limit] {\n    \"title\": coalesce(title[$locale], title.it, title),\n    \"excerpt\": coalesce(excerpt[$locale], excerpt.it, excerpt),\n    \"slug\": coalesce(slug[$locale].current, slug.it.current),\n    publishedAt,\n    category,\n    coverImage {\n      ...,\n      \"alt\": coalesce(alt[$locale], alt.it, alt)\n    }\n  }\n": POSTS_QUERYResult;
     "count(*[_type == \"post\"])": POSTS_COUNT_QUERYResult;
-    "*[_type == \"post\" && slug.current == $slug][0]{\n  \"title\": coalesce(title[$locale], title.it, title),\n  \"excerpt\": coalesce(excerpt[$locale], excerpt.it, excerpt),\n  \"metaTitle\": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),\n  \"metaDescription\": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),\n  \"body\": coalesce(body[$locale], body.it, body),\n  slug,\n  publishedAt,\n  category,\n  coverImage\n}": POST_QUERYResult;
+    "*[\n  _type == \"post\" &&\n  coalesce(slug[$locale].current, slug.it.current) == $slug\n][0]{\n  \"title\": coalesce(title[$locale], title.it, title),\n  \"excerpt\": coalesce(excerpt[$locale], excerpt.it, excerpt),\n  \"metaTitle\": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),\n  \"metaDescription\": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),\n  \"body\": coalesce(body[$locale], body.it, body),\n  slug,\n  publishedAt,\n  category,\n  coverImage {\n    ...,\n    \"alt\": coalesce(alt[$locale], alt.it, alt)\n  }\n}": POST_QUERYResult;
   }
 }

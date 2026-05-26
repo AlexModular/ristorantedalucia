@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
 import { components } from "@/components/PortableTextComponents";
 import type { Metadata } from "next";
+import { resolveAlt } from "@/lib/resolveAlt";
 
 const CATEGORY_LABELS: Record<string, { it: string; en: string }> = {
   news:     { it: "News",                   en: "News" },
@@ -116,7 +117,7 @@ export default async function PostPage({
           <div className="relative w-full aspect-video overflow-hidden mb-12">
             <Image
               src={urlFor(post.coverImage).width(1200).height(675).url()}
-              alt={(post.coverImage as { alt?: string }).alt ?? post.title ?? ""}
+              alt={resolveAlt(post.coverImage?.alt, locale, post.title ?? '')}
               fill
               className="object-cover"
               priority

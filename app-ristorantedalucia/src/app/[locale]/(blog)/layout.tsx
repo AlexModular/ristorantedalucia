@@ -62,6 +62,14 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     },
     description: defaultDescription,
     metadataBase: new URL('https://ristorantedalucia.it'),
+    // ── Google Search Console verification ─────────────────────────────────
+    // Imposta NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION nel file .env.local (o su Vercel)
+    ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION && {
+      verification: {
+        google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+      },
+    }),
+    // ───────────────────────────────────────────────────────────────────────
     openGraph: {
       title: siteName,
       description: defaultDescription,

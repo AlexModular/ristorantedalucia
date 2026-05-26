@@ -4,6 +4,7 @@ import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import type { Metadata } from "next";
+import { resolveAlt } from "@/lib/resolveAlt";
 
 const POSTS_PER_PAGE = 12;
 
@@ -133,7 +134,7 @@ export default async function NewsListPage({
                     {post.coverImage ? (
                       <Image
                         src={urlFor(post.coverImage).width(800).height(450).url()}
-                        alt={(post.coverImage as { alt?: string }).alt ?? post.title ?? ""}
+                        alt={resolveAlt(post.coverImage?.alt, locale, post.title ?? '')}
                         fill
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />

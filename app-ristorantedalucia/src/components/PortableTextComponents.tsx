@@ -2,6 +2,7 @@ import { PortableTextComponents } from "@portabletext/react";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 import React from "react";
+import { resolveAlt } from "@/lib/resolveAlt";
 
 export const components: PortableTextComponents = {
   block: {
@@ -36,7 +37,7 @@ export const components: PortableTextComponents = {
         <div className="my-8 relative w-full aspect-video">
           <Image
             src={urlFor(value).width(1200).url()}
-            alt={value.alt || 'Image'}
+            alt={resolveAlt(value.alt, 'it', 'Image')}
             fill
             className="object-cover rounded-lg"
           />

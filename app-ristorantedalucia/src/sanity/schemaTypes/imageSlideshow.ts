@@ -33,7 +33,7 @@ export const imageSlideshowType = defineType({
             },
             {
               name: 'alt',
-              type: 'string',
+              type: 'localizedString',
               title: 'Alternative text',
             },
             {

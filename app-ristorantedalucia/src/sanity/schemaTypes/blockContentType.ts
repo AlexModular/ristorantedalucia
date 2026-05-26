@@ -107,7 +107,7 @@ export const blockContentType = defineType({
       fields: [
         {
           name: 'alt',
-          type: 'string',
+          type: 'localizedString',
           title: 'Alternative Text',
         }
       ]

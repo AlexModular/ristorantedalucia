@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from 'next-intl/plugin';
+import path from 'path';
 
 const nextConfig: NextConfig = {
+  // Fix: Next.js finds multiple lockfiles and mis-detects workspace root.
+  // Explicitly point to this project's directory.
+  outputFileTracingRoot: path.join(__dirname),
   env: {
     LIGHTGALLERY_LICENSE_KEY: process.env.LIGHTGALLERY_LICENSE_KEY,
     IUBENDA_SITE_ID: process.env.IUBENDA_SITE_ID,
