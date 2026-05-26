@@ -1,9 +1,5 @@
 import { LOCATION_QUERY, LOCATIONS_PATHS_QUERY } from "@/sanity/lib/queries";
 import { client } from "@/sanity/lib/client";
-
-// Revalidate every 60 seconds (ISR) instead of relying on Live API
-// which calls draftMode() and breaks static generation.
-export const revalidate = 60;
 import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -12,6 +8,30 @@ import { components } from "@/components/PortableTextComponents";
 import PageMaker from "@/components/PageMaker";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import type { Metadata } from "next";
+import type { LocalizedString } from "@/../sanity.types";
+
+// Revalidate every 60 seconds (ISR) instead of relying on Live API
+// which calls draftMode() and breaks static generation.
+export const revalidate = 60;
+
+/**
+ * Safely resolve a Sanity localised field (coalesce result) to a plain string.
+ * The GROQ coalesce() can return: a plain string, a LocalizedString object,
+ * or an array of LocalizedString objects (legacy multi-language arrays).
+ */
+function localStr(
+  value: string | LocalizedString | Array<LocalizedString | { _type: string; it?: string; en?: string }> | null | undefined,
+  locale: string
+): string | undefined {
+  if (!value) return undefined;
+  if (typeof value === "string") return value || undefined;
+  if (Array.isArray(value)) {
+    const hit = value.find((v) => typeof v === "object" && v !== null && "_type" in v) as { it?: string; en?: string } | undefined;
+    return hit?.[locale as "it" | "en"] ?? hit?.it ?? undefined;
+  }
+  // LocalizedString object
+  return (value as LocalizedString)[locale as "it" | "en"] ?? (value as LocalizedString).it ?? undefined;
+}
 
 export async function generateStaticParams() {
   // Use direct client — generateStaticParams runs at build time outside
@@ -31,16 +51,16 @@ export async function generateMetadata({
   if (!location) return {};
 
   const siteName = "Ristorante Da Lucia";
-  const title = location.metaTitle || location.title || siteName;
-  const description =
-    location.metaDescription ||
+  const resolvedTitle = localStr(location.metaTitle, locale) ?? localStr(location.title, locale) ?? siteName;
+  const resolvedDesc =
+    localStr(location.metaDescription, locale) ??
     (locale === "it"
-      ? `Visita ${location.title} — ${location.address}, ${location.city}.`
-      : `Visit ${location.title} — ${location.address}, ${location.city}.`);
+      ? `Visita ${localStr(location.title, locale)} — ${location.address}, ${location.city}.`
+      : `Visit ${localStr(location.title, locale)} — ${location.address}, ${location.city}.`);
 
   return {
-    title,
-    description,
+    title: resolvedTitle,
+    description: resolvedDesc,
     alternates: {
       canonical: `https://ristorantedalucia.it/${locale}/location/${slug}`,
       languages: {
@@ -49,12 +69,12 @@ export async function generateMetadata({
       },
     },
     openGraph: {
-      title,
-      description,
+      title: resolvedTitle,
+      description: resolvedDesc,
       url: `https://ristorantedalucia.it/${locale}/location/${slug}`,
       siteName,
       images: location.heroImage
-        ? [{ url: urlFor(location.heroImage).width(1200).height(630).url(), width: 1200, height: 630, alt: location.title ?? "" }]
+        ? [{ url: urlFor(location.heroImage).width(1200).height(630).url(), width: 1200, height: 630, alt: localStr(location.title, locale) ?? "" }]
         : [],
     },
   };
@@ -91,7 +111,7 @@ export default async function LocationPage({
         >
           <Image
             src={urlFor(location.heroImage).width(1920).height(1080).url()}
-            alt={(location.heroImage as { alt?: string }).alt ?? location.title ?? ""}
+            alt={(location.heroImage as { alt?: string }).alt ?? localStr(location.title, locale) ?? ""}
             fill
             className="object-cover"
             priority
@@ -99,7 +119,7 @@ export default async function LocationPage({
           <div className="absolute inset-0 bg-black/40" />
           <div className="absolute inset-0 flex items-end pb-12 px-6 md:px-16">
             <h1 className="family-playfair text-white text-4xl md:text-6xl drop-shadow-lg">
-              {location.title}
+              {localStr(location.title, locale)}
             </h1>
           </div>
         </div>
@@ -107,7 +127,7 @@ export default async function LocationPage({
 
       <div className="container mx-auto px-4 md:px-8 py-16 max-w-5xl">
         {!location.heroImage && (
-          <h1 className="family-playfair text-4xl md:text-5xl mb-12 text-center">{location.title}</h1>
+          <h1 className="family-playfair text-4xl md:text-5xl mb-12 text-center">{localStr(location.title, locale)}</h1>
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
