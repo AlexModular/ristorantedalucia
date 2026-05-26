@@ -8,7 +8,8 @@ import { components } from "@/components/PortableTextComponents";
 import PageMaker from "@/components/PageMaker";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import type { Metadata } from "next";
-import type { LocalizedString } from "@/../sanity.types";
+import type { LocalizedString, LocalizedBlockContent, BlockContent, LOCATION_QUERYResult } from "@/../sanity.types";
+import type { PageBlock } from "@/../sanity.types.custom";
 
 // Revalidate every 60 seconds (ISR) instead of relying on Live API
 // which calls draftMode() and breaks static generation.
@@ -33,6 +34,38 @@ function localStr(
   return (value as LocalizedString)[locale as "it" | "en"] ?? (value as LocalizedString).it ?? undefined;
 }
 
+/**
+ * Safely resolve a Sanity localised block-content field to a plain block array.
+ * The GROQ coalesce() can return several shapes depending on what it matches:
+ *   1. BlockContent              — direct array, pass through
+ *   2. LocalizedBlockContent     — object with it/en keys, unwrap by locale
+ *   3. Array<LocalizedBlockContent> — legacy multi-locale array, pick first element
+ */
+type LocationDescription = NonNullable<LOCATION_QUERYResult>["description"];
+
+function resolveBlockContent(
+  value: LocationDescription,
+  locale: string
+): BlockContent | null {
+  if (!value) return null;
+  if (Array.isArray(value)) {
+    const first = value[0];
+    // Array<LocalizedBlockContent>: each element has _type === "localizedBlockContent"
+    if (first && typeof first === "object" && "_type" in first && (first as { _type: string })._type === "localizedBlockContent") {
+      const loc = first as LocalizedBlockContent;
+      return (loc[locale as "it" | "en"] ?? loc.it) as BlockContent | null ?? null;
+    }
+    // Already a plain BlockContent array
+    return value as BlockContent;
+  }
+  // LocalizedBlockContent object
+  if ((value as LocalizedBlockContent)._type === "localizedBlockContent") {
+    const loc = value as LocalizedBlockContent;
+    return (loc[locale as "it" | "en"] ?? loc.it) as BlockContent | null ?? null;
+  }
+  return null;
+}
+
 export async function generateStaticParams() {
   type LocationSlug = { slug: string | null };
   const locations = await client.fetch<LocationSlug[]>(LOCATIONS_PATHS_QUERY);
@@ -45,12 +78,13 @@ export async function generateStaticParams() {
 
   // Cicla su ogni location di Sanity
   (locations ?? []).forEach((l) => {
-    if (l.slug) {
+    const slug = l.slug;
+    if (slug) {
       // Per ogni location, crea una rotta per ogni lingua
       locales.forEach((locale) => {
         params.push({
           locale: locale,
-          slug: l.slug
+          slug: slug,
         });
       });
     }
@@ -207,16 +241,16 @@ export default async function LocationPage({
         </div>
 
         {/* Description */}
-        {location.description && (
+        {location.description && resolveBlockContent(location.description, locale) && (
           <div className="prose prose-lg max-w-none mb-16">
-            <PortableText value={location.description} components={components} />
+            <PortableText value={resolveBlockContent(location.description, locale) as BlockContent} components={components} />
           </div>
         )}
       </div>
 
       {/* Extra page blocks */}
       {location.pageBuilder && location.pageBuilder.length > 0 && (
-        <PageMaker page={{ pageBuilder: location.pageBuilder }} />
+        <PageMaker page={{ pageBuilder: location.pageBuilder as unknown as PageBlock[] }} />
       )}
     </main>
   );

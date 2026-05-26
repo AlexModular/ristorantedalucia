@@ -344,6 +344,31 @@ export const LOCATION_QUERY = defineQuery(`*[_type == "locations" && slug.curren
       "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),
       images
     },
+    _type == "slideshow" => {
+      _type,
+      'images': images[] {
+        asset,
+        hotspot,
+        crop,
+        alt,
+        "heading": coalesce(heading[$locale], heading.it, heading),
+        "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),
+        logo,
+        'link': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{
+          'slug': slug.current
+        },
+        'externalUrl': cta.navigationItemUrl.externalUrl,
+        'ctaText': coalesce(cta.text[$locale], cta.text.it, cta.text)
+      }
+    },
+    _type == "slider" => {
+      _type,
+      "heading": coalesce(heading[$locale], heading.it, heading),
+      "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),
+      backgroundImage,
+      backgroundFixed,
+      images
+    },
     _type == "textWithIllustration" => {
       _type,
       "heading": coalesce(heading[$locale], heading.it, heading),
@@ -360,6 +385,31 @@ export const LOCATION_QUERY = defineQuery(`*[_type == "locations" && slug.curren
       _type,
       "title": coalesce(title[$locale], title.it, title),
       link, direction, speed
+    },
+    _type == "map" => {
+      _type,
+      "heading": coalesce(heading[$locale], heading.it, heading),
+      mapCenter,
+      locations
+    },
+    _type == "dishesMenu" => {
+      _type,
+      _ref,
+      "menu": *[_type == "dishesMenu" && _id == ^._ref][0] {
+        "title": coalesce(title[$locale], title.it, title),
+        "introText": coalesce(introText[$locale], introText.it, introText),
+        categories[] {
+          "title": coalesce(title[$locale], title.it, title),
+          icon,
+          flaticonClass,
+          dishes[] {
+            "title": coalesce(title[$locale], title.it, title),
+            "description": coalesce(description[$locale], description.it, description),
+            price,
+            "subcategory": coalesce(subcategory[$locale], subcategory.it, subcategory)
+          }
+        }
+      }
     },
     _type == "quickActions" => {
       _type,
