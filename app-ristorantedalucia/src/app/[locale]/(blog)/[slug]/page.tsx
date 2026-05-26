@@ -1,10 +1,10 @@
 import { sanityFetch } from "@/sanity/lib/live";
 import { PAGE_QUERY } from "@/sanity/lib/queries"
-
 import PageMaker from "@/components/PageMaker";
 import PageIntro from "@/components/PageIntro";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
+import AlternateSlugRegistrar from "@/components/AlternateSlugRegistrar";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string, slug: string }> }) {
   const { locale, slug } = await params;
@@ -66,6 +66,10 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
   });
   return (
       <main className={`relative text-foreground min-h-screen ${page?.theme ?? ''} ${!page?.backgroundImage ? 'bg-background' : ''}`}>
+        <AlternateSlugRegistrar
+          slugIt={(page as { slugIt?: string })?.slugIt ?? slug}
+          slugEn={(page as { slugEn?: string })?.slugEn ?? slug}
+        />
         {page?.backgroundImage && (
           <div className={`${page?.backgroundFixed ? 'fixed' : 'absolute'} inset-0 -z-10 w-full h-full`}>
             <Image 

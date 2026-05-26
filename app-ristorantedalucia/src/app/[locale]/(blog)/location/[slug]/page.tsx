@@ -11,6 +11,7 @@ import type { Metadata } from "next";
 import type { LocalizedString, LocalizedBlockContent, BlockContent, LOCATION_QUERYResult } from "@/../sanity.types";
 import type { PageBlock } from "@/../sanity.types.custom";
 import { resolveAlt } from "@/lib/resolveAlt";
+import AlternateSlugRegistrar from "@/components/AlternateSlugRegistrar";
 
 // Revalidate every 60 seconds (ISR) instead of relying on Live API
 // which calls draftMode() and breaks static generation.
@@ -144,6 +145,11 @@ export default async function LocationPage({
 
   return (
     <main className="relative text-foreground min-h-screen bg-background">
+      <AlternateSlugRegistrar
+        slugIt={(location as { slugIt?: string })?.slugIt ?? slug}
+        slugEn={(location as { slugEn?: string })?.slugEn ?? slug}
+        prefix="location"
+      />
       {/* Hero */}
       {location.heroImage && (
         <div

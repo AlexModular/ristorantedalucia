@@ -1,5 +1,6 @@
 'use client'
 import { Link, usePathname } from "@/i18n/routing";
+import { useAlternateSlugs } from "@/context/AlternateSlugContext";
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { HEADERMENU_QUERYResult, LOCATIONS_QUERYResult } from "../../sanity.types";
 import Logo from "./Logo";
@@ -177,10 +178,27 @@ export default function Navbar({
   const allItems = navItems?.flatMap((item) => item.items ?? []) ?? [];
 
   // ── Language switcher ─────────────────────────────────────────────────────
+  const { alternates } = useAlternateSlugs();
+
+  // Build the href for a target locale.
+  // If the page has registered alternate slugs, use them to avoid
+  // serving /en/contattaci instead of /en/contact-us.
+  const getLocaleHref = (targetLocale: 'it' | 'en'): string => {
+    if (alternates) {
+      const slug = targetLocale === 'it' ? alternates.slugIt : alternates.slugEn;
+      const isHome = slug === 'home' || slug === '';
+      if (isHome) return '/';
+      const base = alternates.prefix ? `/${alternates.prefix}/${slug}` : `/${slug}`;
+      return base;
+    }
+    // Fallback: keep current pathname (next-intl swaps the locale prefix)
+    return pathname;
+  };
+
   const LanguageSwitcher = ({ inverse = false }: { inverse?: boolean }) => (
     <div className="flex items-center gap-2 text-sm font-medium shrink-0">
       <Link
-        href={pathname}
+        href={getLocaleHref('it')}
         locale="it"
         className={`transition-colors ${locale === 'it' ? 'text-gold' : inverse ? 'text-foreground' : (headerIsTransparent ? navTextColor : 'text-foreground')} hover:text-gold`}
       >
@@ -188,7 +206,7 @@ export default function Navbar({
       </Link>
       <span className={inverse ? 'text-foreground/30' : (headerIsTransparent ? (navTextDark ? 'text-foreground/30' : 'text-white/30') : 'text-foreground/30')}>|</span>
       <Link
-        href={pathname}
+        href={getLocaleHref('en')}
         locale="en"
         className={`transition-colors ${locale === 'en' ? 'text-gold' : inverse ? 'text-foreground' : (headerIsTransparent ? navTextColor : 'text-foreground')} hover:text-gold`}
       >

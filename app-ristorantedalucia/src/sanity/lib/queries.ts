@@ -209,6 +209,8 @@ export const PAGE_QUERY = defineQuery(`*[
   "title": coalesce(title[$locale], title.it, title),
   "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),
   "slug": coalesce(slug[$locale].current, slug.it.current),
+  "slugIt": slug.it.current,
+  "slugEn": coalesce(slug.en.current, slug.it.current),
   "metaTitle": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),
   "metaDescription": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),
   introImage,
@@ -351,6 +353,8 @@ export const LOCATION_QUERY = defineQuery(`*[
   "metaTitle": coalesce(metaTitle[$locale], metaTitle.it, metaTitle),
   "metaDescription": coalesce(metaDescription[$locale], metaDescription.it, metaDescription),
   "slug": coalesce(slug[$locale].current, slug.it.current),
+  "slugIt": slug.it.current,
+  "slugEn": coalesce(slug.en.current, slug.it.current),
   heroImage {
     ...,
     "alt": coalesce(alt[$locale], alt.it, alt)

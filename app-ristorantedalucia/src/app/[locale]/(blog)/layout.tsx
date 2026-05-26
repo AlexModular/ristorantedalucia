@@ -4,6 +4,7 @@ import { VisualEditing } from "next-sanity";
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { draftMode } from "next/headers";
 import Navigation from "@/components/Navigation";
+import { AlternateSlugContextProvider } from "@/context/AlternateSlugContext";
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { IubendaProvider, IubendaCookieSolutionBannerConfigInterface } from '@mep-agency/next-iubenda';
 import Image from 'next/image';
@@ -176,7 +177,8 @@ export default async function RootLayout({
       <body cz-shortcut-listen="true" className={`${montserrat.variable} ${playfair.variable} bg-background text-foreground`}>
         <NextIntlClientProvider messages={messages}>
           <ReCaptchaProvider>
-            <div className="min-h-screen">
+            <AlternateSlugContextProvider>
+              <div className="min-h-screen">
               <Navigation navItems={navItems} theme={theme} locations={locations} />
               <IubendaProvider bannerConfig={iubendaBannerConfig}>
                 <PixelLoader />
@@ -192,6 +194,7 @@ export default async function RootLayout({
                 </>
               )}
             </div>
+            </AlternateSlugContextProvider>
           </ReCaptchaProvider>
         </NextIntlClientProvider>
       </body>
