@@ -134,3 +134,5 @@ scratch/*
 
 # scripts files
 scripts/*
+
+*.DS_Store

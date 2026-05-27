@@ -145,6 +145,13 @@ export default async function RootLayout({
   return (
     <html lang={locale} data-theme={theme} className={themeClass}>
       <head>
+        {/* Favicon principale: SVG adattivo con CSS prefers-color-scheme (Chrome, Firefox, Safari 12+) */}
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        {/* Fallback PNG per browser senza SVG favicon: media query funziona su Chrome/Firefox */}
+        <link rel="icon" href="/icon" type="image/png" media="(prefers-color-scheme: light)" />
+        <link rel="icon" href="/icon-dark.png" type="image/png" media="(prefers-color-scheme: dark)" />
+        {/* Apple touch icon: generato da icon.tsx (favicon-black.png 180x180) */}
+        <link rel="apple-touch-icon" href="/apple-icon" />
         {/* Meta Pixel Code */}
         <script
           dangerouslySetInnerHTML={{
@@ -179,21 +186,21 @@ export default async function RootLayout({
           <ReCaptchaProvider>
             <AlternateSlugContextProvider>
               <div className="min-h-screen">
-              <Navigation navItems={navItems} theme={theme} locations={locations} />
-              <IubendaProvider bannerConfig={iubendaBannerConfig}>
-                <PixelLoader />
-                {children}
-              </IubendaProvider>
-              <Footer locations={locations} socials={socials} copyright={copyright} />
-              <SanityLive />
-              {(await draftMode()).isEnabled && (
-                <>
-                  <DisableDraftMode />
-                  <VisualEditing />
-                  <SpeedInsights />
-                </>
-              )}
-            </div>
+                <Navigation navItems={navItems} theme={theme} locations={locations} />
+                <IubendaProvider bannerConfig={iubendaBannerConfig}>
+                  <PixelLoader />
+                  {children}
+                </IubendaProvider>
+                <Footer locations={locations} socials={socials} copyright={copyright} />
+                <SanityLive />
+                {(await draftMode()).isEnabled && (
+                  <>
+                    <DisableDraftMode />
+                    <VisualEditing />
+                    <SpeedInsights />
+                  </>
+                )}
+              </div>
             </AlternateSlugContextProvider>
           </ReCaptchaProvider>
         </NextIntlClientProvider>

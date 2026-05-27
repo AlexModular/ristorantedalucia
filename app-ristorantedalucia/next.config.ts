@@ -21,6 +21,7 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_MAPS_API_KEY: process.env.NEXT_PUBLIC_MAPS_API_KEY,
     NEXT_PUBLIC_MAPS_ID: process.env.NEXT_PUBLIC_MAPS_ID,
     NEXT_PUBLIC_FACEBOOK_PIXEL_ID: process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID,
+    NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
   },
   images: {
     remotePatterns: [
