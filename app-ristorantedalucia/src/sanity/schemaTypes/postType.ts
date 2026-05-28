@@ -66,7 +66,6 @@ export const postType = defineType({
       description: 'Breve descrizione mostrata nelle card e nei meta tag. Max 200 caratteri.',
       type: 'localizedString',
       group: 'content',
-      validation: (Rule) => Rule.max(200),
     }),
     defineField({
       name: 'body',
