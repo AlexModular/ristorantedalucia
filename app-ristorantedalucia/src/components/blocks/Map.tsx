@@ -6,7 +6,7 @@ import AOSComponent from "../AOS";
 import Image from "next/image";
 import { useEffect } from "react";
 
-function MapBounds({ locations }: { locations: Array<any> }) {
+function MapBounds({ locations }: { locations: Array<{ lat?: number; lng?: number; location?: { lat?: number; lng?: number } }> }) {
   const map = useMap();
 
   useEffect(() => {
