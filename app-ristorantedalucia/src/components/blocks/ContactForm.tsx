@@ -100,7 +100,7 @@ export default function ContactForm({item}: {item: TransformedForm}) {
               <button 
                 type="submit"
                 disabled={isSubmitting}
-                className={`bg-gold text-white px-12 py-4 uppercase family-oswald tracking-widest transition-all hover:bg-foreground disabled:opacity-50`}
+                className={`bg-gold text-white border-2 border-gold px-12 py-4 uppercase family-oswald tracking-widest transition-all hover:bg-background hover:text-gold disabled:opacity-50`}
               >
                 {isSubmitting ? t('sending') : t('submit')}
               </button>

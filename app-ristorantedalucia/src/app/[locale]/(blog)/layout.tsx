@@ -183,7 +183,7 @@ export default async function RootLayout({
       <GoogleAnalytics gaId="UA-119546408-1" />
       <body cz-shortcut-listen="true" className={`${montserrat.variable} ${playfair.variable} bg-background text-foreground`}>
         <NextIntlClientProvider messages={messages}>
-          <ReCaptchaProvider>
+          <ReCaptchaProvider reCaptchaKey={process.env.NEXT_RECAPTCHA_SITE_KEY} useEnterprise={true}>
             <AlternateSlugContextProvider>
               <div className="min-h-screen">
                 <Navigation navItems={navItems} theme={theme} locations={locations} />
