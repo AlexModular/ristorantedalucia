@@ -1,6 +1,6 @@
 'use client'
 import { Link, usePathname } from "@/i18n/routing";
-import { useAlternateSlugs } from "@/context/AlternateSlugContext";
+import { useAlternateSlugs, useForceSticky } from "@/context/AlternateSlugContext";
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { HEADERMENU_QUERYResult, LOCATIONS_QUERYResult } from "../../sanity.types";
 import Logo from "./Logo";
@@ -8,6 +8,8 @@ import { Phone, ChevronLeft, X } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import Image from 'next/image';
 import { urlFor } from '@/sanity/lib/image';
+
+import { openBookingWidget } from '@/lib/booking';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 type NavItem = NonNullable<NonNullable<HEADERMENU_QUERYResult>[number]['items']>[number];
@@ -53,6 +55,46 @@ export default function Navbar({
   const [overTrigger, setOverTrigger] = useState(false);
   const [navTextDark, setNavTextDark] = useState(false); // true = use dark text when transparent
   const [isScrolled, setIsScrolled] = useState(false);
+  const { forceSticky } = useForceSticky();
+
+  const handleBookClick = (e: React.MouseEvent) => {
+    openBookingWidget(e);
+  };
+
+  useEffect(() => {
+    if (!document.getElementById('quandoo-widget-container')) {
+      const container = document.createElement('div');
+      container.id = 'quandoo-widget-container';
+      container.style.position = 'fixed';
+      container.style.top = '0';
+      container.style.left = '0';
+      container.style.opacity = '0';
+      container.style.pointerEvents = 'none';
+      container.style.zIndex = '-50';
+      
+      const builder = document.createElement('div');
+      builder.className = 'quandoo-widget-builder';
+      builder.setAttribute('data-config', JSON.stringify({
+        "format": "text-button",
+        "bgcolor": "#f5b016",
+        "txcolor": "#ffffff",
+        "round": "yes",
+        "position": "",
+        "font": "md",
+        "merchant": 48062,
+        "lang": locale,
+        "txt": t('bookNow')
+      }));
+      
+      container.appendChild(builder);
+      document.body.appendChild(container);
+      
+      const script = document.createElement('script');
+      script.src = "https://s3-eu-west-1.amazonaws.com/quandoo-website/widget-builder/quandoo-widget-builder.js";
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, [locale, t]);
 
   useEffect(() => {
     const NAV_HEIGHT = 80; // approx nav bar height in px
@@ -104,7 +146,8 @@ export default function Navbar({
   const megaOpen = activeDesktopItem !== null;
 
   // Transparent while still scrolling OVER a trigger section (slideshow/page-intro)
-  const headerIsTransparent = overTrigger && !megaOpen;
+  // forceSticky overrides this entirely (e.g. news page, pages without hero)
+  const headerIsTransparent = !forceSticky && overTrigger && !megaOpen;
 
   // Is the current theme light? Used to adapt transparent nav tint + megamenu bg
   const isLightTheme = theme === 'light' || theme === 'cream' || theme === 'white';
@@ -268,9 +311,9 @@ export default function Navbar({
         />
       )}
 
-      {/* Header: sticky when scrolled OR when megamenu is open */}
+      {/* Header: sticky when scrolled */}
       <header
-        className={(isScrolled || megaOpen) ? 'sticky z-[900] top-0 active' : 'z-[900] top-0'}
+        className={(isScrolled || forceSticky) ? 'sticky z-[900] top-0 active' : 'z-[900] top-0'}
         onMouseLeave={closeMega}
       >
         <nav
@@ -322,9 +365,9 @@ export default function Navbar({
             <div className="logo-container">
               <Link href="/" className="logo" aria-label="Ristorante Da Lucia — torna alla homepage">
                 <Logo
-                  className={`w-full h-full transition-all duration-500 ${useWhiteLogo ? 'text-white' : 'text-foreground'}`}
-                  width={headerIsTransparent ? 140 : 110}
-                  height={headerIsTransparent ? 140 : 110}
+                  className={`w-full h-full transition-all duration-500 ${useWhiteLogo ? 'text-white' : 'text-foreground'} ${(!isScrolled && overTrigger && megaOpen) ? '-translate-y-[60px]' : 'translate-y-0'}`}
+                  width={headerIsTransparent ? 140 : 100}
+                  height={headerIsTransparent ? 140 : 100}
                 />
               </Link>
             </div>
@@ -341,9 +384,9 @@ export default function Navbar({
                   </li>
                 ))}
               </ul>
-              <Link
-                href="/contattaci"
-                className={`cta-btn-header px-5 py-2 border-2 uppercase family-oswald tracking-widest text-sm transition-all duration-300 shrink-0 ${headerIsTransparent
+              <button
+                onClick={handleBookClick}
+                className={`cta-btn-header max-[1439px]:hidden px-5 py-2 border-2 uppercase family-oswald tracking-widest text-sm transition-all duration-300 shrink-0 ${headerIsTransparent
                   ? (navTextDark
                     ? 'border-foreground text-foreground hover:bg-foreground hover:text-background'
                     : 'border-white text-white hover:bg-white hover:text-gold')
@@ -351,7 +394,7 @@ export default function Navbar({
                   }`}
               >
                 {t('bookNow')}
-              </Link>
+              </button>
               <LanguageSwitcher />
             </div>
 
@@ -516,13 +559,12 @@ export default function Navbar({
 
           {/* Footer */}
           <div className="px-6 py-6 border-t border-foreground/10 flex flex-col gap-4">
-            <Link
-              href="/contattaci"
-              onClick={toggleMobileMenu}
-              className="block text-center py-3 border-2 border-gold bg-gold text-white uppercase family-oswald tracking-widest text-sm transition-all active:bg-foreground"
+            <button
+              onClick={handleBookClick}
+              className="block w-full text-center py-3 border-2 border-gold bg-gold text-white uppercase family-oswald tracking-widest text-sm transition-all active:bg-foreground"
             >
               {t('bookNow')}
-            </Link>
+            </button>
             <LanguageSwitcher inverse />
           </div>
         </div>
@@ -613,6 +655,14 @@ export default function Navbar({
           )}
         </div>
       </div>
+
+      {/* Floating Booking Button (< 1440px) */}
+      <button
+        onClick={handleBookClick}
+        className="fixed bottom-4 left-4 md:bottom-6 md:left-6 z-[9999] min-[1440px]:hidden px-6 py-3 border-2 border-gold bg-gold text-white uppercase family-oswald tracking-widest text-sm transition-all duration-300 shadow-2xl hover:bg-background hover:text-gold"
+      >
+        {t('bookNow')}
+      </button>
     </>
   );
 }

@@ -4,6 +4,7 @@ import React from 'react'
 import * as LucideIcons from 'lucide-react'
 import { TransformedQuickActions, QuickActionIconName } from '../../../sanity.types.custom'
 import { Link } from '@/i18n/routing'
+import { openBookingWidget } from '@/lib/booking'
 
 const DynamicLucideIcon = ({ name, className }: { name: QuickActionIconName; className?: string }) => {
   const IconComponent = LucideIcons[name as keyof typeof LucideIcons] as React.ElementType | undefined
@@ -40,7 +41,15 @@ export default function QuickActions({ item }: { item: TransformedQuickActions }
 
           return (
             <React.Fragment key={index}>
-              {isPhone ? (
+              {action.link?.isBookingWidget ? (
+                <button
+                  type="button"
+                  onClick={openBookingWidget}
+                  className={className}
+                >
+                  {content}
+                </button>
+              ) : isPhone ? (
                 <a href={href} className={className}>
                   {content}
                 </a>

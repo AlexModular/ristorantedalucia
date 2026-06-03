@@ -13,11 +13,12 @@ import 'swiper/css/effect-fade';
 import AOSComponent from '../AOS';
 import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
+import { openBookingWidget } from '@/lib/booking';
 
 export default function Slideshow(params: { key: number, item: TransformedSlideshow }) {
   const t = useTranslations('Navigation');
   const data: TransformedSlideshow = params?.item;
-  const slidesWithContent = data?.images?.filter(img => img.heading || img.subtitle || (img.ctaText && (img.externalUrl || img.link?.slug))) || [];
+  const slidesWithContent = data?.images?.filter(img => img.heading || img.subtitle || (img.ctaText && (img.externalUrl || img.link?.slug || img.link?.isBookingWidget))) || [];
   const useGlobalContent = slidesWithContent.length === 1;
   const globalContent = useGlobalContent ? slidesWithContent[0] : null;
   const effect = data?.effect || 'fade';
@@ -27,13 +28,25 @@ export default function Slideshow(params: { key: number, item: TransformedSlides
       {item?.heading && (<div className='family-dancing-script slide-title text-4xl sm:text-5xl md:text-6xl lg:text-8xl text-white'>{item.heading}</div>)}
       <div className='slide-content-items'>
         {item?.subtitle && (<div className='family-playfair slide-subtitle text-lg sm:text-2xl md:text-4xl lg:text-5xl uppercase pb-4 md:pb-12 text-white'>{item.subtitle}</div>)}
-        {((item?.link?.slug != null && item?.link?.slug != '') || (item?.externalUrl != null && item?.externalUrl != '')) && (
+        {((item?.link?.slug != null && item?.link?.slug != '') || (item?.externalUrl != null && item?.externalUrl != '') || item?.link?.isBookingWidget) && (
           <div className='cta'>
-            <Link
-              href={item.externalUrl ? item.externalUrl : (item.link?.slug || '#')}
-              target={item.externalUrl ? '__blank' : ''}
-              className='family-oswald cta-btn bg-gold text-white transition-all hover:text-gold hover:bg-background p-2 md:p-4 text-md md:text-2xl lg:text-4xl uppercase'
-            >{item.ctaText || t('readMore')}</Link>
+            {item.link?.isBookingWidget ? (
+              <button
+                type="button"
+                onClick={openBookingWidget}
+                className='family-oswald cta-btn bg-gold text-white transition-all hover:text-gold hover:bg-background p-2 md:p-4 text-md md:text-2xl lg:text-4xl uppercase'
+              >
+                {item.ctaText || t('readMore')}
+              </button>
+            ) : (
+              <Link
+                href={item.externalUrl ? item.externalUrl : (item.link?.slug || '#')}
+                target={item.externalUrl ? '__blank' : ''}
+                className='family-oswald cta-btn bg-gold text-white transition-all hover:text-gold hover:bg-background p-2 md:p-4 text-md md:text-2xl lg:text-4xl uppercase'
+              >
+                {item.ctaText || t('readMore')}
+              </Link>
+            )}
           </div>
         )}
       </div>

@@ -26,5 +26,12 @@ export const linkType = defineType({
       description: 'Enter phone number (e.g. +39061234567). It will be prefixed with tel:',
       type: 'string',
     }),
+    defineField({
+      name: 'isBookingWidget',
+      title: 'Open Booking Widget (Overrides Link)',
+      description: 'Check this box to trigger the Booking Widget (e.g. Quandoo/TheFork) instead of navigating to the link.',
+      type: 'boolean',
+      initialValue: false,
+    }),
   ]
 });

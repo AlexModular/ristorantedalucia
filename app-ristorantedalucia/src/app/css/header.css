@@ -9,7 +9,8 @@ header {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-header.sticky {
+header.sticky,
+header.active {
   position: fixed;
   animation: slideInDown 0.5s both;
   z-index: 1000;
@@ -19,7 +20,8 @@ header nav {
   transition: background-color 0.4s ease, padding 0.4s ease, box-shadow 0.4s ease;
 }
 
-header.sticky nav {
+header.sticky nav,
+header.active nav {
   padding-top: 20px !important;
   padding-bottom: 20px !important;
   min-height: 100px;
@@ -68,7 +70,8 @@ header li a:hover {
   z-index: 100;
 }
 
-header.sticky .logo-container {
+header.sticky .logo-container,
+header.active .logo-container {
   top: 50%;
   transform: translate(-50%, -50%);
   width: 110px;
@@ -131,7 +134,8 @@ header.sticky .logo-container {
     background: transparent;
   }
 
-  header.sticky nav {
+  header.sticky nav,
+  header.active nav {
     padding-top: 10px !important;
     padding-bottom: 10px !important;
     min-height: 70px;
@@ -152,7 +156,8 @@ header.sticky .logo-container {
     transform: translate(-50%, -50%);
   }
 
-  header.sticky .logo-container {
+  header.sticky .logo-container,
+  header.active .logo-container {
     width: 90px;
     height: 90px;
   }

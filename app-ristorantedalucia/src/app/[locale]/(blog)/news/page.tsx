@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import type { Metadata } from "next";
 import { resolveAlt } from "@/lib/resolveAlt";
+import ForceStickyHeader from "@/components/ForceStickyHeader";
 
 const POSTS_PER_PAGE = 12;
 
@@ -77,7 +78,10 @@ export default async function NewsListPage({
   }));
 
   return (
-    <main className="text-foreground min-h-screen bg-background pt-24 pb-20">
+    <main className="text-foreground min-h-screen bg-background pb-20">
+      <ForceStickyHeader />
+      {/* Spacer per header fixed/absolute — in sticky mode: ~100px desktop, ~70px mobile */}
+      <div className="h-[90px] lg:h-[100px]" aria-hidden="true" />
       <div className="container mx-auto px-4 md:px-8 max-w-6xl">
         {/* Header */}
         <header className="text-center mb-16">

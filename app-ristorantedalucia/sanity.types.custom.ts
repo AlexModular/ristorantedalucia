@@ -58,7 +58,7 @@ export type TransformedSlideshow = {
     heading?: string;
     subtitle?: string;
     ctaText?: string;
-    link?: { slug?: string };
+    link?: { slug?: string, isBookingWidget?: boolean };
     externalUrl?: string;
     logo?: SanityImageWithMeta;
     _type: 'image';
@@ -152,6 +152,7 @@ export type TransformedQuickActions = {
       slug?: string;
       externalUrl?: string;
       phone?: string;
+      isBookingWidget?: boolean;
     };
   }>;
 };

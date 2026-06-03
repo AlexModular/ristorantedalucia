@@ -22,7 +22,7 @@ export default function Footer({ locations, socials, copyright }: { locations: L
 
   return (
     <footer className="text-center pt-12 pb-6 px-4" aria-labelledby="footer-heading">
-      <h2 id="footer-heading" className="sr-only">{t('srHeading')}</h2>
+      <h3 id="footer-heading" className="sr-only">{t('srHeading')}</h3>
       <div className="footer-links grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 py-7 max-w-7xl mx-auto gap-8">
         <div className="footer-logo md:col-span-2 lg:col-span-2 flex justify-center items-center">
           <Image

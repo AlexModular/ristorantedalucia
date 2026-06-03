@@ -27,17 +27,23 @@ export type AlternateSlugs = {
 type AlternateSlugContextValue = {
   alternates: AlternateSlugs | null
   setAlternates: (slugs: AlternateSlugs | null) => void
+  /** When true, the Navigation always uses the sticky (solid bg) style */
+  forceSticky: boolean
+  setForceSticky: (v: boolean) => void
 }
 
 export const AlternateSlugContext = createContext<AlternateSlugContextValue>({
   alternates: null,
   setAlternates: () => {},
+  forceSticky: false,
+  setForceSticky: () => {},
 })
 
 export function AlternateSlugContextProvider({ children }: { children: React.ReactNode }) {
   const [alternates, setAlternates] = useState<AlternateSlugs | null>(null)
+  const [forceSticky, setForceSticky] = useState(false)
   return (
-    <AlternateSlugContext.Provider value={{ alternates, setAlternates }}>
+    <AlternateSlugContext.Provider value={{ alternates, setAlternates, forceSticky, setForceSticky }}>
       {children}
     </AlternateSlugContext.Provider>
   )
@@ -45,4 +51,9 @@ export function AlternateSlugContextProvider({ children }: { children: React.Rea
 
 export function useAlternateSlugs() {
   return useContext(AlternateSlugContext)
+}
+
+export function useForceSticky() {
+  const { forceSticky, setForceSticky } = useContext(AlternateSlugContext)
+  return { forceSticky, setForceSticky }
 }

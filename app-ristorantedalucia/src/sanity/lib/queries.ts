@@ -117,8 +117,14 @@ export const HOMEPAGE_QUERY = defineQuery(`*[slug.it.current match "home*"][0]{
         "heading": coalesce(heading[$locale], heading.it, heading),
         "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),
         logo,
-        'link': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{
-          'slug': slug.current
+        'link': {
+          'slug': *[(_type == "page" || _type == "locations") && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{
+            's': select(
+              _type == "locations" => "location/" + coalesce(slug[$locale].current, slug.it.current),
+              coalesce(slug[$locale].current, slug.it.current)
+            )
+          }.s,
+          'isBookingWidget': cta.navigationItemUrl.isBookingWidget
         },
         'externalUrl': cta.navigationItemUrl.externalUrl,
         'ctaText': coalesce(cta.text[$locale], cta.text.it, cta.text)
@@ -193,9 +199,15 @@ export const HOMEPAGE_QUERY = defineQuery(`*[slug.it.current match "home*"][0]{
         icon,
         isPrimary,
         "link": {
-          "slug": *[_type == "page" && _id == ^.link.internalLink._ref][0].slug.current,
+          "slug": *[(_type == "page" || _type == "locations") && _id == ^.link.internalLink._ref][0] {
+            "s": select(
+              _type == "locations" => "location/" + coalesce(slug[$locale].current, slug.it.current),
+              coalesce(slug[$locale].current, slug.it.current)
+            )
+          }.s,
           "externalUrl": link.externalUrl,
-          "phone": link.phone
+          "phone": link.phone,
+          "isBookingWidget": link.isBookingWidget
         }
       }
     }
@@ -260,8 +272,14 @@ export const PAGE_QUERY = defineQuery(`*[
         "heading": coalesce(heading[$locale], heading.it, heading),
         "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),
         logo,
-        'link': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{
-          'slug': coalesce(slug[$locale].current, slug.it.current)
+        'link': {
+          'slug': *[(_type == "page" || _type == "locations") && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{
+            's': select(
+              _type == "locations" => "location/" + coalesce(slug[$locale].current, slug.it.current),
+              coalesce(slug[$locale].current, slug.it.current)
+            )
+          }.s,
+          'isBookingWidget': cta.navigationItemUrl.isBookingWidget
         },
         'externalUrl': cta.navigationItemUrl.externalUrl,
         'ctaText': coalesce(cta.text[$locale], cta.text.it, cta.text)
@@ -334,9 +352,15 @@ export const PAGE_QUERY = defineQuery(`*[
         icon,
         isPrimary,
         "link": {
-          "slug": coalesce(*[_type == "page" && _id == ^.link.internalLink._ref][0].slug[$locale].current, *[_type == "page" && _id == ^.link.internalLink._ref][0].slug.it.current),
+          "slug": *[(_type == "page" || _type == "locations") && _id == ^.link.internalLink._ref][0] {
+            "s": select(
+              _type == "locations" => "location/" + coalesce(slug[$locale].current, slug.it.current),
+              coalesce(slug[$locale].current, slug.it.current)
+            )
+          }.s,
           "externalUrl": link.externalUrl,
-          "phone": link.phone
+          "phone": link.phone,
+          "isBookingWidget": link.isBookingWidget
         }
       }
     }
@@ -394,8 +418,14 @@ export const LOCATION_QUERY = defineQuery(`*[
         "heading": coalesce(heading[$locale], heading.it, heading),
         "subtitle": coalesce(subtitle[$locale], subtitle.it, subtitle),
         logo,
-        'link': *[_type == "page" && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{
-          'slug': coalesce(slug[$locale].current, slug.it.current)
+        'link': {
+          'slug': *[(_type == "page" || _type == "locations") && _id == ^.cta.navigationItemUrl.internalLink._ref][0]{
+            's': select(
+              _type == "locations" => "location/" + coalesce(slug[$locale].current, slug.it.current),
+              coalesce(slug[$locale].current, slug.it.current)
+            )
+          }.s,
+          'isBookingWidget': cta.navigationItemUrl.isBookingWidget
         },
         'externalUrl': cta.navigationItemUrl.externalUrl,
         'ctaText': coalesce(cta.text[$locale], cta.text.it, cta.text)
@@ -466,9 +496,15 @@ export const LOCATION_QUERY = defineQuery(`*[
         "label": coalesce(label[$locale], label.it, label),
         icon, isPrimary,
         "link": {
-          "slug": coalesce(*[_type == "page" && _id == ^.link.internalLink._ref][0].slug[$locale].current, *[_type == "page" && _id == ^.link.internalLink._ref][0].slug.it.current),
+          "slug": *[(_type == "page" || _type == "locations") && _id == ^.link.internalLink._ref][0] {
+            "s": select(
+              _type == "locations" => "location/" + coalesce(slug[$locale].current, slug.it.current),
+              coalesce(slug[$locale].current, slug.it.current)
+            )
+          }.s,
           "externalUrl": link.externalUrl,
-          "phone": link.phone
+          "phone": link.phone,
+          "isBookingWidget": link.isBookingWidget
         }
       }
     }

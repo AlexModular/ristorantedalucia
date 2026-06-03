@@ -4241,6 +4241,13 @@
             "type": "string"
           },
           "optional": true
+        },
+        "isBookingWidget": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
         }
       }
     }

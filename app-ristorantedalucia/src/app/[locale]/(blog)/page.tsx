@@ -7,7 +7,7 @@ import { urlFor } from "@/sanity/lib/image";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  const {data: page} = await sanityFetch({
+  const { data: page } = await sanityFetch({
     query: HOMEPAGE_QUERY,
     params: { locale },
   });
@@ -59,31 +59,31 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  const {data: page} = await sanityFetch({
+  const { data: page } = await sanityFetch({
     query: HOMEPAGE_QUERY,
     params: { locale }
   });
   return (
-      <main className={`relative text-foreground min-h-screen ${page?.theme ?? ''} ${!page?.backgroundImage ? 'bg-background' : ''}`}>
-        {page?.backgroundImage && (
-          <div className={`${page?.backgroundFixed ? 'fixed' : 'absolute'} inset-0 -z-10 w-full h-full`}>
-            <Image 
-              src={urlFor(page.backgroundImage).width(1920).url()}
-              alt=""
-              fill
-              className="object-cover opacity-50"
-              priority
-            />
-          </div>
-        )}
-        {page?.subtitle && (
-          <div className="container mx-auto px-4">
-            <h2 className="text-center family-playfair text-3xl md:text-4xl py-24" data-aos="zoom-in">
-              {page?.subtitle}
-            </h2>
-          </div>
-        )}
-        <PageMaker page={page} />
-      </main>
+    <main className={`relative text-foreground min-h-screen ${page?.theme ?? ''} ${!page?.backgroundImage ? 'bg-background' : ''}`}>
+      {page?.backgroundImage && (
+        <div className={`${page?.backgroundFixed ? 'fixed' : 'absolute'} inset-0 -z-10 w-full h-full`}>
+          <Image
+            src={urlFor(page.backgroundImage).width(1920).url()}
+            alt=""
+            fill
+            className="object-cover opacity-50"
+            priority
+          />
+        </div>
+      )}
+      {page?.subtitle && (
+        <div className="container mx-auto px-4">
+          <h2 className="text-center family-playfair text-3xl md:text-4xl py-12" data-aos="zoom-in">
+            {page?.subtitle as string}
+          </h2>
+        </div>
+      )}
+      <PageMaker page={page} />
+    </main>
   );
 }
