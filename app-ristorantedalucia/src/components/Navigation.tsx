@@ -659,7 +659,7 @@ export default function Navbar({
       {/* Floating Booking Button (< 1440px) */}
       <button
         onClick={handleBookClick}
-        className="fixed bottom-4 left-4 md:bottom-6 md:left-6 z-[9999] min-[1440px]:hidden px-6 py-3 border-2 border-gold bg-gold text-white uppercase family-oswald tracking-widest text-sm transition-all duration-300 shadow-2xl hover:bg-background hover:text-gold"
+        className="fixed bottom-4 left-4 md:bottom-6 md:left-6 z-[8500] min-[1440px]:hidden px-6 py-3 border-2 border-gold bg-gold text-white uppercase family-oswald tracking-widest text-sm transition-all duration-300 shadow-2xl hover:bg-background hover:text-gold"
       >
         {t('bookNow')}
       </button>
