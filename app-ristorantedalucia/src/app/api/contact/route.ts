@@ -20,6 +20,7 @@ export async function POST(request: NextRequest) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Referer': 'https://www.ristorantedalucia.it/',
         },
         body: JSON.stringify({
           event: {
@@ -30,9 +31,9 @@ export async function POST(request: NextRequest) {
         }),
       });
       const data = await res.json();
-      
+
       if (!data.tokenProperties || !data.tokenProperties.valid) {
-        return NextResponse.json({ message: "COULD NOT SEND MESSAGE", data: data }, { status: 500 });
+        return NextResponse.json({ message: "COULD NOT SEND MESSAGE" }, { status: 500 });
       } else if (data.riskAnalysis && data.riskAnalysis.score < .5) {
         return NextResponse.json({ message: "COULD NOT SEND MESSAGE (score)" }, { status: 500 });
       } else {
@@ -50,7 +51,6 @@ export async function POST(request: NextRequest) {
           port: Number(process.env.SMTP_SERVER_PORT),
           secure: true,
           tls: {
-            ciphers: "SSLv3",
             rejectUnauthorized: false,
           },
 
@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
               <p>Messaggio: ${message} </p>
               `,
           });
-          return NextResponse.json({ message: "Success: email was sent", data: data }, { status: 200 });
+          return NextResponse.json({ message: "Success: email was sent" }, { status: 200 });
         } catch (error) {
           console.log(error)
           return NextResponse.json({ message: "COULD NOT SEND MESSAGE" }, { status: 500 })
