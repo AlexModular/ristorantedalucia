@@ -1,9 +1,43 @@
 'use client'
 
 import { TransformedMap } from "../../../sanity.types.custom";
-import { APIProvider, Map as GoogleMap, AdvancedMarker } from '@vis.gl/react-google-maps';
+import { APIProvider, Map as GoogleMap, AdvancedMarker, useMap } from '@vis.gl/react-google-maps';
 import AOSComponent from "../AOS";
 import Image from "next/image";
+import { useEffect } from "react";
+
+function MapBounds({ locations }: { locations: Array<any> }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!map || !locations || locations.length === 0 || !window.google?.maps) return;
+
+    const bounds = new window.google.maps.LatLngBounds();
+    let hasValidLocations = false;
+
+    locations.forEach(loc => {
+      const lat = loc.lat || loc.location?.lat;
+      const lng = loc.lng || loc.location?.lng;
+      if (lat && lng) {
+        bounds.extend({ lat, lng });
+        hasValidLocations = true;
+      }
+    });
+
+    if (hasValidLocations) {
+      map.fitBounds(bounds);
+      // Limit zoom if there's only one location or they are very close
+      const listener = window.google.maps.event.addListener(map, 'idle', () => {
+        if (map.getZoom()! > 16) {
+          map.setZoom(16);
+        }
+        window.google.maps.event.removeListener(listener);
+      });
+    }
+  }, [map, locations]);
+
+  return null;
+}
 
 export default function Map({ item }: { item: TransformedMap }) {
   const center = {
@@ -30,6 +64,8 @@ export default function Map({ item }: { item: TransformedMap }) {
               gestureHandling={'greedy'}
               disableDefaultUI={false}
             >
+              <MapBounds locations={item.locations || []} />
+              
               {item.locations?.map((loc, index) => {
                 // Support both structures: {lat, lng} or {location: {lat, lng}}
                 const lat = loc.lat || loc.location?.lat;
@@ -45,7 +81,7 @@ export default function Map({ item }: { item: TransformedMap }) {
                     key={loc._key || index}
                     position={{ lat, lng }}
                   >
-                    <div className="relative w-12 h-12 flex items-center justify-center -translate-y-1/2">
+                    <div className="relative w-12 h-12 flex items-center justify-center">
                       <Image
                         src="/images/marker.svg"
                         alt="Marker"
