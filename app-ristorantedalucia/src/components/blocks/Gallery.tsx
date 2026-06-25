@@ -38,22 +38,25 @@ export default function Gallery({ item }: { item: TransformedGallery }) {
           ref={galleryRef}
           className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-4"
         >
-          {item.images?.map((image, index) => (
-            <div
-              key={index}
-              className="gallery-item cursor-pointer relative overflow-hidden rounded-lg shadow-lg aspect-square group"
-              data-src={urlFor(image).width(1600).url()}
-              data-sub-html={`<h4>${item.heading || ''}</h4>`}
-            >
-              <Image
-                src={urlFor(image).width(400).height(400).url()}
-                width={400}
-                height={400}
-                alt={resolveAlt(image.alt, 'it', `Gallery Image ${index} - ${item.heading ?? ''}`)}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-            </div>
-          ))}
+          {item.images?.map((image, index) => {
+            if (!image || !image.asset) return null;
+            return (
+              <div
+                key={index}
+                className="gallery-item cursor-pointer relative overflow-hidden rounded-lg shadow-lg aspect-square group"
+                data-src={urlFor(image).width(1600).url()}
+                data-sub-html={`<h4>${item.heading || ''}</h4>`}
+              >
+                <Image
+                  src={urlFor(image).width(400).height(400).url()}
+                  width={400}
+                  height={400}
+                  alt={resolveAlt(image.alt, 'it', `Gallery Image ${index} - ${item.heading ?? ''}`)}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
     </AOSComponent>

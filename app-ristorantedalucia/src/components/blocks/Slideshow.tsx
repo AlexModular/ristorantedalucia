@@ -88,18 +88,21 @@ export default function Slideshow(params: { key: number, item: TransformedSlides
               dynamicBullets: true,
             }}
           >
-            {data?.images?.map((item, index) => (
-              <SwiperSlide key={index} itemID={`${index}`} className="relative">
-                <Image
-                  src={urlFor(item).width(2560).url()}
-                  alt={resolveAlt(item?.alt, 'it', `Slide #${index}`)}
-                  fill
-                  className="object-cover"
-                  priority={index === 0}
-                />
-                {!useGlobalContent && renderContent(item)}
-              </SwiperSlide>
-            ))}
+            {data?.images?.map((item, index) => {
+              if (!item || !item.asset) return null;
+              return (
+                <SwiperSlide key={index} itemID={`${index}`} className="relative">
+                  <Image
+                    src={urlFor(item).width(2560).url()}
+                    alt={resolveAlt(item?.alt, 'it', `Slide #${index}`)}
+                    fill
+                    className="object-cover"
+                    priority={index === 0}
+                  />
+                  {!useGlobalContent && renderContent(item)}
+                </SwiperSlide>
+              );
+            })}
           </Swiper>
           {useGlobalContent && globalContent && (
             <div className="absolute inset-0 z-20 pointer-events-none">

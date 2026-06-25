@@ -47,20 +47,23 @@ export default function Slider(params: {key: number, item: TransformedSlider}) {
             navigation={false}
             pagination={{ clickable: true }}
           >
-            {data?.images?.map((item, index) => (
-              <SwiperSlide key={index} itemID={`${index}`}>
-                <div className="relative w-full h-[300px] md:h-[400px] lg:h-[600px]">
-                  <Image 
-                    src={urlFor(item).width(1200).url()} 
-                    alt={resolveAlt(item?.alt, 'it', `Slide #${index}`)}
-                    fill
-                    className="object-cover rounded-lg shadow-2xl"
-                    sizes="(max-width: 768px) 80vw, (max-width: 1200px) 50vw, 40vw"
-                    priority={index < 5}
-                  />
-                </div>
-              </SwiperSlide>
-            ))}
+            {data?.images?.map((item, index) => {
+              if (!item || !item.asset) return null;
+              return (
+                <SwiperSlide key={index} itemID={`${index}`}>
+                  <div className="relative w-full h-[300px] md:h-[400px] lg:h-[600px]">
+                    <Image 
+                      src={urlFor(item).width(1200).url()} 
+                      alt={resolveAlt(item?.alt, 'it', `Slide #${index}`)}
+                      fill
+                      className="object-cover rounded-lg shadow-2xl"
+                      sizes="(max-width: 768px) 80vw, (max-width: 1200px) 50vw, 40vw"
+                      priority={index < 5}
+                    />
+                  </div>
+                </SwiperSlide>
+              );
+            })}
           </Swiper>
           <div className="clearfix"></div>
         </div>
