@@ -15,6 +15,12 @@ type ContactFormData = {
   message: string;
 };
 
+declare global {
+  interface Window {
+    gtag?: (command: string, action: string, params: Record<string, string | number>) => void;
+  }
+}
+
 export default function ContactForm({item}: {item: TransformedForm}) {
   const t = useTranslations('ContactForm');
   const { executeRecaptcha } = useReCaptcha();
@@ -36,6 +42,14 @@ export default function ContactForm({item}: {item: TransformedForm}) {
       if (response.ok) {
         toast.success(t('success'));
         reset();
+        
+        if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+          window.gtag('event', 'conversion', {
+            'send_to': `${process.env.NEXT_PUBLIC_GOOGLE_ADS_ID}/${process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL}`,
+            'value': 1.0,
+            'currency': 'EUR'
+          });
+        }
       } else {
         throw new Error('Failed to send');
       }

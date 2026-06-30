@@ -8,6 +8,7 @@ import { AlternateSlugContextProvider } from "@/context/AlternateSlugContext";
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { IubendaProvider, IubendaCookieSolutionBannerConfigInterface } from '@mep-agency/next-iubenda';
 import Image from 'next/image';
+import Script from 'next/script';
 
 import '@/app/globals.css'
 // Import Swiper styles
@@ -180,7 +181,16 @@ export default async function RootLayout({
         </noscript>
         {/* End Meta Pixel Code */}
       </head>
-      <GoogleAnalytics gaId="UA-119546408-1" />
+      {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID} />}
+      <Script src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ADS_ID}`} strategy="afterInteractive" />
+      <Script id="google-ads-tag" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ADS_ID}');
+        `}
+      </Script>
       <body cz-shortcut-listen="true" className={`${montserrat.variable} ${playfair.variable} bg-background text-foreground`}>
         <NextIntlClientProvider messages={messages}>
           <ReCaptchaProvider reCaptchaKey={process.env.NEXT_RECAPTCHA_SITE_KEY} useEnterprise={true}>
