@@ -25,6 +25,7 @@ import { ReCaptchaProvider } from "next-recaptcha-v3";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import PixelLoader from "@/components/PixelLoader";
+import BookingModal from "@/components/BookingModal";
 import { Montserrat, Playfair_Display } from 'next/font/google'
 
 const montserrat = Montserrat({
@@ -210,6 +211,7 @@ export default async function RootLayout({
                     <SpeedInsights />
                   </>
                 )}
+                <BookingModal />
               </div>
             </AlternateSlugContextProvider>
           </ReCaptchaProvider>

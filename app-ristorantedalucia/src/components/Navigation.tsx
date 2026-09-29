@@ -61,40 +61,7 @@ export default function Navbar({
     openBookingWidget(e);
   };
 
-  useEffect(() => {
-    if (!document.getElementById('quandoo-widget-container')) {
-      const container = document.createElement('div');
-      container.id = 'quandoo-widget-container';
-      container.style.position = 'fixed';
-      container.style.top = '0';
-      container.style.left = '0';
-      container.style.opacity = '0';
-      container.style.pointerEvents = 'none';
-      container.style.zIndex = '-50';
-      
-      const builder = document.createElement('div');
-      builder.className = 'quandoo-widget-builder';
-      builder.setAttribute('data-config', JSON.stringify({
-        "format": "text-button",
-        "bgcolor": "#f5b016",
-        "txcolor": "#ffffff",
-        "round": "yes",
-        "position": "",
-        "font": "md",
-        "merchant": 48062,
-        "lang": locale,
-        "txt": t('bookNow')
-      }));
-      
-      container.appendChild(builder);
-      document.body.appendChild(container);
-      
-      const script = document.createElement('script');
-      script.src = "https://s3-eu-west-1.amazonaws.com/quandoo-website/widget-builder/quandoo-widget-builder.js";
-      script.async = true;
-      document.body.appendChild(script);
-    }
-  }, [locale, t]);
+
 
   useEffect(() => {
     const NAV_HEIGHT = 80; // approx nav bar height in px

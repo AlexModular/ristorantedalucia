@@ -24,5 +24,10 @@
     "followUs": "Seguici",
     "whereWeAre": "Dove siamo",
     "srHeading": "Informazioni Footer"
+  },
+  "BookingModal": {
+    "title": "Prenota un tavolo",
+    "subtitle": "Scegli la data e l'ora per la tua prenotazione",
+    "close": "Chiudi modale"
   }
 }

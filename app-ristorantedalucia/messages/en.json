@@ -24,5 +24,10 @@
     "followUs": "Follow Us",
     "whereWeAre": "Where we are",
     "srHeading": "Footer Information"
+  },
+  "BookingModal": {
+    "title": "Book a table",
+    "subtitle": "Choose the date and time for your reservation",
+    "close": "Close modal"
   }
 }
